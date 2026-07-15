@@ -18,6 +18,9 @@ model Store {
   bdPerEntry               Decimal   @default(10) @map("bd_per_entry") @db.Decimal(10, 3)
   metaPhoneNumberId        String?   @map("meta_phone_number_id")
   metaAccessTokenEncrypted String?   @map("meta_access_token_encrypted")
+  // Each store is a separate company with its own Meta app, so the app secret
+  // used to verify webhook signatures is per-store, not global.
+  metaAppSecretEncrypted   String?   @map("meta_app_secret_encrypted")
   metaTemplateName         String?   @default("campaign_entry_confirmation") @map("meta_template_name")
   metaTemplateLang         String?   @default("ar") @map("meta_template_lang")
   googleSheetId            String?   @map("google_sheet_id")

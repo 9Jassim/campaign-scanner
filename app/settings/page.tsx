@@ -90,34 +90,20 @@ export default async function SettingsPage({
             <Field name="metaTemplateName" label="Template name" defaultValue={store.metaTemplateName ?? ''} />
             <Field name="metaTemplateLang" label="Template language" defaultValue={store.metaTemplateLang ?? ''} />
 
-            <label className="flex flex-col gap-1 text-sm">
-              <span className="font-medium text-zinc-600 dark:text-zinc-400">
-                Access token{' '}
-                <span className="font-normal text-zinc-400">
-                  {store.metaAccessTokenEncrypted
-                    ? '(a token is saved — leave blank to keep it)'
-                    : '(not set)'}
-                </span>
-              </span>
-              <input
-                type="password"
-                name="metaAccessToken"
-                autoComplete="off"
-                disabled={!encryptionReady}
-                placeholder={
-                  encryptionReady
-                    ? 'Enter a new token to replace'
-                    : 'Set ENCRYPTION_KEY to enable'
-                }
-                className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm disabled:opacity-50 dark:border-white/15"
-              />
-              {!encryptionReady && (
-                <span className="text-xs text-amber-600 dark:text-amber-400">
-                  ENCRYPTION_KEY is not configured, so the access token cannot be
-                  saved yet.
-                </span>
-              )}
-            </label>
+            <SecretField
+              name="metaAccessToken"
+              label="Access token"
+              isSet={!!store.metaAccessTokenEncrypted}
+              encryptionReady={encryptionReady}
+            />
+
+            <SecretField
+              name="metaAppSecret"
+              label="App secret"
+              isSet={!!store.metaAppSecretEncrypted}
+              encryptionReady={encryptionReady}
+              hint="Used to verify this store's webhook events. Each store has its own Meta app, so this is set per store."
+            />
           </Section>
 
           <Section title="Google Sheets">
@@ -152,6 +138,53 @@ function Section({
       </legend>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">{children}</div>
     </fieldset>
+  );
+}
+
+/**
+ * A write-only secret input: never renders the stored value, only whether one
+ * is set. Leaving it blank keeps the existing secret.
+ */
+function SecretField({
+  name,
+  label,
+  isSet,
+  encryptionReady,
+  hint,
+}: {
+  name: string;
+  label: string;
+  isSet: boolean;
+  encryptionReady: boolean;
+  hint?: string;
+}) {
+  return (
+    <label className="flex flex-col gap-1 text-sm">
+      <span className="font-medium text-zinc-600 dark:text-zinc-400">
+        {label}{' '}
+        <span className="font-normal text-zinc-400">
+          {isSet ? '(saved — leave blank to keep it)' : '(not set)'}
+        </span>
+      </span>
+      <input
+        type="password"
+        name={name}
+        autoComplete="off"
+        disabled={!encryptionReady}
+        placeholder={
+          encryptionReady
+            ? 'Enter a new value to replace'
+            : 'Set ENCRYPTION_KEY to enable'
+        }
+        className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm disabled:opacity-50 dark:border-white/15"
+      />
+      {hint && <span className="text-xs text-zinc-400">{hint}</span>}
+      {!encryptionReady && (
+        <span className="text-xs text-amber-600 dark:text-amber-400">
+          ENCRYPTION_KEY is not configured, so this cannot be saved yet.
+        </span>
+      )}
+    </label>
   );
 }
 

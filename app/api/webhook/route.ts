@@ -1,7 +1,8 @@
 import { db } from '@/lib/db';
+import { decrypt } from '@/lib/crypto';
 import {
   resolveStatusUpdate,
-  verifySignature,
+  verifySignatureAgainstAny,
   type StatusEvent,
 } from '@/lib/webhook';
 
@@ -67,14 +68,17 @@ export async function POST(request: Request) {
   // Read the raw body: the signature is computed over the exact bytes sent.
   const raw = await request.text();
 
-  const appSecret = process.env.META_APP_SECRET;
-  if (appSecret) {
+  // Each store has its own Meta app (separate companies), so a payload may be
+  // signed by any of their app secrets. Try them all.
+  const appSecrets = await getAppSecrets();
+  if (appSecrets.length > 0) {
     const signature = request.headers.get('x-hub-signature-256');
-    if (!verifySignature(raw, signature, appSecret)) {
-      // A wrong META_APP_SECRET rejects every real event from Meta, which
-      // looks identical to "no events arriving" — so say so loudly.
+    if (!verifySignatureAgainstAny(raw, signature, appSecrets)) {
+      // A wrong secret rejects every real event from Meta, which looks
+      // identical to "no events arriving" — so say so loudly.
       console.error(
-        '[webhook] REJECTED: bad X-Hub-Signature-256. Check META_APP_SECRET matches your Meta app secret (or unset it to disable verification).',
+        `[webhook] REJECTED: bad X-Hub-Signature-256 (tried ${appSecrets.length} app secret(s)). ` +
+          "Check each store's Meta app secret in Settings, or META_APP_SECRET.",
       );
       return new Response('Invalid signature', { status: 403 });
     }
@@ -121,6 +125,38 @@ export async function POST(request: Request) {
   }
 
   return new Response('OK', { status: 200 });
+}
+
+/**
+ * Every app secret a payload could legitimately be signed with: one per store
+ * that has one configured, plus the legacy global env var if set.
+ *
+ * Returning an empty list disables signature verification (dev / not yet
+ * configured). Note that once ANY secret is configured, unsigned payloads are
+ * rejected — so configure a secret for every store, or none.
+ */
+async function getAppSecrets(): Promise<string[]> {
+  const secrets: string[] = [];
+
+  const envSecret = process.env.META_APP_SECRET;
+  if (envSecret) secrets.push(envSecret);
+
+  const stores = await db.store.findMany({
+    where: { metaAppSecretEncrypted: { not: null } },
+    select: { slug: true, metaAppSecretEncrypted: true },
+  });
+
+  for (const store of stores) {
+    try {
+      secrets.push(decrypt(store.metaAppSecretEncrypted!));
+    } catch {
+      console.error(
+        `[webhook] could not decrypt the Meta app secret for store '${store.slug}' — check ENCRYPTION_KEY`,
+      );
+    }
+  }
+
+  return secrets;
 }
 
 /** Advance the matching receipt's delivery status. */

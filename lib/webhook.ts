@@ -103,3 +103,24 @@ export function verifySignature(
   if (a.length !== b.length || a.length === 0) return false;
   return timingSafeEqual(a, b);
 }
+
+/**
+ * Verify against any of several app secrets.
+ *
+ * Each store is a separate company with its own Meta app, so a single webhook
+ * URL receives payloads signed by different app secrets. We try each rather
+ * than picking one based on the (still unverified) payload body.
+ *
+ * Returns true if any secret matches. With no secrets configured, verification
+ * is disabled and everything is accepted.
+ */
+export function verifySignatureAgainstAny(
+  rawBody: string,
+  signatureHeader: string | null,
+  appSecrets: string[],
+): boolean {
+  if (appSecrets.length === 0) return true; // verification disabled
+  return appSecrets.some((secret) =>
+    verifySignature(rawBody, signatureHeader, secret),
+  );
+}

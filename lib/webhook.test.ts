@@ -4,6 +4,7 @@ import {
   resolveStatusUpdate,
   formatStatusError,
   verifySignature,
+  verifySignatureAgainstAny,
 } from './webhook';
 
 describe('formatStatusError', () => {
@@ -123,5 +124,47 @@ describe('verifySignature', () => {
     expect(verifySignature(body, null, secret)).toBe(false);
     expect(verifySignature(body, 'sha1=abc', secret)).toBe(false);
     expect(verifySignature(body, 'sha256=', secret)).toBe(false);
+  });
+});
+
+// Each store is a separate company with its own Meta app, so one webhook URL
+// receives payloads signed by different app secrets.
+describe('verifySignatureAgainstAny (multi-store Meta apps)', () => {
+  const secretA = 'morslon-app-secret';
+  const secretB = 'modern-sources-app-secret';
+  const body = JSON.stringify({ entry: [{ id: '1' }] });
+  const sign = (s: string) =>
+    'sha256=' + createHmac('sha256', s).update(body, 'utf8').digest('hex');
+
+  it('accepts a payload signed by the first store app', () => {
+    expect(verifySignatureAgainstAny(body, sign(secretA), [secretA, secretB])).toBe(
+      true,
+    );
+  });
+
+  it('accepts a payload signed by the second store app', () => {
+    expect(verifySignatureAgainstAny(body, sign(secretB), [secretA, secretB])).toBe(
+      true,
+    );
+  });
+
+  it('rejects a payload signed by an unknown app', () => {
+    expect(
+      verifySignatureAgainstAny(body, sign('some-other-app'), [secretA, secretB]),
+    ).toBe(false);
+  });
+
+  it('rejects an unsigned payload when secrets are configured', () => {
+    expect(verifySignatureAgainstAny(body, null, [secretA, secretB])).toBe(false);
+  });
+
+  it('accepts everything when no secrets are configured (verification off)', () => {
+    expect(verifySignatureAgainstAny(body, null, [])).toBe(true);
+  });
+
+  it('rejects a tampered body even with valid secrets', () => {
+    expect(
+      verifySignatureAgainstAny(body + 'x', sign(secretA), [secretA, secretB]),
+    ).toBe(false);
   });
 });

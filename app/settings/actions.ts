@@ -45,11 +45,18 @@ export async function saveStoreSettings(formData: FormData) {
     googleSheetId: field(formData, 'googleSheetId'),
   };
 
-  // Access token is write-only: only overwrite when a new value is entered,
-  // and always store it encrypted.
+  // Secrets are write-only: only overwrite when a new value is entered, and
+  // always store them encrypted.
   const token = field(formData, 'metaAccessToken');
   if (token) {
     data.metaAccessTokenEncrypted = encrypt(token);
+  }
+
+  // Per-store app secret: each store is a separate company with its own Meta
+  // app, so webhook signatures are verified per-store rather than globally.
+  const appSecret = field(formData, 'metaAppSecret');
+  if (appSecret) {
+    data.metaAppSecretEncrypted = encrypt(appSecret);
   }
 
   await db.store.update({ where: { id: storeId }, data });
