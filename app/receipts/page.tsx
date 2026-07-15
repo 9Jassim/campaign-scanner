@@ -5,11 +5,12 @@ import FilterBar from '@/components/filter-bar';
 import AutoSubmitSelect from '@/components/auto-submit-select';
 import ExportButton from '@/components/export-button';
 import StatusBadge from '@/components/status-badge';
+import Pagination, { parsePageParam } from '@/components/pagination';
 import type { Prisma } from '@prisma/client';
 
 export const dynamic = 'force-dynamic';
 
-const PAGE_LIMIT = 200;
+const PER_PAGE = 50;
 const STATUSES = [
   'pending',
   'sent',
@@ -22,7 +23,12 @@ const STATUSES = [
 export default async function ReceiptsPage({
   searchParams,
 }: {
-  searchParams: { storeId?: string; q?: string; status?: string };
+  searchParams: {
+    storeId?: string;
+    q?: string;
+    status?: string;
+    page?: string;
+  };
 }) {
   const profile = await requireManager();
   const { stores, store } = await resolveActiveStore(
@@ -60,17 +66,21 @@ export default async function ReceiptsPage({
     ];
   }
 
-  const [receipts, total] = await Promise.all([
-    db.receipt.findMany({
-      where,
-      include: {
-        contact: { select: { name: true, phone: true } },
-      },
-      orderBy: { createdAt: 'desc' },
-      take: PAGE_LIMIT,
-    }),
-    db.receipt.count({ where }),
-  ]);
+  // Count first so an out-of-range ?page can be clamped rather than showing
+  // an empty list.
+  const total = await db.receipt.count({ where });
+  const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
+  const page = Math.min(parsePageParam(searchParams.page), totalPages);
+
+  const receipts = await db.receipt.findMany({
+    where,
+    include: {
+      contact: { select: { name: true, phone: true } },
+    },
+    orderBy: { createdAt: 'desc' },
+    skip: (page - 1) * PER_PAGE,
+    take: PER_PAGE,
+  });
 
   return (
     <>
@@ -118,7 +128,6 @@ export default async function ReceiptsPage({
 
         <p className="text-xs text-zinc-500">
           {total} receipt{total === 1 ? '' : 's'}
-          {total > PAGE_LIMIT ? ` (showing first ${PAGE_LIMIT})` : ''}
         </p>
 
         <div className="overflow-x-auto rounded-lg border border-black/10 dark:border-white/10">
@@ -181,6 +190,15 @@ export default async function ReceiptsPage({
             </tbody>
           </table>
         </div>
+
+        <Pagination
+          basePath="/receipts"
+          params={{ storeId: store.id, q, status }}
+          page={page}
+          totalPages={totalPages}
+          totalItems={total}
+          perPage={PER_PAGE}
+        />
       </main>
     </>
   );

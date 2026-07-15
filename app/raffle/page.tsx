@@ -3,16 +3,17 @@ import { db } from '@/lib/db';
 import AppNav from '@/components/app-nav';
 import FilterBar from '@/components/filter-bar';
 import ExportButton from '@/components/export-button';
+import Pagination, { parsePageParam } from '@/components/pagination';
 import type { Prisma } from '@prisma/client';
 
 export const dynamic = 'force-dynamic';
 
-const PAGE_LIMIT = 300;
+const PER_PAGE = 100;
 
 export default async function RafflePage({
   searchParams,
 }: {
-  searchParams: { storeId?: string; q?: string };
+  searchParams: { storeId?: string; q?: string; page?: string };
 }) {
   const profile = await requireManager();
   const { stores, store } = await resolveActiveStore(
@@ -49,14 +50,18 @@ export default async function RafflePage({
     where.OR = or;
   }
 
-  const [entries, total] = await Promise.all([
-    db.raffleEntry.findMany({
-      where,
-      orderBy: { entryNumber: 'asc' },
-      take: PAGE_LIMIT,
-    }),
-    db.raffleEntry.count({ where }),
-  ]);
+  // Count first so an out-of-range ?page can be clamped rather than showing
+  // an empty list.
+  const total = await db.raffleEntry.count({ where });
+  const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
+  const page = Math.min(parsePageParam(searchParams.page), totalPages);
+
+  const entries = await db.raffleEntry.findMany({
+    where,
+    orderBy: { entryNumber: 'asc' },
+    skip: (page - 1) * PER_PAGE,
+    take: PER_PAGE,
+  });
 
   return (
     <>
@@ -85,7 +90,6 @@ export default async function RafflePage({
 
         <p className="text-xs text-zinc-500">
           {total} entr{total === 1 ? 'y' : 'ies'}
-          {total > PAGE_LIMIT ? ` (showing first ${PAGE_LIMIT})` : ''}
         </p>
 
         <div className="overflow-x-auto rounded-lg border border-black/10 dark:border-white/10">
@@ -130,6 +134,15 @@ export default async function RafflePage({
             </tbody>
           </table>
         </div>
+
+        <Pagination
+          basePath="/raffle"
+          params={{ storeId: store.id, q }}
+          page={page}
+          totalPages={totalPages}
+          totalItems={total}
+          perPage={PER_PAGE}
+        />
       </main>
     </>
   );

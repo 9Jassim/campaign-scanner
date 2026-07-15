@@ -4,11 +4,12 @@ import AppNav from '@/components/app-nav';
 import FilterBar from '@/components/filter-bar';
 import ExportButton from '@/components/export-button';
 import StatusBadge from '@/components/status-badge';
+import Pagination, { parsePageParam } from '@/components/pagination';
 import type { Prisma } from '@prisma/client';
 
 export const dynamic = 'force-dynamic';
 
-const PAGE_LIMIT = 200;
+const PER_PAGE = 50;
 /** Cap invoices shown per contact — a six-month campaign can rack them up. */
 const RECEIPTS_PER_CONTACT = 50;
 
@@ -19,7 +20,7 @@ const ROW_GRID =
 export default async function ContactsPage({
   searchParams,
 }: {
-  searchParams: { storeId?: string; q?: string };
+  searchParams: { storeId?: string; q?: string; page?: string };
 }) {
   const profile = await requireManager();
   const { stores, store } = await resolveActiveStore(
@@ -52,31 +53,35 @@ export default async function ContactsPage({
     ];
   }
 
-  const [contacts, total] = await Promise.all([
-    db.contact.findMany({
-      where,
-      orderBy: { lastSeen: 'desc' },
-      take: PAGE_LIMIT,
-      include: {
-        // The invoice IDs are on the contact, but the amount and entry count
-        // per invoice live on the receipt — so read them from there.
-        receipts: {
-          select: {
-            id: true,
-            invoiceId: true,
-            amount: true,
-            entries: true,
-            createdAt: true,
-            messageStatus: true,
-            messageError: true,
-          },
-          orderBy: { createdAt: 'desc' },
-          take: RECEIPTS_PER_CONTACT,
+  // Count first so an out-of-range ?page can be clamped rather than showing
+  // an empty list.
+  const total = await db.contact.count({ where });
+  const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
+  const page = Math.min(parsePageParam(searchParams.page), totalPages);
+
+  const contacts = await db.contact.findMany({
+    where,
+    orderBy: { lastSeen: 'desc' },
+    skip: (page - 1) * PER_PAGE,
+    take: PER_PAGE,
+    include: {
+      // The invoice IDs are on the contact, but the amount and entry count
+      // per invoice live on the receipt — so read them from there.
+      receipts: {
+        select: {
+          id: true,
+          invoiceId: true,
+          amount: true,
+          entries: true,
+          createdAt: true,
+          messageStatus: true,
+          messageError: true,
         },
+        orderBy: { createdAt: 'desc' },
+        take: RECEIPTS_PER_CONTACT,
       },
-    }),
-    db.contact.count({ where }),
-  ]);
+    },
+  });
 
   return (
     <>
@@ -103,7 +108,6 @@ export default async function ContactsPage({
 
         <p className="text-xs text-zinc-500">
           {total} contact{total === 1 ? '' : 's'}
-          {total > PAGE_LIMIT ? ` (showing first ${PAGE_LIMIT})` : ''}
           {contacts.length > 0 && ' · click a contact to see their invoices'}
         </p>
 
@@ -165,6 +169,15 @@ export default async function ContactsPage({
             )}
           </div>
         </div>
+
+        <Pagination
+          basePath="/contacts"
+          params={{ storeId: store.id, q }}
+          page={page}
+          totalPages={totalPages}
+          totalItems={total}
+          perPage={PER_PAGE}
+        />
       </main>
     </>
   );
