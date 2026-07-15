@@ -4,6 +4,7 @@ import AppNav from '@/components/app-nav';
 import FilterBar from '@/components/filter-bar';
 import AutoSubmitSelect from '@/components/auto-submit-select';
 import ExportButton from '@/components/export-button';
+import StatusBadge from '@/components/status-badge';
 import type { Prisma } from '@prisma/client';
 
 export const dynamic = 'force-dynamic';
@@ -17,15 +18,6 @@ const STATUSES = [
   'failed',
   'skipped',
 ];
-
-const STATUS_STYLES: Record<string, string> = {
-  delivered: 'bg-green-100 text-green-800 dark:bg-green-950/50 dark:text-green-300',
-  read: 'bg-green-100 text-green-800 dark:bg-green-950/50 dark:text-green-300',
-  sent: 'bg-blue-100 text-blue-800 dark:bg-blue-950/50 dark:text-blue-300',
-  pending: 'bg-amber-100 text-amber-800 dark:bg-amber-950/50 dark:text-amber-300',
-  failed: 'bg-red-100 text-red-800 dark:bg-red-950/50 dark:text-red-300',
-  skipped: 'bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300',
-};
 
 export default async function ReceiptsPage({
   searchParams,
@@ -175,15 +167,10 @@ export default async function ReceiptsPage({
                       {r.entries}
                     </td>
                     <td className="px-3 py-2">
-                      <span
-                        className={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
-                          STATUS_STYLES[r.messageStatus ?? ''] ??
-                          'bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300'
-                        }`}
-                        title={r.messageError ?? undefined}
-                      >
-                        {r.messageStatus}
-                      </span>
+                      <StatusBadge
+                        status={r.messageStatus}
+                        error={r.messageError}
+                      />
                     </td>
                     <td className="px-3 py-2 text-xs text-zinc-500">
                       {r.cashierEmail ?? '—'}
