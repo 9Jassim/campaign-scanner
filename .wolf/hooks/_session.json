@@ -1,0 +1,149 @@
+{
+  "session_id": "session-2026-07-15-1237",
+  "started": "2026-07-15T09:37:38.601Z",
+  "files_read": {
+    "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/users/page.tsx": {
+      "count": 2,
+      "tokens": 2980,
+      "first_read": "2026-07-15T09:38:06.813Z"
+    },
+    "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/scan.ts": {
+      "count": 4,
+      "tokens": 2576,
+      "first_read": "2026-07-15T10:01:02.376Z"
+    }
+  },
+  "files_written": [
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/users/page.tsx",
+      "action": "edit",
+      "tokens": 390,
+      "at": "2026-07-15T09:38:17.830Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/users/page.tsx",
+      "action": "edit",
+      "tokens": 614,
+      "at": "2026-07-15T09:38:36.134Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/whatsapp.ts",
+      "action": "create",
+      "tokens": 1379,
+      "at": "2026-07-15T10:00:55.234Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/scan.ts",
+      "action": "edit",
+      "tokens": 219,
+      "at": "2026-07-15T10:01:10.085Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/scan.ts",
+      "action": "edit",
+      "tokens": 102,
+      "at": "2026-07-15T10:01:29.941Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/scan.ts",
+      "action": "edit",
+      "tokens": 168,
+      "at": "2026-07-15T10:01:36.700Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/scan.ts",
+      "action": "edit",
+      "tokens": 946,
+      "at": "2026-07-15T10:01:54.995Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/whatsapp.test.ts",
+      "action": "create",
+      "tokens": 1209,
+      "at": "2026-07-15T10:03:01.317Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/scan/route.ts",
+      "action": "edit",
+      "tokens": 155,
+      "at": "2026-07-15T10:03:31.336Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+      "action": "edit",
+      "tokens": 63,
+      "at": "2026-07-15T10:03:37.965Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+      "action": "edit",
+      "tokens": 68,
+      "at": "2026-07-15T10:03:44.686Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+      "action": "edit",
+      "tokens": 16,
+      "at": "2026-07-15T10:03:56.992Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+      "action": "edit",
+      "tokens": 57,
+      "at": "2026-07-15T10:04:02.076Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+      "action": "edit",
+      "tokens": 135,
+      "at": "2026-07-15T10:04:09.083Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+      "action": "edit",
+      "tokens": 310,
+      "at": "2026-07-15T10:04:17.432Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/crypto.test.ts",
+      "action": "create",
+      "tokens": 498,
+      "at": "2026-07-15T10:06:38.091Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/webhook.ts",
+      "action": "create",
+      "tokens": 864,
+      "at": "2026-07-15T10:21:11.089Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/webhook.test.ts",
+      "action": "create",
+      "tokens": 1164,
+      "at": "2026-07-15T10:21:29.043Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/webhook/route.ts",
+      "action": "create",
+      "tokens": 1400,
+      "at": "2026-07-15T10:22:02.648Z"
+    }
+  ],
+  "edit_counts": {
+    "app/admin/users/page.tsx": 2,
+    "lib/whatsapp.ts": 1,
+    "lib/scan.ts": 4,
+    "lib/whatsapp.test.ts": 1,
+    "app/api/scan/route.ts": 1,
+    "app/scanner/scanner-client.tsx": 6,
+    "lib/crypto.test.ts": 1,
+    "lib/webhook.ts": 1,
+    "lib/webhook.test.ts": 1,
+    "app/api/webhook/route.ts": 1
+  },
+  "anatomy_hits": 2,
+  "anatomy_misses": 0,
+  "repeated_reads_warned": 4,
+  "cerebrum_warnings": 0,
+  "stop_count": 4
+}

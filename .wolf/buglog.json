@@ -1,0 +1,341 @@
+{
+  "version": 1,
+  "bugs": [
+    {
+      "id": "bug-001",
+      "timestamp": "2026-07-14T12:27:44.582Z",
+      "error_message": "Incorrect value in code",
+      "file": "package.json",
+      "root_cause": "Had \"eslint\"",
+      "fix": "Changed to \"next lint\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "json"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-14T12:27:44.582Z"
+    },
+    {
+      "id": "bug-002",
+      "timestamp": "2026-07-14T12:28:17.928Z",
+      "error_message": "Type error",
+      "file": "drizzle.config.ts",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-14T12:28:17.928Z"
+    },
+    {
+      "id": "bug-003",
+      "timestamp": "2026-07-14T12:35:40.309Z",
+      "error_message": "Significant refactor of ",
+      "file": "prisma/schema.prisma",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 5→3 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "prisma"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-14T12:35:40.309Z"
+    },
+    {
+      "id": "bug-004",
+      "timestamp": "2026-07-14T12:42:47.227Z",
+      "error_message": "CSS fix: --font-sans",
+      "file": "app/globals.css",
+      "root_cause": "--font-sans: var(--font-geist-sans) → var(--font-sans)",
+      "fix": "Changed --font-sans: var(--font-geist-sans) → var(--font-sans)",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "css"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-14T12:42:53.352Z"
+    },
+    {
+      "id": "bug-005",
+      "timestamp": "2026-07-14T12:44:14.539Z",
+      "error_message": "Wrong reference: injected should be CreateSchema",
+      "file": "prisma/migrations/0000_init/migration.sql",
+      "root_cause": "Used \"injected\" instead of \"CreateSchema\"",
+      "fix": "Changed injected → CreateSchema",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "sql"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-14T12:44:14.539Z"
+    },
+    {
+      "id": "bug-006",
+      "timestamp": "2026-07-14T12:59:39.688Z",
+      "error_message": "Incorrect value in code",
+      "file": "package.json",
+      "root_cause": "Had \"test\"",
+      "fix": "Changed to \"db:seed\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "json"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-14T12:59:39.688Z"
+    },
+    {
+      "id": "bug-007",
+      "timestamp": "2026-07-14T13:05:42.246Z",
+      "error_message": "Significant refactor of ",
+      "file": "prisma/schema.prisma",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 6→7 lines (5 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "prisma"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-14T13:05:42.246Z"
+    },
+    {
+      "id": "bug-008",
+      "timestamp": "2026-07-14T13:07:27.429Z",
+      "error_message": "Significant refactor of ",
+      "file": "lib/auth.ts",
+      "root_cause": "27 lines replaced/restructured",
+      "fix": "Rewrote 46→22 lines (27 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-14T13:07:27.429Z"
+    },
+    {
+      "id": "bug-009",
+      "timestamp": "2026-07-14T13:10:41.029Z",
+      "error_message": "Significant refactor of ",
+      "file": "README.md",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 14→22 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-14T13:10:41.029Z"
+    },
+    {
+      "id": "bug-010",
+      "timestamp": "2026-07-14T13:31:44.331Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/page.tsx",
+      "root_cause": "Had \"./sign-out-button\"",
+      "fix": "Changed to \"@/components/sign-out-button\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-14T13:31:44.331Z"
+    },
+    {
+      "id": "bug-011",
+      "timestamp": "2026-07-14T15:04:50.167Z",
+      "error_message": "Missing guard clause",
+      "file": "lib/auth.ts",
+      "root_cause": "No early return/throw for edge case: stores.length === 0",
+      "fix": "Added guard clause: if (stores.length === 0)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-14T15:04:50.167Z"
+    },
+    {
+      "id": "bug-012",
+      "timestamp": "2026-07-14T15:39:59.303Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/settings/page.tsx",
+      "root_cause": "9 lines replaced/restructured",
+      "fix": "Rewrote 23→15 lines (9 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-14T15:39:59.303Z"
+    },
+    {
+      "id": "bug-013",
+      "timestamp": "2026-07-14T15:42:00.168Z",
+      "error_message": "Null/undefined access in ",
+      "file": "lib/auth.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-14T15:42:00.168Z"
+    },
+    {
+      "id": "bug-014",
+      "timestamp": "2026-07-14T15:43:04.104Z",
+      "error_message": "Type error",
+      "file": "app/admin/users/page.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-14T15:43:04.104Z"
+    },
+    {
+      "id": "bug-015",
+      "timestamp": "2026-07-14T16:27:48.018Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/admin/users/page.tsx",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 20→29 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-14T16:27:48.018Z"
+    },
+    {
+      "id": "bug-016",
+      "timestamp": "2026-07-14T16:31:17.008Z",
+      "error_message": "CSS fix: chevron, transition",
+      "file": "app/globals.css",
+      "root_cause": "chevron: rotates when the card is open. */ → rotates when the card is open.; transition: rotate 150ms ease → transform 150ms ease",
+      "fix": "Changed chevron: rotates when the card is open. */ → rotates when the card is open.; transition: rotate 150ms ease → transform 150ms ease",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "css"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-14T16:31:17.008Z"
+    },
+    {
+      "id": "bug-017",
+      "timestamp": "2026-07-15T09:38:17.832Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/admin/users/page.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-15T09:38:17.832Z"
+    },
+    {
+      "id": "bug-018",
+      "timestamp": "2026-07-15T10:01:36.707Z",
+      "error_message": "Wrong return value",
+      "file": "lib/scan.ts",
+      "root_cause": "Was returning: await db.$transaction(",
+      "fix": "Now returns: { ...committed, message };",
+      "tags": [
+        "auto-detected",
+        "return-value",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-15T10:01:36.707Z"
+    },
+    {
+      "id": "bug-019",
+      "timestamp": "2026-07-15T10:01:54.999Z",
+      "error_message": "Missing guard clause",
+      "file": "lib/scan.ts",
+      "root_cause": "No early return/throw for edge case: err instanceof Prisma.PrismaClientKnownRequestError &&\n     ",
+      "fix": "Added guard clause: if (err instanceof Prisma.PrismaClientKnownR)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-15T10:01:54.999Z"
+    },
+    {
+      "id": "bug-020",
+      "timestamp": "2026-07-15T10:03:31.342Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/api/scan/route.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-15T10:03:31.342Z"
+    },
+    {
+      "id": "bug-021",
+      "timestamp": "2026-07-15T10:04:02.082Z",
+      "error_message": "CSS fix: ok",
+      "file": "app/scanner/scanner-client.tsx",
+      "root_cause": "ok: false, message: 'Network error — please try again' → false, error: 'Network error — please try again'",
+      "fix": "Changed ok: false, message: 'Network error — please try again' → false, error: 'Network error — please try again'",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-15T10:04:02.082Z"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --surface: #ffffff;
+  /* Tell the browser to theme native controls (select/option menus,
+     scrollbars, etc.) for a light UI. */
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --surface: #1a1a1a;
+    color-scheme: dark;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Native <select> dropdowns: keep the closed control legible and give the
+   open option list an explicit, theme-aware surface so it never renders as
+   white-on-white (or dark-on-dark). */
+select {
+  color: var(--foreground);
+}
+
+select option {
+  background-color: var(--surface);
+  color: var(--foreground);
+}
+
+/* Collapsible <details> disclosure chevron: rotates when the card is open.
+   Uses `transform` (not the individual `rotate` property, which is unreliable
+   on inline SVG elements). */
+.disclosure-chevron {
+  transition: transform 150ms ease;
+  transform-origin: center;
+}
+
+details[open] .disclosure-chevron {
+  transform: rotate(90deg);
+}
