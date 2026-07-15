@@ -209,13 +209,15 @@ function InvoiceList({
   return (
     <div className="bg-zinc-50 px-3 pb-3 pl-10 pt-1 dark:bg-zinc-900/40">
       <table className="w-full text-sm">
+        {/* pr-* on every column: without it the right-aligned Entries number
+            runs straight into the left-aligned WhatsApp badge. */}
         <thead className="text-left text-xs uppercase tracking-wide text-zinc-400">
           <tr>
-            <th className="py-1 font-medium">Invoice</th>
-            <th className="py-1 font-medium">Date</th>
-            <th className="py-1 text-right font-medium">Amount (BD)</th>
-            <th className="py-1 text-right font-medium">Entries</th>
-            <th className="py-1 font-medium">WhatsApp</th>
+            <th className="py-1 pr-4 font-medium">Invoice</th>
+            <th className="py-1 pr-4 font-medium">Date</th>
+            <th className="py-1 pr-4 text-right font-medium">Amount (BD)</th>
+            <th className="py-1 pr-8 text-right font-medium">Entries</th>
+            <th className="w-px py-1 whitespace-nowrap font-medium">WhatsApp</th>
           </tr>
         </thead>
         <tbody>
@@ -224,15 +226,17 @@ function InvoiceList({
               key={r.id}
               className="border-t border-black/5 dark:border-white/5"
             >
-              <td className="py-1.5 font-mono text-xs">{r.invoiceId}</td>
-              <td className="py-1.5 text-zinc-500">
+              <td className="py-1.5 pr-4 font-mono text-xs">{r.invoiceId}</td>
+              <td className="py-1.5 pr-4 text-zinc-500">
                 {r.createdAt ? r.createdAt.toLocaleString() : '—'}
               </td>
-              <td className="py-1.5 text-right tabular-nums">
+              <td className="py-1.5 pr-4 text-right tabular-nums">
                 {Number(r.amount).toFixed(3)}
               </td>
-              <td className="py-1.5 text-right tabular-nums">{r.entries}</td>
-              <td className="py-1.5">
+              <td className="py-1.5 pr-8 text-right tabular-nums">
+                {r.entries}
+              </td>
+              <td className="w-px py-1.5 whitespace-nowrap">
                 <StatusBadge status={r.messageStatus} error={r.messageError} />
               </td>
             </tr>
