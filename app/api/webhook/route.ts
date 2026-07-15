@@ -71,6 +71,11 @@ export async function POST(request: Request) {
   if (appSecret) {
     const signature = request.headers.get('x-hub-signature-256');
     if (!verifySignature(raw, signature, appSecret)) {
+      // A wrong META_APP_SECRET rejects every real event from Meta, which
+      // looks identical to "no events arriving" — so say so loudly.
+      console.error(
+        '[webhook] REJECTED: bad X-Hub-Signature-256. Check META_APP_SECRET matches your Meta app secret (or unset it to disable verification).',
+      );
       return new Response('Invalid signature', { status: 403 });
     }
   }
@@ -84,19 +89,30 @@ export async function POST(request: Request) {
   }
 
   try {
+    let statusCount = 0;
+    let messageCount = 0;
+
     for (const entry of payload.entry ?? []) {
       for (const change of entry.changes ?? []) {
         const value = change.value;
         if (!value) continue;
 
         for (const status of value.statuses ?? []) {
+          statusCount++;
           await applyStatusEvent(status);
         }
         for (const message of value.messages ?? []) {
+          messageCount++;
           await logIncomingMessage(message, value.metadata?.phone_number_id);
         }
       }
     }
+
+    // Meta delivers status events under the `messages` webhook field. If this
+    // logs 0 statuses, the subscription is missing rather than the code failing.
+    console.log(
+      `[webhook] received: ${statusCount} status event(s), ${messageCount} inbound message(s)`,
+    );
   } catch (err) {
     // Return 500 so Meta retries — every write here is idempotent, so a
     // replay is safe and we'd rather retry than silently drop a status.
@@ -116,15 +132,30 @@ async function applyStatusEvent(event: StatusEvent) {
     where: { wamid },
     select: { id: true, messageStatus: true },
   });
-  if (!receipt) return; // not one of ours (or not recorded yet)
+  if (!receipt) {
+    // e.g. a message sent from another tool, or one whose wamid we never saved.
+    console.warn(
+      `[webhook] status '${event.status}' for unknown wamid ${wamid} — no matching receipt`,
+    );
+    return;
+  }
 
   const update = resolveStatusUpdate(receipt.messageStatus, event);
-  if (!update) return; // duplicate, stale, or untracked status
+  if (!update) {
+    console.log(
+      `[webhook] ignored '${event.status}' for ${wamid} (current='${receipt.messageStatus}': duplicate, stale, or untracked)`,
+    );
+    return;
+  }
 
   await db.receipt.update({
     where: { id: receipt.id },
     data: update,
   });
+  console.log(
+    `[webhook] ${wamid}: ${receipt.messageStatus} -> ${update.messageStatus}` +
+      (update.messageError ? ` (${update.messageError})` : ''),
+  );
 }
 
 /** Log a customer's inbound message so support can review it. */
