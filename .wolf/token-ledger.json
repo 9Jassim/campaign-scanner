@@ -2,14 +2,14 @@
   "version": 1,
   "created_at": "2026-07-14T12:19:01.896Z",
   "lifetime": {
-    "total_tokens_estimated": 352801,
-    "total_reads": 89,
-    "total_writes": 616,
+    "total_tokens_estimated": 355267,
+    "total_reads": 91,
+    "total_writes": 635,
     "total_sessions": 14,
-    "anatomy_hits": 59,
+    "anatomy_hits": 61,
     "anatomy_misses": 30,
     "repeated_reads_blocked": 61,
-    "estimated_savings_vs_bare_cli": 164360
+    "estimated_savings_vs_bare_cli": 164760
   },
   "sessions": [
     {
@@ -4076,6 +4076,130 @@
         "writes_count": 0,
         "repeated_reads_blocked": 0,
         "anatomy_lookups": 15
+      }
+    },
+    {
+      "id": "session-2026-07-16-1232",
+      "started": "2026-07-16T09:32:52.464Z",
+      "ended": "2026-07-16T09:46:24.494Z",
+      "reads": [
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/crypto.test.ts",
+          "tokens_estimated": 498,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/.claude/launch.json",
+          "tokens_estimated": 57,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/datetime.ts",
+          "tokens_estimated": 742,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/datetime.test.ts",
+          "tokens_estimated": 633,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/contacts/page.tsx",
+          "tokens_estimated": 47,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/contacts/page.tsx",
+          "tokens_estimated": 40,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/contacts/page.tsx",
+          "tokens_estimated": 35,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/receipts/page.tsx",
+          "tokens_estimated": 47,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/receipts/page.tsx",
+          "tokens_estimated": 40,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/raffle/page.tsx",
+          "tokens_estimated": 47,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/raffle/page.tsx",
+          "tokens_estimated": 40,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/export/route.ts",
+          "tokens_estimated": 42,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/export/route.ts",
+          "tokens_estimated": 22,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/export/route.ts",
+          "tokens_estimated": 0,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/export/route.ts",
+          "tokens_estimated": 11,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/export/route.ts",
+          "tokens_estimated": 12,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/export/route.ts",
+          "tokens_estimated": 41,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/export/route.ts",
+          "tokens_estimated": 37,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/export/route.ts",
+          "tokens_estimated": 30,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/export/route.ts",
+          "tokens_estimated": 22,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/export/route.ts",
+          "tokens_estimated": 23,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 555,
+        "output_tokens_estimated": 1911,
+        "reads_count": 2,
+        "writes_count": 19,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 2
       }
     }
   ],

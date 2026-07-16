@@ -555,12 +555,28 @@
       "last_seen": "2026-07-16T09:40:00.000Z"
     },
     {
-      "id": "bug-035",
-      "timestamp": "2026-07-16T09:45:10.934Z",
+      "id": "bug-036",
+      "timestamp": "2026-07-16T09:55:18.129Z",
+      "error_message": "Significant refactor of ",
+      "file": "lib/login-throttle.test.ts",
+      "root_cause": "6 lines replaced/restructured",
+      "fix": "Rewrote 8→17 lines (6 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T09:55:18.129Z"
+    },
+    {
+      "id": "bug-037",
+      "timestamp": "2026-07-16T09:56:41.508Z",
       "error_message": "Incorrect value in code",
-      "file": "app/api/export/route.ts",
-      "root_cause": "Had 'Timestamp'",
-      "fix": "Changed to 'Timestamp (Bahrain)'",
+      "file": "app/admin/users/actions.ts",
+      "root_cause": "Had 'bcryptjs'",
+      "fix": "Changed to '@/lib/auth'",
       "tags": [
         "auto-detected",
         "wrong-value",
@@ -568,7 +584,109 @@
       ],
       "related_bugs": [],
       "occurrences": 1,
-      "last_seen": "2026-07-16T09:45:10.934Z"
+      "last_seen": "2026-07-16T09:56:41.508Z"
+    },
+    {
+      "id": "bug-038",
+      "timestamp": "2026-07-16T09:57:16.042Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/sign-in/sign-in-form.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T09:57:16.042Z"
+    },
+    {
+      "id": "bug-039",
+      "timestamp": "2026-07-16T09:57:23.256Z",
+      "error_message": "Incorrect value in code",
+      "file": "prisma/seed.ts",
+      "root_cause": "Had 'bcryptjs'",
+      "fix": "Changed to '../lib/password'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T09:57:23.256Z"
+    },
+    {
+      "id": "bug-040",
+      "timestamp": "2026-07-16T10:02:54.174Z",
+      "error_message": "Null/undefined access in ",
+      "file": "lib/login-throttle.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T10:02:54.174Z"
+    },
+    {
+      "id": "bug-041",
+      "timestamp": "2026-07-16T10:03:09.971Z",
+      "error_message": "Wrong reference: messageFor should be signInErrorMessage",
+      "file": "app/sign-in/sign-in-form.tsx",
+      "root_cause": "Used \"messageFor\" instead of \"signInErrorMessage\"",
+      "fix": "Changed messageFor → signInErrorMessage",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T10:03:09.971Z"
+    },
+    {
+      "id": "bug-042",
+      "timestamp": "2026-07-16T10:03:34.742Z",
+      "error_message": "Type error",
+      "file": "lib/login-throttle.test.ts",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T10:03:34.742Z"
+    },
+    {
+      "id": "bug-035",
+      "timestamp": "2026-07-16T10:15:00.000Z",
+      "error_message": "Security audit finding #2: sign-in had no brute-force protection — unlimited bcrypt.compare attempts per second, no lockout, no rate limit, and no log that an attack was happening.",
+      "file": "auth.ts",
+      "root_cause": "authorize() in auth.ts looked up the user and compared the password with no attempt counter of any kind. A public portal + password auth + no lockout = credential stuffing works and leaves no trace. Two related holes in the same function: an unknown email returned before bcrypt ran, so response time (~900ms vs instant) enumerated the staff list (audit finding #9); and the bcrypt cost 10 was copy-pasted at three call sites (auth.ts, admin/users/actions.ts, prisma/seed.ts) so it could drift.",
+      "fix": "Added login_attempts table (migration 0003) counting failures per email and per IP. lib/login-throttle.ts holds the pure policy (email: 5 failures → lock, doubling 1→2→4→8→15 min cap; IP: 30 failures, deliberately loose because a shop's cashiers share one NAT and locking the store mid-shift stops them scanning). lib/login-attempts.ts holds the Postgres reads/writes plus opportunistic GC. auth.ts throws a CredentialsSignin subclass whose code carries the wait ('too_many_attempts:60'), which the sign-in form renders as a human message. Enumeration closed via lib/password.ts ABSENT_USER_HASH — a bcrypt hash of an unrecorded random value, compared against when the email is unknown so the timing matches. BCRYPT_COST now defined once and shared. Failed sign-ins are console.warn'd.",
+      "tags": [
+        "security",
+        "auth",
+        "brute-force",
+        "rate-limit",
+        "lockout",
+        "user-enumeration",
+        "timing-attack",
+        "bcrypt",
+        "nextauth"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T10:15:00.000Z"
     }
   ]
 }

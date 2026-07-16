@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T09:45:10.919Z
-> Files: 66 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T10:03:34.725Z
+> Files: 71 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
 
@@ -14,7 +14,7 @@
 - `.eslintrc.json` (~12 tok)
 - `.gitignore` — Git ignore rules (~132 tok)
 - `auth.config.ts` — Edge-safe base config shared by the middleware and the full Node config. (~371 tok)
-- `auth.ts` — Declares email (~316 tok)
+- `auth.ts` — Thrown when the email or IP is locked out. NextAuth puts `code` on the (~637 tok)
 - `CLAUDE.md` — OpenWolf (~57 tok)
 - `drizzle.config.ts` (~134 tok)
 - `middleware.ts` — The middleware uses only the edge-safe config (no DB, no bcrypt). Route (~143 tok)
@@ -42,7 +42,7 @@
 
 ## app/admin/users/
 
-- `actions.ts` — API routes: GET (10 endpoints) (~1021 tok)
+- `actions.ts` — API routes: GET (10 endpoints) (~1024 tok)
 - `page.tsx` — dynamic — renders form (~3514 tok)
 
 ## app/api/auth/[...nextauth]/
@@ -86,7 +86,7 @@
 ## app/sign-in/
 
 - `page.tsx` — SignInPage (~168 tok)
-- `sign-in-form.tsx` — SignInForm — renders form (~651 tok)
+- `sign-in-form.tsx` — SignInForm — renders form (~668 tok)
 
 ## app/sign-in/[[...sign-in]]/
 
@@ -121,6 +121,11 @@
 - `datetime.test.ts` — Bahrain time formatting: +3 offset, midnight rollover, no-DST, CSV format. Passes under any TZ. (~633 tok)
 - `datetime.ts` — Renders UTC-stored timestamps in Asia/Bahrain. formatDateTime (UI), formatDateTimeCsv (export), todayInBahrain (filenames). NEVER use toLocaleString/toISOString in pages: they follow the server's zone (UTC on Vercel) and render times 3h early. (~742 tok)
 - `db.ts` — Prisma 7 requires a driver adapter at runtime. We use the Neon serverless (~220 tok)
+- `login-attempts.ts` — Persistence for sign-in throttling — reads and writes `login_attempts`. (~667 tok)
+- `login-throttle.test.ts` — Replay `count` consecutive failures, all at T0 unless a clock is given. (~1765 tok)
+- `login-throttle.ts` — Sign-in throttling policy. (~1453 tok)
+- `password.test.ts` — Declares hash (~520 tok)
+- `password.ts` — Password hashing and verification. (~395 tok)
 - `scan.ts` — Outcome of the WhatsApp send attempt for this scan. (~2576 tok)
 - `webhook.test.ts` — Declares secret (~1598 tok)
 - `webhook.ts` — Pure helpers for the Meta WhatsApp webhook. (~1066 tok)
@@ -129,8 +134,8 @@
 
 ## prisma/
 
-- `schema.prisma` (~1743 tok)
-- `seed.ts` — Seed script: creates the two campaign stores, and optionally seeds an admin (~805 tok)
+- `schema.prisma` (~1901 tok)
+- `seed.ts` — Seed script: creates the two campaign stores, and optionally seeds an admin (~809 tok)
 
 ## prisma/migrations/
 

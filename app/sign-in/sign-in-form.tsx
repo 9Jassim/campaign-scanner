@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import { signInErrorMessage } from '@/lib/login-throttle';
 
 export default function SignInForm() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function SignInForm() {
     setSubmitting(false);
 
     if (res?.error) {
-      setError('Invalid email or password');
+      setError(signInErrorMessage(res.code));
       return;
     }
     router.push('/scanner');

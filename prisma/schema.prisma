@@ -158,6 +158,20 @@ model AuditLog {
   @@map("audit_log")
 }
 
+/// Failed sign-in counter, one row per throttle key ("email:..." / "ip:...").
+/// Rows are transient: cleared on a successful login and garbage-collected
+/// once stale, so this table stays small.
+model LoginAttempt {
+  key           String    @id // "email:someone@example.com" | "ip:1.2.3.4"
+  failures      Int       @default(0)
+  firstFailedAt DateTime  @default(now()) @map("first_failed_at")
+  lockedUntil   DateTime? @map("locked_until")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  @@index([updatedAt], map: "idx_login_attempts_updated_at")
+  @@map("login_attempts")
+}
+
 // Optional: for rate-limit retry queue
 model RetryQueue {
   id          String    @id @default(uuid()) @db.Uuid

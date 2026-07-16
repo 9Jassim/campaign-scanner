@@ -2,9 +2,9 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import bcrypt from 'bcryptjs';
 import { requireAdmin } from '@/lib/auth';
 import { db } from '@/lib/db';
+import { hashPassword } from '@/lib/password';
 
 const ROLES = ['admin', 'manager', 'cashier'] as const;
 type Role = (typeof ROLES)[number];
@@ -45,7 +45,7 @@ export async function createUser(formData: FormData) {
     backWithError(`A user with email ${email} already exists.`);
   }
 
-  const passwordHash = await bcrypt.hash(password, 10);
+  const passwordHash = await hashPassword(password);
 
   await db.userProfile.create({
     data: {
@@ -88,7 +88,7 @@ export async function updateUser(formData: FormData) {
     if (newPassword.length < 8) {
       backWithError('Password must be at least 8 characters.');
     }
-    data.passwordHash = await bcrypt.hash(newPassword, 10);
+    data.passwordHash = await hashPassword(newPassword);
   }
 
   // Replace store assignments atomically.

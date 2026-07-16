@@ -292,3 +292,29 @@
 | 12:39 | Edited app/api/export/route.ts | 4→4 lines | ~22 |
 | 12:45 | Fixed invoice times showing 3h early (bug-034): display-only, storage was already correct UTC. Server components used toLocaleString() → server zone = UTC on Vercel. Added lib/datetime.ts (Asia/Bahrain formatters) + 9 tests; replaced all call sites in contacts/receipts/raffle/export. Verified against real DB rows under TZ=UTC: 11:35 AM → 14:35. | lib/datetime.ts, lib/datetime.test.ts, app/contacts/page.tsx, app/receipts/page.tsx, app/raffle/page.tsx, app/api/export/route.ts | 59 tests pass, typecheck+lint+build clean | ~9000 |
 | 12:45 | Edited app/api/export/route.ts | inline fix | ~23 |
+| 12:46 | Session end: 19 writes across 4 files (datetime.ts, datetime.test.ts, page.tsx, route.ts) | 2 reads | ~2466 tok |
+| 12:51 | Edited prisma/schema.prisma | expanded (+14 lines) | ~174 |
+| 12:53 | Created lib/login-throttle.ts | — | ~1681 |
+| 12:53 | Created lib/login-throttle.test.ts | — | ~1211 |
+| 12:54 | Created lib/login-throttle.ts | — | ~1086 |
+| 12:54 | Created lib/login-attempts.ts | — | ~667 |
+| 12:55 | Edited lib/login-throttle.test.ts | failTimes() → lockRemainingMs() | ~229 |
+| 12:55 | Created auth.ts | — | ~847 |
+| 12:56 | Created lib/password.ts | — | ~395 |
+| 12:56 | Created lib/password.test.ts | — | ~520 |
+| 12:56 | Created auth.ts | — | ~636 |
+| 12:56 | Edited app/admin/users/actions.ts | 3→3 lines | ~35 |
+| 12:56 | Edited app/admin/users/actions.ts | inline fix | ~15 |
+| 12:56 | Edited app/admin/users/actions.ts | inline fix | ~16 |
+| 12:57 | Edited app/sign-in/sign-in-form.tsx | added nullish coalescing | ~464 |
+| 12:57 | Edited prisma/seed.ts | 2→2 lines | ~28 |
+| 12:57 | Edited prisma/seed.ts | inline fix | ~17 |
+| 13:02 | Edited lib/login-throttle.ts | added nullish coalescing | ~489 |
+| 13:03 | Edited app/sign-in/sign-in-form.tsx | removed 26 lines | ~11 |
+| 13:03 | Edited app/sign-in/sign-in-form.tsx | added 1 import(s) | ~29 |
+| 13:03 | Edited app/sign-in/sign-in-form.tsx | inline fix | ~13 |
+| 13:03 | Edited auth.ts | inline fix | ~22 |
+| 13:03 | Edited auth.ts | modified constructor() | ~50 |
+| 13:03 | Edited lib/login-throttle.test.ts | 9→11 lines | ~54 |
+| 13:03 | Edited lib/login-throttle.test.ts | expanded (+37 lines) | ~490 |
+| 13:15 | Fixed security finding #2 (no brute-force protection on sign-in) + #9 (user enumeration via timing). Added login_attempts table (migration 0003), pure throttle policy + Postgres persistence, lockout message, ABSENT_USER_HASH, shared BCRYPT_COST. Verified end-to-end against the real endpoint: 5 wrong passwords → 6th returns too_many_attempts:60. | prisma/schema.prisma, prisma/migrations/0003_login_attempts, lib/login-throttle.ts, lib/login-attempts.ts, lib/password.ts, auth.ts, app/sign-in/sign-in-form.tsx, app/admin/users/actions.ts, prisma/seed.ts | 80 tests pass, typecheck+lint+build clean, migration applied to Neon | ~14000 |

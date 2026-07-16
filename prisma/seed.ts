@@ -15,7 +15,7 @@
 import { config } from 'dotenv';
 import { PrismaClient } from '@prisma/client';
 import { PrismaNeon } from '@prisma/adapter-neon';
-import bcrypt from 'bcryptjs';
+import { hashPassword } from '../lib/password';
 
 config({ path: '.env.local' });
 
@@ -63,7 +63,7 @@ async function main() {
   const adminPassword = process.env.SEED_ADMIN_PASSWORD;
 
   if (adminEmail && adminPassword) {
-    const passwordHash = await bcrypt.hash(adminPassword, 10);
+    const passwordHash = await hashPassword(adminPassword);
     const admin = await db.userProfile.upsert({
       where: { email: adminEmail },
       create: {
