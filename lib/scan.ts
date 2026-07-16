@@ -2,6 +2,7 @@ import { Prisma } from '@prisma/client';
 import type { Contact, Receipt, Store, UserProfile } from '@prisma/client';
 import { db } from './db';
 import { normalizePhone } from './barcode';
+import { SCAN_LOCK_TIMEOUT, storeLockKey } from './store-lock';
 import { sendWhatsApp, hasWhatsAppCredentials } from './whatsapp';
 
 export interface ScanInput {
@@ -38,7 +39,8 @@ export class ScanError extends Error {
       | 'validation'
       | 'duplicate'
       | 'below_minimum'
-      | 'conflict' = 'validation',
+      | 'conflict'
+      | 'busy' = 'validation',
   ) {
     super(message);
     this.name = 'ScanError';
@@ -47,12 +49,15 @@ export class ScanError extends Error {
 
 /**
  * Process a scan atomically: duplicate check, contact upsert, receipt creation,
- * and raffle-entry generation. WhatsApp sending is intentionally not performed
- * here yet — receipts are created with `messageStatus: 'skipped'`.
+ * and raffle-entry generation. The WhatsApp send happens after the commit.
  *
- * The transaction runs at Serializable isolation so concurrent cashier scans in
- * the same store cannot allocate the same raffle entry number; on a transient
- * write conflict we retry a few times.
+ * Concurrency: each scan takes a Postgres advisory lock keyed to its store, so
+ * scans in one store queue behind each other while the two stores stay fully
+ * independent — a Modern Sources till is never blocked by a Morslon scan. The
+ * lock releases automatically when the transaction ends.
+ *
+ * The lock is what makes the read-then-write steps safe (invoice check, contact
+ * upsert, and above all `MAX(entry_number) + 1`).
  */
 export async function processScan(
   store: Store,
@@ -82,8 +87,8 @@ export async function processScan(
   const committed = await runScanTransaction();
 
   // --- WhatsApp (outside the transaction: a send failure must not roll back
-  // the scan, and we never want to hold a Serializable txn open across a
-  // network call). ---
+  // the scan, and holding the store's lock across a network call would stall
+  // every other till in that shop). ---
   const message = await deliverWhatsApp(store, committed, {
     name,
     phone,
@@ -99,6 +104,19 @@ export async function processScan(
       try {
         return await db.$transaction(
         async (tx) => {
+          // Don't wait forever behind a stuck scan — fail cleanly instead.
+          await tx.$executeRawUnsafe(
+            `SET LOCAL statement_timeout = '${SCAN_LOCK_TIMEOUT}'`,
+          );
+
+          // Serialize scans within this store, and only this store. Everything
+          // below reads-then-writes, so it must happen under the lock.
+          //
+          // $executeRaw, not $queryRaw: the function returns `void`, and the
+          // Neon adapter cannot deserialize a void column (UnsupportedNative-
+          // DataType). $executeRaw only counts rows, so it never looks.
+          await tx.$executeRaw`SELECT pg_advisory_xact_lock(${storeLockKey(store.id)}::bigint)`;
+
           // Duplicate check (the unique constraint is the real guard; this
           // gives a clean error before we do any writes).
           const existing = await tx.receipt.findFirst({
@@ -162,7 +180,9 @@ export async function processScan(
             },
           });
 
-          // Next sequential entry number for this store.
+          // Next sequential entry number for this store. Safe only because the
+          // advisory lock above is held AND we read at Read Committed, so this
+          // sees rows the previous scan committed while we waited.
           const agg = await tx.raffleEntry.aggregate({
             where: { storeId: store.id },
             _max: { entryNumber: true },
@@ -183,11 +203,35 @@ export async function processScan(
 
             return { receipt, contact, entries };
           },
-          { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
+          {
+            // Read Committed, NOT Serializable — and the advisory lock depends
+            // on it. Serializable freezes the transaction's snapshot at its
+            // first statement, which here is the lock acquisition itself. A
+            // scan that queued would take the lock and then still read the
+            // world as it was before the winner committed, so MAX(entry_number)
+            // would come back stale and it would allocate a duplicate anyway:
+            // the lock would appear to work while protecting nothing. Read
+            // Committed re-reads per statement, so waiting actually pays off.
+            isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted,
+            // Must exceed statement_timeout so a lock wait surfaces as our own
+            // 'busy' error rather than Prisma tearing the transaction down.
+            timeout: 15_000,
+          },
         );
       } catch (err) {
-        // Unique violation → most likely a duplicate invoice from a concurrent
-        // scan that beat our pre-check.
+        // A ScanError is our own verdict (e.g. duplicate invoice) — never retry
+        // it, or a real duplicate would be attempted three times over.
+        if (err instanceof ScanError) throw err;
+
+        // Waited out the lock: another till in this store is mid-scan and stuck.
+        if (isStatementTimeout(err)) {
+          throw new ScanError(
+            'System busy, please try again',
+            'busy',
+          );
+        }
+
+        // Unique violation → a concurrent scan beat our pre-check.
         if (
           err instanceof Prisma.PrismaClientKnownRequestError &&
           err.code === 'P2002'
@@ -199,6 +243,11 @@ export async function processScan(
               'duplicate',
             );
           }
+          // Anything else unique — realistically (store_id, entry_number) —
+          // means our allocation raced despite the lock. Retrying re-reads the
+          // max and picks the next free number; this used to fall through to a
+          // 500 and lose the scan.
+          if (attempt < maxAttempts) continue;
         }
 
         // Transient serialization/write conflict → retry a couple of times.
@@ -214,6 +263,21 @@ export async function processScan(
       }
     }
   }
+}
+
+/**
+ * Whether the transaction was cancelled by `statement_timeout` — which here
+ * means it gave up waiting for the store's advisory lock.
+ *
+ * Postgres reports SQLSTATE 57014; Prisma surfaces raw-query failures without a
+ * dedicated code, so match on what it does give us.
+ */
+function isStatementTimeout(err: unknown): boolean {
+  const message = err instanceof Error ? err.message : String(err);
+  return (
+    message.includes('57014') ||
+    message.includes('canceling statement due to statement timeout')
+  );
 }
 
 /**

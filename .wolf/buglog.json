@@ -555,54 +555,6 @@
       "last_seen": "2026-07-16T09:40:00.000Z"
     },
     {
-      "id": "bug-038",
-      "timestamp": "2026-07-16T09:57:16.042Z",
-      "error_message": "Null/undefined access in ",
-      "file": "app/sign-in/sign-in-form.tsx",
-      "root_cause": "Property access on potentially null/undefined value",
-      "fix": "Added null safety (optional chaining or null check)",
-      "tags": [
-        "auto-detected",
-        "null-safety",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-07-16T09:57:16.042Z"
-    },
-    {
-      "id": "bug-039",
-      "timestamp": "2026-07-16T09:57:23.256Z",
-      "error_message": "Incorrect value in code",
-      "file": "prisma/seed.ts",
-      "root_cause": "Had 'bcryptjs'",
-      "fix": "Changed to '../lib/password'",
-      "tags": [
-        "auto-detected",
-        "wrong-value",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-07-16T09:57:23.256Z"
-    },
-    {
-      "id": "bug-040",
-      "timestamp": "2026-07-16T10:02:54.174Z",
-      "error_message": "Null/undefined access in ",
-      "file": "lib/login-throttle.ts",
-      "root_cause": "Property access on potentially null/undefined value",
-      "fix": "Added null safety (optional chaining or null check)",
-      "tags": [
-        "auto-detected",
-        "null-safety",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-07-16T10:02:54.174Z"
-    },
-    {
       "id": "bug-041",
       "timestamp": "2026-07-16T10:03:09.971Z",
       "error_message": "Wrong reference: messageFor should be signInErrorMessage",
@@ -732,6 +684,184 @@
       ],
       "occurrences": 1,
       "last_seen": "2026-07-16T10:45:00.000Z"
+    },
+    {
+      "id": "bug-045",
+      "timestamp": "2026-07-16T10:54:39.948Z",
+      "error_message": "Significant refactor of ",
+      "file": "lib/scan.ts",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 9→12 lines (5 removed) | Also: import { createHash } from 'node:crypto';; /** How long a scan will wait for the store's lock",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-16T10:56:57.424Z"
+    },
+    {
+      "id": "bug-046",
+      "timestamp": "2026-07-16T10:55:15.063Z",
+      "error_message": "Type error",
+      "file": "lib/scan.ts",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation | Also: //; // $executeRaw, not $queryRaw: the function returns `void`, ",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-16T10:58:51.156Z"
+    },
+    {
+      "id": "bug-047",
+      "timestamp": "2026-07-16T10:55:30.956Z",
+      "error_message": "Missing guard clause",
+      "file": "lib/scan.ts",
+      "root_cause": "No early return/throw for edge case: err instanceof ScanError",
+      "fix": "Added guard clause: if (err instanceof ScanError)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T10:55:30.956Z"
+    },
+    {
+      "id": "bug-048",
+      "timestamp": "2026-07-16T10:55:45.171Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/api/scan/route.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T10:55:45.171Z"
+    },
+    {
+      "id": "bug-049",
+      "timestamp": "2026-07-16T10:55:51.570Z",
+      "error_message": "Type error",
+      "file": "app/api/scan/route.ts",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T10:55:51.570Z"
+    },
+    {
+      "id": "bug-050",
+      "timestamp": "2026-07-16T10:56:28.132Z",
+      "error_message": "Significant refactor of ",
+      "file": "lib/store-lock.test.ts",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 3→4 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T10:56:28.132Z"
+    },
+    {
+      "id": "bug-051",
+      "timestamp": "2026-07-16T10:57:01.553Z",
+      "error_message": "Incorrect value in code",
+      "file": "lib/store-lock.test.ts",
+      "root_cause": "Had './scan'",
+      "fix": "Changed to './store-lock'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T10:57:01.553Z"
+    },
+    {
+      "id": "bug-038",
+      "timestamp": "2026-07-16T11:15:00.000Z",
+      "error_message": "RACE_CONDITION_HANDLING.md as written would have shipped an advisory lock that protected nothing: it specified pg_advisory_xact_lock() but left the transaction at Serializable.",
+      "file": "lib/scan.ts",
+      "root_cause": "Under SERIALIZABLE (and REPEATABLE READ) Postgres freezes the transaction snapshot at the FIRST statement — which, with this pattern, is the lock acquisition itself. The snapshot is taken before the function blocks. So a scan that queues on the lock acquires it and then still reads the world as it was BEFORE the winner committed: MAX(entry_number) comes back stale and it allocates a duplicate entry number anyway. The lock appears to work while doing nothing. READ COMMITTED takes a fresh snapshot per statement, so reads after the lock is granted see the previous scan's committed rows.",
+      "fix": "Switched the scan transaction to Prisma.TransactionIsolationLevel.ReadCommitted and took the advisory lock as the first statement inside it. Proved empirically: two txns contending for the same key, A inserts+commits while B waits — under Serializable B counted 0 after acquiring the lock (1 was committed); under ReadCommitted B counted 1.",
+      "tags": [
+        "race-condition",
+        "postgres",
+        "advisory-lock",
+        "isolation-level",
+        "snapshot",
+        "serializable",
+        "read-committed",
+        "spec-bug"
+      ],
+      "related_bugs": [
+        "bug-039"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T11:15:00.000Z"
+    },
+    {
+      "id": "bug-039",
+      "timestamp": "2026-07-16T11:15:00.000Z",
+      "error_message": "Raw query failed. Code: `N/A`. Message: `Failed to deserialize column of type 'void'` / DriverAdapterError: UnsupportedNativeDataType { kind: 'UnsupportedNativeDataType', type: 'void' } — every scan failed with P2010.",
+      "file": "lib/scan.ts",
+      "root_cause": "Took the advisory lock with tx.$queryRaw`SELECT pg_advisory_xact_lock(...)`. pg_advisory_xact_lock() returns void, and $queryRaw tries to deserialize the result columns; the @prisma/adapter-neon driver cannot map Postgres 'void'. RACE_CONDITION_HANDLING.md actually had this right with $executeRaw — I 'corrected' it to $queryRaw on the reasoning that SELECT belongs in $queryRaw, and broke every scan.",
+      "fix": "Use tx.$executeRaw for the lock: it only reports a row count and never deserializes columns, so the void return is fine. Caught immediately by the concurrency test (0/5 scans succeeded) — it would have taken down every scan in production.",
+      "tags": [
+        "prisma",
+        "neon-adapter",
+        "raw-query",
+        "void",
+        "advisory-lock",
+        "executeRaw",
+        "queryRaw"
+      ],
+      "related_bugs": [
+        "bug-038"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T11:15:00.000Z"
+    },
+    {
+      "id": "bug-040",
+      "timestamp": "2026-07-16T11:15:00.000Z",
+      "error_message": "A raffle entry-number collision returned HTTP 500 \"Something went wrong while logging the scan\" and lost the scan, instead of retrying.",
+      "file": "lib/scan.ts",
+      "root_cause": "The P2002 handler only mapped the violation to a clean error when err.meta.target included 'invoice'; anything else — realistically the (store_id, entry_number) unique index — fell through to `throw err` and surfaced as a 500. Only P2034 was retried.",
+      "fix": "Retry non-invoice P2002 within maxAttempts (re-reads MAX(entry_number) and takes the next free number). Also stopped retrying ScanError itself — a genuine duplicate invoice was being re-attempted three times — and mapped statement_timeout (SQLSTATE 57014) to a friendly ScanError('System busy, please try again', 'busy') -> HTTP 503 rather than a raw 500.",
+      "tags": [
+        "race-condition",
+        "error-handling",
+        "prisma",
+        "p2002",
+        "retry",
+        "http-status"
+      ],
+      "related_bugs": [
+        "bug-038"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T11:15:00.000Z"
     }
   ]
 }

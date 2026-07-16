@@ -4,6 +4,12 @@ import { processScan, ScanError, type ScanInput } from '@/lib/scan';
 
 export const runtime = 'nodejs';
 
+/** 409 = already scanned; 503 = the store's lock was busy, retrying may work. */
+const SCAN_ERROR_STATUS: Record<string, number> = {
+  duplicate: 409,
+  busy: 503,
+};
+
 interface ScanRequestBody extends Partial<ScanInput> {
   storeId?: string;
 }
@@ -72,7 +78,7 @@ export async function POST(request: Request) {
     });
   } catch (err) {
     if (err instanceof ScanError) {
-      const status = err.code === 'duplicate' ? 409 : 400;
+      const status = SCAN_ERROR_STATUS[err.code] ?? 400;
       return NextResponse.json(
         { error: err.message, code: err.code },
         { status },

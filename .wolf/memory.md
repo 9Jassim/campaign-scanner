@@ -335,3 +335,22 @@
 | 13:27 | Edited lib/webhook.test.ts | 6→7 lines | ~36 |
 | 13:27 | Edited lib/webhook.test.ts | expanded (+33 lines) | ~833 |
 | 13:45 | Fixed security findings #3 (webhook failed open — no secret resolvable meant verification silently off) and #4 (one store could forge the other's delivery statuses). Replaced verifySignatureAgainstAny (boolean) with findSigner (returns the signing store); resolve store from phone_number_id, verify against that store's secret only, refuse cross-store changes, scope receipt lookups by storeId. No fail-open path remains. Verified with a real morslon-signed forgery carrying IN-00087's wamid: receipt stayed 'read'. | lib/webhook.ts, lib/webhook.test.ts, app/api/webhook/route.ts | 83 tests pass, typecheck+lint+build clean, no migration needed | ~12000 |
+| 13:35 | Session end: 5 writes across 3 files (webhook.ts, route.ts, webhook.test.ts) | 2 reads | ~5957 tok |
+| 13:54 | Edited lib/scan.ts | modified storeLockKey() | ~229 |
+| 13:54 | Edited lib/scan.ts | 3→4 lines | ~27 |
+| 13:54 | Edited lib/scan.ts | 9→12 lines | ~171 |
+| 13:54 | Edited lib/scan.ts | 5→5 lines | ~70 |
+| 13:54 | Edited lib/scan.ts | expanded (+9 lines) | ~199 |
+| 13:55 | Edited lib/scan.ts | 5→7 lines | ~109 |
+| 13:55 | Edited lib/scan.ts | expanded (+13 lines) | ~282 |
+| 13:55 | Edited lib/scan.ts | added 3 condition(s) | ~434 |
+| 13:55 | Edited lib/scan.ts | modified isStatementTimeout() | ~195 |
+| 13:55 | Edited app/api/scan/route.ts | added nullish coalescing | ~60 |
+| 13:55 | Edited app/api/scan/route.ts | expanded (+6 lines) | ~58 |
+| 13:56 | Created lib/store-lock.test.ts | — | ~385 |
+| 13:56 | Edited lib/store-lock.test.ts | 3→4 lines | ~72 |
+| 13:56 | Created lib/store-lock.ts | — | ~329 |
+| 13:56 | Edited lib/scan.ts | reduced (-14 lines) | ~91 |
+| 13:57 | Edited lib/store-lock.test.ts | "./scan" → "./store-lock" | ~13 |
+| 13:58 | Edited lib/scan.ts | modified returns() | ~141 |
+| 14:15 | Implemented per-store race-condition handling from RACE_CONDITION_HANDLING.md: pg_advisory_xact_lock keyed by store, ReadCommitted (NOT Serializable — proven that the lock protects nothing under Serializable's frozen snapshot), $executeRaw (not $queryRaw — void return breaks the Neon adapter), 10s statement_timeout -> 'busy' -> HTTP 503. Also fixed a latent 500 on entry-number P2002. Verified against throwaway stores (no Meta creds -> zero messages, real campaign data untouched): 5 concurrent same-store scans -> 20 unique gapless entries, 1 contact, no lost increments; same-invoice race -> 1 success + 1 duplicate; cross-store 1.08x = independent; jammed lock -> busy at 11.1s, 0 orphan rows. | lib/store-lock.ts, lib/store-lock.test.ts, lib/scan.ts, app/api/scan/route.ts | 87 tests pass, typecheck+lint+build clean, no migration needed | ~16000 |

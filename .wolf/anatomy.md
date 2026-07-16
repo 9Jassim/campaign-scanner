@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T10:27:50.734Z
-> Files: 71 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T10:58:51.142Z
+> Files: 73 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
 
@@ -55,7 +55,7 @@
 
 ## app/api/scan/
 
-- `route.ts` — Next.js API route: POST (~692 tok)
+- `route.ts` — 409 = already scanned; 503 = the store's lock was busy, retrying may work. (~740 tok)
 
 ## app/api/webhook/
 
@@ -126,7 +126,9 @@
 - `login-throttle.ts` — Sign-in throttling policy. (~1453 tok)
 - `password.test.ts` — Declares hash (~520 tok)
 - `password.ts` — Password hashing and verification. (~395 tok)
-- `scan.ts` — Outcome of the WhatsApp send attempt for this scan. (~2576 tok)
+- `scan.ts` — Outcome of the WhatsApp send attempt for this scan. (~3486 tok)
+- `store-lock.test.ts` — Declares MORSLON (~418 tok)
+- `store-lock.ts` — Per-store locking for the scan flow. (~329 tok)
 - `webhook.test.ts` — Declares secret (~2007 tok)
 - `webhook.ts` — Pure helpers for the Meta WhatsApp webhook. (~1389 tok)
 - `whatsapp.test.ts` — Declares makeStore (~1209 tok)
