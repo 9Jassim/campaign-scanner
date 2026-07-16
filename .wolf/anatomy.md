@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T10:58:51.142Z
-> Files: 73 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T14:50:03.088Z
+> Files: 79 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
 
@@ -13,7 +13,7 @@
 
 - `.eslintrc.json` (~12 tok)
 - `.gitignore` — Git ignore rules (~132 tok)
-- `auth.config.ts` — Edge-safe base config shared by the middleware and the full Node config. (~371 tok)
+- `auth.config.ts` — Edge-safe base config shared by the middleware and the full Node config. (~396 tok)
 - `auth.ts` — Thrown when the email or IP is locked out. NextAuth puts `code` on the (~637 tok)
 - `CLAUDE.md` — OpenWolf (~57 tok)
 - `drizzle.config.ts` (~134 tok)
@@ -21,7 +21,8 @@
 - `next.config.mjs` — Declares nextConfig (~33 tok)
 - `package.json` — Node.js package manifest (~333 tok)
 - `prisma.config.ts` — Load .env.local (Next.js convention) for local development. In hosted (~274 tok)
-- `README.md` — Project documentation (~1186 tok)
+- `README.md` — Project documentation (~1690 tok)
+- `vercel.json` (~44 tok)
 
 ## .claude/
 
@@ -48,6 +49,10 @@
 ## app/api/auth/[...nextauth]/
 
 - `route.ts` — Next.js API route (~22 tok)
+
+## app/api/cron/backup/
+
+- `route.ts` — Weekly backup: replace each store's Google Sheet with a full snapshot. (~1551 tok)
 
 ## app/api/export/
 
@@ -81,7 +86,7 @@
 ## app/settings/
 
 - `actions.ts` — API routes: GET (1 endpoints) (~648 tok)
-- `page.tsx` — A write-only secret input: never renders the stored value, only whether one (~2113 tok)
+- `page.tsx` — A write-only secret input: never renders the stored value, only whether one (~2234 tok)
 
 ## app/sign-in/
 
@@ -114,6 +119,8 @@
 ## lib/
 
 - `auth.ts` — Per-user permission overrides stored in `user_profiles.permissions` (jsonb). (~1242 tok)
+- `backup.test.ts` — Declares dec (~1312 tok)
+- `backup.ts` — Weekly backup snapshot for a store's Google Sheet. (~1210 tok)
 - `barcode.test.ts` — Declares result (~671 tok)
 - `barcode.ts` — Barcode parsing for receipt barcodes. (~673 tok)
 - `crypto.test.ts` — Declares KEY (~498 tok)
@@ -121,6 +128,8 @@
 - `datetime.test.ts` — Bahrain time formatting: +3 offset, midnight rollover, no-DST, CSV format. Passes under any TZ. (~633 tok)
 - `datetime.ts` — Renders UTC-stored timestamps in Asia/Bahrain. formatDateTime (UI), formatDateTimeCsv (export), todayInBahrain (filenames). NEVER use toLocaleString/toISOString in pages: they follow the server's zone (UTC on Vercel) and render times 3h early. (~742 tok)
 - `db.ts` — Prisma 7 requires a driver adapter at runtime. We use the Neon serverless (~220 tok)
+- `google-sheets.test.ts` — Declares EMAIL (~1128 tok)
+- `google-sheets.ts` — Minimal Google Sheets client. (~1632 tok)
 - `login-attempts.ts` — Persistence for sign-in throttling — reads and writes `login_attempts`. (~667 tok)
 - `login-throttle.test.ts` — Replay `count` consecutive failures, all at T0 unless a clock is given. (~1765 tok)
 - `login-throttle.ts` — Sign-in throttling policy. (~1453 tok)

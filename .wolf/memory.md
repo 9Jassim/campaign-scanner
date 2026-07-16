@@ -354,3 +354,27 @@
 | 13:57 | Edited lib/store-lock.test.ts | "./scan" → "./store-lock" | ~13 |
 | 13:58 | Edited lib/scan.ts | modified returns() | ~141 |
 | 14:15 | Implemented per-store race-condition handling from RACE_CONDITION_HANDLING.md: pg_advisory_xact_lock keyed by store, ReadCommitted (NOT Serializable — proven that the lock protects nothing under Serializable's frozen snapshot), $executeRaw (not $queryRaw — void return breaks the Neon adapter), 10s statement_timeout -> 'busy' -> HTTP 503. Also fixed a latent 500 on entry-number P2002. Verified against throwaway stores (no Meta creds -> zero messages, real campaign data untouched): 5 concurrent same-store scans -> 20 unique gapless entries, 1 contact, no lost increments; same-invoice race -> 1 success + 1 duplicate; cross-store 1.08x = independent; jammed lock -> busy at 11.1s, 0 orphan rows. | lib/store-lock.ts, lib/store-lock.test.ts, lib/scan.ts, app/api/scan/route.ts | 87 tests pass, typecheck+lint+build clean, no migration needed | ~16000 |
+| 14:02 | Session end: 22 writes across 6 files (webhook.ts, route.ts, webhook.test.ts, scan.ts, store-lock.test.ts) | 4 reads | ~12024 tok |
+| 14:16 | Session end: 22 writes across 6 files (webhook.ts, route.ts, webhook.test.ts, scan.ts, store-lock.test.ts) | 4 reads | ~12024 tok |
+
+## Session: 2026-07-16 15:14
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-16 17:24
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 17:45 | Created lib/google-sheets.ts | — | ~1632 |
+| 17:45 | Created lib/backup.ts | — | ~1210 |
+| 17:46 | Created app/api/cron/backup/route.ts | — | ~1551 |
+| 17:46 | Edited auth.config.ts | 4→5 lines | ~75 |
+| 17:46 | Created vercel.json | — | ~44 |
+| 17:47 | Created lib/backup.test.ts | — | ~1312 |
+| 17:47 | Created lib/google-sheets.test.ts | — | ~1128 |
+| 17:48 | Edited app/settings/page.tsx | 3→8 lines | ~145 |
+| 17:48 | Edited app/settings/page.tsx | modified Field() | ~226 |
+| 17:49 | Edited README.md | modified Setup() | ~468 |
+| 17:50 | Edited README.md | modified region() | ~138 |
+| 15:00 | Built the weekly Google Sheets backup (was entirely unbuilt — the Settings Sheet ID field was a dead input). Design confirmed with user: sheet is a BACKUP not a live mirror, so NO per-scan dual-write; weekly cron overwrites Contacts/Log/Raffle with a full snapshot; the sheet's own Apps Script archives it. Full snapshots mean ordering can't lose data; added a never-shrink guard so a broken sync can't wipe good rows. Hand-rolled the service-account JWT (no googleapis SDK) and verified the RS256 signature against a real generated key. | lib/google-sheets.ts, lib/google-sheets.test.ts, lib/backup.ts, lib/backup.test.ts, app/api/cron/backup/route.ts, vercel.json, auth.config.ts, app/settings/page.tsx, .env.example, README.md | 110 tests pass, typecheck+lint+build clean. Sheets API calls UNVERIFIED — needs the user's service account. | ~18000 |

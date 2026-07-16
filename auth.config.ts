@@ -22,7 +22,8 @@ export const authConfig = {
       const isPublic =
         pathname === '/' ||
         pathname.startsWith('/sign-in') ||
-        pathname.startsWith('/api/webhook'); // Meta webhook: own token, not auth
+        pathname.startsWith('/api/webhook') || // Meta webhook: own token, not auth
+        pathname.startsWith('/api/cron'); // Vercel Cron: CRON_SECRET, not a session
 
       if (isPublic) return true;
       return isLoggedIn;

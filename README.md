@@ -125,6 +125,43 @@ The schema (see `prisma/schema.prisma`) defines: `stores`, `user_profiles`,
 `audit_log`, and `retry_queue`. Multi-store isolation is enforced by scoping
 every query to `store_id`.
 
+## Weekly backup to Google Sheets
+
+Each store's sheet is a human-readable **backup**, not a live mirror. Once a
+week a Vercel Cron job replaces that sheet's `Contacts`, `Log` and `Raffle` tabs
+with a complete snapshot from Postgres. There is no per-scan dual-write: the
+portal is the source of truth, and keeping Google off the scanning path means a
+Sheets outage can never hold up a till.
+
+Because every sync writes a **full** snapshot rather than a delta, the sheet's
+own Apps Script archive captures a complete, valid copy whenever it runs — the
+two schedules can't interleave badly. A sync will also **refuse to shrink** a
+tab: if the snapshot has fewer rows than the sheet already holds, it writes
+nothing and reports a failure, so a half-built snapshot can never destroy good
+rows for the archive to preserve.
+
+Setup (once):
+
+1. In Google Cloud, enable the **Google Sheets API**.
+2. Create a **service account** and download its JSON key.
+3. Set `GOOGLE_SERVICE_ACCOUNT_EMAIL` and `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`
+   (keep the literal `\n` escapes) and a generated `CRON_SECRET`, locally and in
+   Vercel.
+4. **Share each store's sheet with the service account address as Editor** —
+   without this the write fails with a permission error.
+5. Paste each sheet's ID (from its URL) into **Settings → Weekly backup** for
+   that store. A store with no Sheet ID is skipped.
+
+The schedule lives in `vercel.json` (`0 21 * * 6` — Saturday 21:00 UTC, i.e.
+Sunday 00:00 in Bahrain). Set it about an hour *before* the sheet's own archive
+script so each archive captures a fresh snapshot rather than a week-old one.
+
+To run it by hand:
+
+```bash
+curl -H "Authorization: Bearer $CRON_SECRET" http://localhost:3000/api/cron/backup
+```
+
 ## Deploying to Vercel
 
 1. Push the repo to GitHub and import it into Vercel.
@@ -132,6 +169,10 @@ every query to `store_id`.
    settings.
 3. Vercel runs `npm run build` — ensure `db:deploy` has been run against your
    production Neon database (either manually or as a release step).
+4. Keep the function region next to the database. Neon is in `eu-west-2`
+   (London) and the functions run in `lhr1`, so a scan's round trips cost ~2ms
+   rather than crossing an ocean. Moving one without the other would slow every
+   scan and lengthen the per-store lock it holds.
 
 ## Roadmap
 

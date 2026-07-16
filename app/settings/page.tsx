@@ -106,8 +106,13 @@ export default async function SettingsPage({
             />
           </Section>
 
-          <Section title="Google Sheets">
-            <Field name="googleSheetId" label="Sheet ID (optional)" defaultValue={store.googleSheetId ?? ''} />
+          <Section title="Weekly backup (Google Sheets)">
+            <Field
+              name="googleSheetId"
+              label="Sheet ID"
+              defaultValue={store.googleSheetId ?? ''}
+              hint="From the sheet's URL. Once a week the portal replaces this sheet's Contacts, Log and Raffle tabs with a full snapshot. Share the sheet with the backup service account as Editor first, or the write will fail. Leave blank to back this store up nowhere."
+            />
           </Section>
 
           <div>
@@ -195,6 +200,7 @@ function Field({
   required,
   rtl,
   inputMode,
+  hint,
 }: {
   name: string;
   label: string;
@@ -202,6 +208,7 @@ function Field({
   required?: boolean;
   rtl?: boolean;
   inputMode?: 'decimal';
+  hint?: string;
 }) {
   return (
     <label className="flex flex-col gap-1 text-sm">
@@ -217,6 +224,7 @@ function Field({
         autoComplete="off"
         className="rounded-md border border-black/10 bg-transparent px-3 py-2 dark:border-white/15"
       />
+      {hint && <span className="text-xs text-zinc-400">{hint}</span>}
     </label>
   );
 }

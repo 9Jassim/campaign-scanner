@@ -555,22 +555,6 @@
       "last_seen": "2026-07-16T09:40:00.000Z"
     },
     {
-      "id": "bug-041",
-      "timestamp": "2026-07-16T10:03:09.971Z",
-      "error_message": "Wrong reference: messageFor should be signInErrorMessage",
-      "file": "app/sign-in/sign-in-form.tsx",
-      "root_cause": "Used \"messageFor\" instead of \"signInErrorMessage\"",
-      "fix": "Changed messageFor → signInErrorMessage",
-      "tags": [
-        "auto-detected",
-        "wrong-reference",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-07-16T10:03:09.971Z"
-    },
-    {
       "id": "bug-042",
       "timestamp": "2026-07-16T10:03:34.742Z",
       "error_message": "Type error",
@@ -862,6 +846,43 @@
       ],
       "occurrences": 1,
       "last_seen": "2026-07-16T11:15:00.000Z"
+    },
+    {
+      "id": "bug-052",
+      "timestamp": "2026-07-16T14:48:11.030Z",
+      "error_message": "Type error",
+      "file": "app/settings/page.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T14:48:11.030Z"
+    },
+    {
+      "id": "bug-041",
+      "timestamp": "2026-07-16T15:00:00.000Z",
+      "error_message": "User: 'is the connector to google spreadsheet work?' — Settings showed a 'Sheet ID (optional)' field that saved fine and did absolutely nothing.",
+      "file": "app/settings/page.tsx",
+      "root_cause": "The Google Sheets integration was never built, but the UI implied it was. stores.google_sheet_id was written by the settings form and never read by anything; no google library was in package.json; GOOGLE_SERVICE_ACCOUNT_* appeared only in .env.example and were read nowhere. A manager could paste a real sheet ID, get 'Settings saved', and believe their data was being backed up when nothing was ever written.",
+      "fix": "Built the weekly backup for real: lib/google-sheets.ts (service-account JWT signed with node:crypto + Sheets REST, no googleapis SDK — it is huge and would tax every cold start), lib/backup.ts (row building + never-shrink guard), app/api/cron/backup/route.ts (CRON_SECRET-authenticated, per-store, one store's failure cannot stop the other), vercel.json weekly schedule, /api/cron made public in auth.config.ts. Relabelled the field 'Weekly backup (Google Sheets)' with a hint explaining what it does and that the sheet must be shared with the service account.",
+      "tags": [
+        "google-sheets",
+        "backup",
+        "dead-ui",
+        "misleading-ux",
+        "cron",
+        "vercel",
+        "jwt",
+        "unbuilt-feature"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T15:00:00.000Z"
     }
   ]
 }
