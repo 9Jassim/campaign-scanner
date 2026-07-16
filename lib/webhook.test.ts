@@ -4,7 +4,8 @@ import {
   resolveStatusUpdate,
   formatStatusError,
   verifySignature,
-  verifySignatureAgainstAny,
+  findSigner,
+  phoneNumberIdsIn,
 } from './webhook';
 
 describe('formatStatusError', () => {
@@ -129,42 +130,75 @@ describe('verifySignature', () => {
 
 // Each store is a separate company with its own Meta app, so one webhook URL
 // receives payloads signed by different app secrets.
-describe('verifySignatureAgainstAny (multi-store Meta apps)', () => {
-  const secretA = 'morslon-app-secret';
-  const secretB = 'modern-sources-app-secret';
+describe('findSigner (multi-store Meta apps)', () => {
+  const morslon = { store: 'morslon', secret: 'morslon-app-secret' };
+  const modern = { store: 'modern-sources', secret: 'modern-app-secret' };
+  const both = [morslon, modern];
   const body = JSON.stringify({ entry: [{ id: '1' }] });
   const sign = (s: string) =>
     'sha256=' + createHmac('sha256', s).update(body, 'utf8').digest('hex');
 
-  it('accepts a payload signed by the first store app', () => {
-    expect(verifySignatureAgainstAny(body, sign(secretA), [secretA, secretB])).toBe(
-      true,
-    );
+  it('names the store whose app signed the payload', () => {
+    // The identity is the point: knowing *that* it was signed is not enough to
+    // decide whose receipts the events may touch.
+    expect(findSigner(body, sign(morslon.secret), both)).toBe(morslon);
+    expect(findSigner(body, sign(modern.secret), both)).toBe(modern);
   });
 
-  it('accepts a payload signed by the second store app', () => {
-    expect(verifySignatureAgainstAny(body, sign(secretB), [secretA, secretB])).toBe(
-      true,
-    );
+  it('does not name a store whose secret did not sign it', () => {
+    expect(findSigner(body, sign(modern.secret), both)).not.toBe(morslon);
   });
 
   it('rejects a payload signed by an unknown app', () => {
+    expect(findSigner(body, sign('some-other-app'), both)).toBeNull();
+  });
+
+  it('rejects an unsigned payload', () => {
+    expect(findSigner(body, null, both)).toBeNull();
+  });
+
+  it('rejects a tampered body even when the secret is right', () => {
+    expect(findSigner(body + 'x', sign(morslon.secret), both)).toBeNull();
+  });
+
+  it('rejects everything when no candidate secret is available', () => {
+    // The old code treated "no secrets" as "verification off" and accepted
+    // anything — so a broken ENCRYPTION_KEY silently opened the endpoint.
+    expect(findSigner(body, sign(morslon.secret), [])).toBeNull();
+    expect(findSigner(body, null, [])).toBeNull();
+  });
+});
+
+describe('phoneNumberIdsIn', () => {
+  const value = (phoneNumberId: string) => ({
+    metadata: { phone_number_id: phoneNumberId, display_phone_number: '973' },
+  });
+
+  it('finds the number a payload is addressed to', () => {
     expect(
-      verifySignatureAgainstAny(body, sign('some-other-app'), [secretA, secretB]),
-    ).toBe(false);
+      phoneNumberIdsIn({ entry: [{ changes: [{ value: value('111') }] }] }),
+    ).toEqual(['111']);
   });
 
-  it('rejects an unsigned payload when secrets are configured', () => {
-    expect(verifySignatureAgainstAny(body, null, [secretA, secretB])).toBe(false);
-  });
-
-  it('accepts everything when no secrets are configured (verification off)', () => {
-    expect(verifySignatureAgainstAny(body, null, [])).toBe(true);
-  });
-
-  it('rejects a tampered body even with valid secrets', () => {
+  it('finds every number when a payload spans changes', () => {
+    // A body naming two stores' numbers can only be signed by one of them —
+    // the route checks each change against the signer.
     expect(
-      verifySignatureAgainstAny(body + 'x', sign(secretA), [secretA, secretB]),
-    ).toBe(false);
+      phoneNumberIdsIn({
+        entry: [
+          { changes: [{ value: value('111') }, { value: value('222') }] },
+          { changes: [{ value: value('111') }] },
+        ],
+      }),
+    ).toEqual(['111', '222']);
+  });
+
+  it('returns nothing for a payload that names no number', () => {
+    expect(phoneNumberIdsIn({})).toEqual([]);
+    expect(phoneNumberIdsIn({ entry: [] })).toEqual([]);
+    expect(phoneNumberIdsIn({ entry: [{ changes: [{}] }] })).toEqual([]);
+    expect(
+      phoneNumberIdsIn({ entry: [{ changes: [{ value: { metadata: {} } }] }] }),
+    ).toEqual([]);
   });
 });

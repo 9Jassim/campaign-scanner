@@ -555,38 +555,6 @@
       "last_seen": "2026-07-16T09:40:00.000Z"
     },
     {
-      "id": "bug-036",
-      "timestamp": "2026-07-16T09:55:18.129Z",
-      "error_message": "Significant refactor of ",
-      "file": "lib/login-throttle.test.ts",
-      "root_cause": "6 lines replaced/restructured",
-      "fix": "Rewrote 8→17 lines (6 removed)",
-      "tags": [
-        "auto-detected",
-        "refactor",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-07-16T09:55:18.129Z"
-    },
-    {
-      "id": "bug-037",
-      "timestamp": "2026-07-16T09:56:41.508Z",
-      "error_message": "Incorrect value in code",
-      "file": "app/admin/users/actions.ts",
-      "root_cause": "Had 'bcryptjs'",
-      "fix": "Changed to '@/lib/auth'",
-      "tags": [
-        "auto-detected",
-        "wrong-value",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-07-16T09:56:41.508Z"
-    },
-    {
       "id": "bug-038",
       "timestamp": "2026-07-16T09:57:16.042Z",
       "error_message": "Null/undefined access in ",
@@ -687,6 +655,83 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-16T10:15:00.000Z"
+    },
+    {
+      "id": "bug-043",
+      "timestamp": "2026-07-16T10:26:34.843Z",
+      "error_message": "Null/undefined access in ",
+      "file": "lib/webhook.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check) | Also: * Identify which candidate signed the body, or null if none ; * Returns the candidate rather than a boolean on purpose. Ea",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-16T10:26:46.864Z"
+    },
+    {
+      "id": "bug-044",
+      "timestamp": "2026-07-16T10:27:50.761Z",
+      "error_message": "Type error",
+      "file": "lib/webhook.test.ts",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T10:27:50.761Z"
+    },
+    {
+      "id": "bug-036",
+      "timestamp": "2026-07-16T10:45:00.000Z",
+      "error_message": "Security audit finding #3: the webhook failed OPEN — if no app secret could be resolved, signature verification silently switched off and /api/webhook accepted anything from anyone.",
+      "file": "app/api/webhook/route.ts",
+      "root_cause": "lib/webhook.ts verifySignatureAgainstAny() began `if (appSecrets.length === 0) return true` — documented and unit-tested as 'verification off'. getAppSecrets() built that list from META_APP_SECRET plus each store's decrypted secret, and a decrypt failure only logged and continued. So a wrong/rotated ENCRYPTION_KEY, or a restored DB, emptied the list and turned verification off — precisely when it mattered most. The insecure state was indistinguishable from the secure one in the logs.",
+      "fix": "Removed the fail-open entirely; there is no 'no secrets = allow' path and no insecure escape hatch. The route now resolves candidate secrets for the phone_number_id the payload names: none resolvable -> 503 (our misconfiguration, so Meta retries and the events can still land once Settings/ENCRYPTION_KEY are fixed); signature mismatch -> 403. Decrypt failure logs loudly and yields no candidate rather than skipping verification. Every rejection names what to fix.",
+      "tags": [
+        "security",
+        "webhook",
+        "fail-open",
+        "signature",
+        "meta",
+        "hmac",
+        "encryption-key"
+      ],
+      "related_bugs": [
+        "bug-037"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T10:45:00.000Z"
+    },
+    {
+      "id": "bug-037",
+      "timestamp": "2026-07-16T10:45:00.000Z",
+      "error_message": "Security audit finding #4: one store could forge the other store's WhatsApp delivery statuses. The two stores are legally separate companies sharing one webhook URL.",
+      "file": "app/api/webhook/route.ts",
+      "root_cause": "verifySignatureAgainstAny() returned a BOOLEAN — it discarded which secret matched, which is exactly the fact needed to scope the events. A payload signed by ANY store's app was accepted, then applyStatusEvent() looked the receipt up by wamid ALONE (db.receipt.findFirst({ where: { wamid } })) with no store scoping. Each store's manager sets their own app secret in Settings, so Morslon could sign a body carrying Modern Sources' wamids and rewrite their receipts.",
+      "fix": "Replaced verifySignatureAgainstAny with findSigner(), which returns the matching candidate rather than a boolean. The route resolves the store from metadata.phone_number_id (safe to read unverified: it only picks WHICH secret to check, and a lie fails verification), verifies against that store's secret only, then applies two layers: (1) any change whose phone_number_id != the signer's is refused as cross-store, blocking a mixed body signed by one app; (2) the receipt lookup is scoped { wamid, storeId: signer.store.id }, so a wamid alone is not proof of ownership. logIncomingMessage now uses the signing store instead of a second phone lookup. CAVEAT: while two stores share the META_APP_SECRET env fallback they can still sign for each other — per-store secrets in Settings are what make the isolation real.",
+      "fix_verified": "Sent a real morslon-signed body smuggling a change for another phone_number_id carrying receipt IN-00087's real wamid marked 'failed' (failed always wins over 'read', so it would have been visible). IN-00087 stayed 'read' with no error. Also confirmed on real data that the same wamid resolves under morslon but is not found under modern-sources.",
+      "tags": [
+        "security",
+        "webhook",
+        "multi-tenant",
+        "store-isolation",
+        "forgery",
+        "wamid",
+        "meta"
+      ],
+      "related_bugs": [
+        "bug-036"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T10:45:00.000Z"
     }
   ]
 }

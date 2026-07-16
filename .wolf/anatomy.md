@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T10:03:34.725Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T10:27:50.734Z
 > Files: 71 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
@@ -59,7 +59,7 @@
 
 ## app/api/webhook/
 
-- `route.ts` — Meta WhatsApp webhook. (~2081 tok)
+- `route.ts` — Meta WhatsApp webhook. (~2916 tok)
 
 ## app/contacts/
 
@@ -127,8 +127,8 @@
 - `password.test.ts` — Declares hash (~520 tok)
 - `password.ts` — Password hashing and verification. (~395 tok)
 - `scan.ts` — Outcome of the WhatsApp send attempt for this scan. (~2576 tok)
-- `webhook.test.ts` — Declares secret (~1598 tok)
-- `webhook.ts` — Pure helpers for the Meta WhatsApp webhook. (~1066 tok)
+- `webhook.test.ts` — Declares secret (~2007 tok)
+- `webhook.ts` — Pure helpers for the Meta WhatsApp webhook. (~1389 tok)
 - `whatsapp.test.ts` — Declares makeStore (~1209 tok)
 - `whatsapp.ts` — WhatsApp sending via the Meta Cloud API. (~1379 tok)
 

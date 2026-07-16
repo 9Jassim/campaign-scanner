@@ -42,6 +42,42 @@ export interface StatusEvent {
   errors?: StatusError[];
 }
 
+export interface IncomingMessage {
+  id?: string;
+  from?: string;
+  type?: string;
+  text?: { body?: string };
+}
+
+export interface WebhookValue {
+  /** `phone_number_id` says which WABA number — and so which store — this is for. */
+  metadata?: { phone_number_id?: string };
+  statuses?: StatusEvent[];
+  messages?: IncomingMessage[];
+}
+
+export interface WebhookPayload {
+  entry?: Array<{ changes?: Array<{ value?: WebhookValue }> }>;
+}
+
+/**
+ * Every `phone_number_id` the payload refers to, deduped.
+ *
+ * Read from an unverified body, which is safe for one purpose only: choosing
+ * which app secret to check the signature against. A payload that lies about
+ * its number simply fails verification against that store's secret.
+ */
+export function phoneNumberIdsIn(payload: WebhookPayload): string[] {
+  const ids = new Set<string>();
+  for (const entry of payload.entry ?? []) {
+    for (const change of entry.changes ?? []) {
+      const id = change.value?.metadata?.phone_number_id;
+      if (id) ids.add(id);
+    }
+  }
+  return [...ids];
+}
+
 /** Render Meta's error array into a single readable string for the receipt. */
 export function formatStatusError(errors?: StatusError[]): string | null {
   const err = errors?.[0];
@@ -105,22 +141,24 @@ export function verifySignature(
 }
 
 /**
- * Verify against any of several app secrets.
+ * Identify which candidate signed the body, or null if none did.
  *
- * Each store is a separate company with its own Meta app, so a single webhook
- * URL receives payloads signed by different app secrets. We try each rather
- * than picking one based on the (still unverified) payload body.
+ * Returns the candidate rather than a boolean on purpose. Each store is a
+ * separate company with its own Meta app, so knowing that *someone* signed the
+ * payload is not enough — the caller must know *who*, or one store's app could
+ * sign a body carrying events for the other store's receipts.
  *
- * Returns true if any secret matches. With no secrets configured, verification
- * is disabled and everything is accepted.
+ * An empty candidate list means no store could be authenticated, so nothing
+ * signed it: never treat that as permission to proceed.
  */
-export function verifySignatureAgainstAny(
+export function findSigner<T extends { secret: string }>(
   rawBody: string,
   signatureHeader: string | null,
-  appSecrets: string[],
-): boolean {
-  if (appSecrets.length === 0) return true; // verification disabled
-  return appSecrets.some((secret) =>
-    verifySignature(rawBody, signatureHeader, secret),
+  candidates: T[],
+): T | null {
+  return (
+    candidates.find((candidate) =>
+      verifySignature(rawBody, signatureHeader, candidate.secret),
+    ) ?? null
   );
 }

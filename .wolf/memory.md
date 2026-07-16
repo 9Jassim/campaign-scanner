@@ -318,3 +318,20 @@
 | 13:03 | Edited lib/login-throttle.test.ts | 9→11 lines | ~54 |
 | 13:03 | Edited lib/login-throttle.test.ts | expanded (+37 lines) | ~490 |
 | 13:15 | Fixed security finding #2 (no brute-force protection on sign-in) + #9 (user enumeration via timing). Added login_attempts table (migration 0003), pure throttle policy + Postgres persistence, lockout message, ABSENT_USER_HASH, shared BCRYPT_COST. Verified end-to-end against the real endpoint: 5 wrong passwords → 6th returns too_many_attempts:60. | prisma/schema.prisma, prisma/migrations/0003_login_attempts, lib/login-throttle.ts, lib/login-attempts.ts, lib/password.ts, auth.ts, app/sign-in/sign-in-form.tsx, app/admin/users/actions.ts, prisma/seed.ts | 80 tests pass, typecheck+lint+build clean, migration applied to Neon | ~14000 |
+| 13:06 | Session end: 43 writes across 14 files (datetime.ts, datetime.test.ts, page.tsx, route.ts, schema.prisma) | 2 reads | ~11657 tok |
+
+## Session: 2026-07-16 13:07
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-16 13:07
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 13:26 | Edited lib/webhook.ts | added optional chaining | ~348 |
+| 13:26 | Edited lib/webhook.ts | added nullish coalescing | ~226 |
+| 13:27 | Created app/api/webhook/route.ts | — | ~2916 |
+| 13:27 | Edited lib/webhook.test.ts | 6→7 lines | ~36 |
+| 13:27 | Edited lib/webhook.test.ts | expanded (+33 lines) | ~833 |
+| 13:45 | Fixed security findings #3 (webhook failed open — no secret resolvable meant verification silently off) and #4 (one store could forge the other's delivery statuses). Replaced verifySignatureAgainstAny (boolean) with findSigner (returns the signing store); resolve store from phone_number_id, verify against that store's secret only, refuse cross-store changes, scope receipt lookups by storeId. No fail-open path remains. Verified with a real morslon-signed forgery carrying IN-00087's wamid: receipt stayed 'read'. | lib/webhook.ts, lib/webhook.test.ts, app/api/webhook/route.ts | 83 tests pass, typecheck+lint+build clean, no migration needed | ~12000 |
