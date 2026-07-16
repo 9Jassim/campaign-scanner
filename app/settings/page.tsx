@@ -106,12 +106,12 @@ export default async function SettingsPage({
             />
           </Section>
 
-          <Section title="Weekly backup (Google Sheets)">
+          <Section title="Google Sheets">
             <Field
               name="googleSheetId"
               label="Sheet ID"
               defaultValue={store.googleSheetId ?? ''}
-              hint="From the sheet's URL. Once a week the portal replaces this sheet's Contacts, Log and Raffle tabs with a full snapshot. Share the sheet with the backup service account as Editor first, or the write will fail. Leave blank to back this store up nowhere."
+              hint="From the sheet's URL. Every night the portal replaces this sheet's Contacts, Log and Raffle tabs with a fresh copy. Share the sheet with the service account as Editor first, or the write will fail. Leave blank and this store is skipped."
             />
           </Section>
 

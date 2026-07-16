@@ -555,22 +555,6 @@
       "last_seen": "2026-07-16T09:40:00.000Z"
     },
     {
-      "id": "bug-042",
-      "timestamp": "2026-07-16T10:03:34.742Z",
-      "error_message": "Type error",
-      "file": "lib/login-throttle.test.ts",
-      "root_cause": "Missing or incorrect type annotation",
-      "fix": "Added type assertion/annotation",
-      "tags": [
-        "auto-detected",
-        "type-fix",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-07-16T10:03:34.742Z"
-    },
-    {
       "id": "bug-035",
       "timestamp": "2026-07-16T10:15:00.000Z",
       "error_message": "Security audit finding #2: sign-in had no brute-force protection — unlimited bcrypt.compare attempts per second, no lockout, no rate limit, and no log that an attack was happening.",
@@ -883,6 +867,59 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-16T15:00:00.000Z"
+    },
+    {
+      "id": "bug-053",
+      "timestamp": "2026-07-16T15:44:14.565Z",
+      "error_message": "CSS fix: href",
+      "file": "components/app-nav.tsx",
+      "root_cause": "href: '/admin/users', label: 'Users', roles: ['admin'] → '/admin/sheets', label: 'Sheets', roles: ['admin']",
+      "fix": "Changed href: '/admin/users', label: 'Users', roles: ['admin'] → '/admin/sheets', label: 'Sheets', roles: ['admin']",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T15:44:14.565Z"
+    },
+    {
+      "id": "bug-054",
+      "timestamp": "2026-07-16T15:44:35.219Z",
+      "error_message": "Significant refactor of ",
+      "file": "README.md",
+      "root_cause": "12 lines replaced/restructured",
+      "fix": "Rewrote 14→21 lines (12 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T15:44:35.219Z"
+    },
+    {
+      "id": "bug-042",
+      "timestamp": "2026-07-16T15:50:00.000Z",
+      "error_message": "Google Sheets sync failed for every store: 'error:1E08010C:DECODER routines::unsupported'. User had set up the service account and redeployed, but nothing worked.",
+      "file": ".env.local / Vercel env",
+      "root_cause": "GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY held the service account JSON's `private_key_id` (a 40-char hex string) instead of its `private_key` (a ~1700-char PEM). Both fields sit next to each other in the downloaded JSON and the names are nearly identical. node:crypto's createSign could not parse it, so the JWT was never built and Google was never contacted. The same wrong value was in both .env.local and Vercel.",
+      "fix": "Diagnosed by checking the value's shape rather than its contents: length 40, no -----BEGIN prefix, matches /^[0-9a-f]{40}$/ = private_key_id. User re-pasted the real private_key (1732 chars, signs fine). NOTE FOR FUTURE: a read-only probe (buildServiceAccountJwt + tabRowCount on each tab) verifies key + sharing + sheet id + tab names WITHOUT writing anything — always do that before running a sync that overwrites.",
+      "tags": [
+        "google-sheets",
+        "service-account",
+        "jwt",
+        "private-key",
+        "config-error",
+        "env-vars"
+      ],
+      "related_bugs": [
+        "bug-041"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T15:50:00.000Z"
     }
   ]
 }

@@ -6,6 +6,11 @@
       "count": 1,
       "tokens": 0,
       "first_read": "2026-07-16T14:50:07.345Z"
+    },
+    "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx": {
+      "count": 1,
+      "tokens": 590,
+      "first_read": "2026-07-16T15:44:09.092Z"
     }
   },
   "files_written": [
@@ -74,6 +79,66 @@
       "action": "edit",
       "tokens": 148,
       "at": "2026-07-16T14:50:03.100Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/prisma/schema.prisma",
+      "action": "edit",
+      "tokens": 145,
+      "at": "2026-07-16T15:42:03.968Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/sheets-sync.ts",
+      "action": "create",
+      "tokens": 1631,
+      "at": "2026-07-16T15:43:03.875Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/cron/sheets-sync/route.ts",
+      "action": "create",
+      "tokens": 508,
+      "at": "2026-07-16T15:43:19.023Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/vercel.json",
+      "action": "create",
+      "tokens": 45,
+      "at": "2026-07-16T15:43:23.679Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/actions.ts",
+      "action": "create",
+      "tokens": 272,
+      "at": "2026-07-16T15:43:34.127Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+      "action": "create",
+      "tokens": 1818,
+      "at": "2026-07-16T15:44:04.286Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
+      "action": "edit",
+      "tokens": 37,
+      "at": "2026-07-16T15:44:14.562Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/page.tsx",
+      "action": "edit",
+      "tokens": 136,
+      "at": "2026-07-16T15:44:22.910Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/README.md",
+      "action": "edit",
+      "tokens": 336,
+      "at": "2026-07-16T15:44:35.215Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/README.md",
+      "action": "edit",
+      "tokens": 126,
+      "at": "2026-07-16T15:44:43.424Z"
     }
   ],
   "edit_counts": {
@@ -81,15 +146,21 @@
     "lib/backup.ts": 1,
     "app/api/cron/backup/route.ts": 1,
     "auth.config.ts": 1,
-    "vercel.json": 1,
+    "vercel.json": 2,
     "lib/backup.test.ts": 1,
     "lib/google-sheets.test.ts": 1,
-    "app/settings/page.tsx": 2,
-    "README.md": 2
+    "app/settings/page.tsx": 3,
+    "README.md": 4,
+    "prisma/schema.prisma": 1,
+    "lib/sheets-sync.ts": 1,
+    "app/api/cron/sheets-sync/route.ts": 1,
+    "app/admin/sheets/actions.ts": 1,
+    "app/admin/sheets/page.tsx": 1,
+    "components/app-nav.tsx": 1
   },
-  "anatomy_hits": 0,
+  "anatomy_hits": 1,
   "anatomy_misses": 1,
   "repeated_reads_warned": 0,
   "cerebrum_warnings": 0,
-  "stop_count": 1
+  "stop_count": 7
 }

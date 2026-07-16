@@ -2,8 +2,8 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "crons": [
     {
-      "path": "/api/cron/backup",
-      "schedule": "0 21 * * 6"
+      "path": "/api/cron/sheets-sync",
+      "schedule": "0 21 * * *"
     }
   ]
 }

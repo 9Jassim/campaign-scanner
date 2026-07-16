@@ -24,6 +24,11 @@ model Store {
   metaTemplateName         String?   @default("campaign_entry_confirmation") @map("meta_template_name")
   metaTemplateLang         String?   @default("ar") @map("meta_template_lang")
   googleSheetId            String?   @map("google_sheet_id")
+  // Outcome of the last Google Sheets sync, so the admin page can show whether
+  // the nightly job is still running and staleness is visible at a glance.
+  lastSyncAt               DateTime? @map("last_sync_at")
+  lastSyncStatus           String?   @map("last_sync_status") // ok | skipped | refused | failed
+  lastSyncDetail           String?   @map("last_sync_detail")
   createdAt                DateTime? @default(now()) @map("created_at")
 
   storeUsers       StoreUser[]

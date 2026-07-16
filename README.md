@@ -125,20 +125,27 @@ The schema (see `prisma/schema.prisma`) defines: `stores`, `user_profiles`,
 `audit_log`, and `retry_queue`. Multi-store isolation is enforced by scoping
 every query to `store_id`.
 
-## Weekly backup to Google Sheets
+## Google Sheets sync
 
-Each store's sheet is a human-readable **backup**, not a live mirror. Once a
-week a Vercel Cron job replaces that sheet's `Contacts`, `Log` and `Raffle` tabs
-with a complete snapshot from Postgres. There is no per-scan dual-write: the
-portal is the source of truth, and keeping Google off the scanning path means a
-Sheets outage can never hold up a till.
+Each store's sheet is a readable **view** of the portal, refreshed nightly by a
+Vercel Cron job that replaces its `Contacts`, `Log` and `Raffle` tabs with a
+fresh copy from Postgres. The sheet's own Apps Script then archives it weekly.
+Nothing is ever read back out — the portal is the source of truth.
 
-Because every sync writes a **full** snapshot rather than a delta, the sheet's
-own Apps Script archive captures a complete, valid copy whenever it runs — the
-two schedules can't interleave badly. A sync will also **refuse to shrink** a
-tab: if the snapshot has fewer rows than the sheet already holds, it writes
-nothing and reports a failure, so a half-built snapshot can never destroy good
-rows for the archive to preserve.
+There is no per-scan dual-write: keeping Google off the scanning path means a
+Sheets outage can never hold up a till, and a whole-tab replace sidesteps the
+"spreadsheets have no upsert" problem entirely.
+
+Because every sync writes a **full** copy rather than a delta, the weekly Apps
+Script archive captures a complete, valid snapshot whenever it runs — the two
+schedules can't interleave badly. A sync will also **refuse to shrink** a tab:
+if it has fewer rows than the sheet already holds, it writes nothing and reports
+a failure, so a half-built sync can't destroy rows for the archive to preserve.
+Admins can override that from **Sheets → Sync now (force)** after deliberately
+clearing data.
+
+Admins get a **Sheets** page showing each store's last sync, its outcome, and
+buttons to run one immediately rather than waiting for the night's job.
 
 Setup (once):
 
@@ -152,14 +159,15 @@ Setup (once):
 5. Paste each sheet's ID (from its URL) into **Settings → Weekly backup** for
    that store. A store with no Sheet ID is skipped.
 
-The schedule lives in `vercel.json` (`0 21 * * 6` — Saturday 21:00 UTC, i.e.
-Sunday 00:00 in Bahrain). Set it about an hour *before* the sheet's own archive
-script so each archive captures a fresh snapshot rather than a week-old one.
+The schedule lives in `vercel.json` (`0 21 * * *` — 21:00 UTC nightly, i.e.
+00:00 in Bahrain). It deliberately lands ahead of the Apps Script archive, which
+runs Sunday 02:00–03:00 (+3), so each weekly archive captures a copy that is
+hours old rather than a week old.
 
-To run it by hand:
+To run it from a terminal (admins can also use the **Sheets** page):
 
 ```bash
-curl -H "Authorization: Bearer $CRON_SECRET" http://localhost:3000/api/cron/backup
+curl -H "Authorization: Bearer $CRON_SECRET" http://localhost:3000/api/cron/sheets-sync
 ```
 
 ## Deploying to Vercel

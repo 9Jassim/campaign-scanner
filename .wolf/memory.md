@@ -378,3 +378,20 @@
 | 17:49 | Edited README.md | modified Setup() | ~468 |
 | 17:50 | Edited README.md | modified region() | ~138 |
 | 15:00 | Built the weekly Google Sheets backup (was entirely unbuilt — the Settings Sheet ID field was a dead input). Design confirmed with user: sheet is a BACKUP not a live mirror, so NO per-scan dual-write; weekly cron overwrites Contacts/Log/Raffle with a full snapshot; the sheet's own Apps Script archives it. Full snapshots mean ordering can't lose data; added a never-shrink guard so a broken sync can't wipe good rows. Hand-rolled the service-account JWT (no googleapis SDK) and verified the RS256 signature against a real generated key. | lib/google-sheets.ts, lib/google-sheets.test.ts, lib/backup.ts, lib/backup.test.ts, app/api/cron/backup/route.ts, vercel.json, auth.config.ts, app/settings/page.tsx, .env.example, README.md | 110 tests pass, typecheck+lint+build clean. Sheets API calls UNVERIFIED — needs the user's service account. | ~18000 |
+| 17:51 | Session end: 11 writes across 9 files (google-sheets.ts, backup.ts, route.ts, auth.config.ts, vercel.json) | 1 reads | ~7973 tok |
+| 18:17 | Session end: 11 writes across 9 files (google-sheets.ts, backup.ts, route.ts, auth.config.ts, vercel.json) | 1 reads | ~7973 tok |
+| 18:20 | Session end: 11 writes across 9 files (google-sheets.ts, backup.ts, route.ts, auth.config.ts, vercel.json) | 1 reads | ~7973 tok |
+| 18:22 | Session end: 11 writes across 9 files (google-sheets.ts, backup.ts, route.ts, auth.config.ts, vercel.json) | 1 reads | ~7973 tok |
+| 18:25 | Session end: 11 writes across 9 files (google-sheets.ts, backup.ts, route.ts, auth.config.ts, vercel.json) | 1 reads | ~7973 tok |
+| 18:31 | Session end: 11 writes across 9 files (google-sheets.ts, backup.ts, route.ts, auth.config.ts, vercel.json) | 1 reads | ~7973 tok |
+| 18:42 | Edited prisma/schema.prisma | 2→7 lines | ~135 |
+| 18:43 | Created lib/sheets-sync.ts | — | ~1631 |
+| 18:43 | Created app/api/cron/sheets-sync/route.ts | — | ~508 |
+| 18:43 | Created vercel.json | — | ~45 |
+| 18:43 | Created app/admin/sheets/actions.ts | — | ~272 |
+| 18:44 | Created app/admin/sheets/page.tsx | — | ~1818 |
+| 18:44 | Edited components/app-nav.tsx | 2→3 lines | ~37 |
+| 18:44 | Edited app/settings/page.tsx | 8→8 lines | ~136 |
+| 18:44 | Edited README.md | expanded (+7 lines) | ~313 |
+| 18:44 | Edited README.md | modified terminal() | ~117 |
+| 15:50 | Google Sheets sync now working end-to-end. Diagnosed the user's setup failure: they pasted private_key_id (40 hex) instead of private_key (~1700 PEM) — same wrong value locally and in Vercel. Then per user request switched weekly->DAILY sync (sheet is now a readable view; their Apps Script still archives weekly Sun 02:00 +3), renamed /api/cron/backup -> /api/cron/sheets-sync, extracted lib/sheets-sync.ts so the cron and the new admin page share it, added last_sync_at/status/detail to stores (migration 0004, applied), built /admin/sheets with Sync now + Sync now (force). Verified: both stores sync, every tab row count matches the DB exactly. | prisma/schema.prisma, prisma/migrations/0004_store_last_sync, lib/sheets-sync.ts, app/api/cron/sheets-sync/route.ts, app/admin/sheets/*, components/app-nav.tsx, vercel.json, app/settings/page.tsx, README.md | 110 tests pass, typecheck+lint+build clean, migration 0004 applied to Neon | ~20000 |

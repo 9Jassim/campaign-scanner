@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T14:50:03.088Z
-> Files: 79 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T15:44:43.414Z
+> Files: 83 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
 
@@ -21,8 +21,8 @@
 - `next.config.mjs` — Declares nextConfig (~33 tok)
 - `package.json` — Node.js package manifest (~333 tok)
 - `prisma.config.ts` — Load .env.local (Next.js convention) for local development. In hosted (~274 tok)
-- `README.md` — Project documentation (~1690 tok)
-- `vercel.json` (~44 tok)
+- `README.md` — Project documentation (~1802 tok)
+- `vercel.json` (~45 tok)
 
 ## .claude/
 
@@ -41,6 +41,11 @@
 - `page.tsx` — Home (~359 tok)
 - `sign-out-button.tsx` — SignOutButton — renders form (~145 tok)
 
+## app/admin/sheets/
+
+- `actions.ts` — Run the Google Sheets sync now, rather than waiting for tonight's cron. (~272 tok)
+- `page.tsx` — dynamic — renders form (~1818 tok)
+
 ## app/admin/users/
 
 - `actions.ts` — API routes: GET (10 endpoints) (~1024 tok)
@@ -53,6 +58,10 @@
 ## app/api/cron/backup/
 
 - `route.ts` — Weekly backup: replace each store's Google Sheet with a full snapshot. (~1551 tok)
+
+## app/api/cron/sheets-sync/
+
+- `route.ts` — Nightly Google Sheets sync (see vercel.json). (~508 tok)
 
 ## app/api/export/
 
@@ -86,7 +95,7 @@
 ## app/settings/
 
 - `actions.ts` — API routes: GET (1 endpoints) (~648 tok)
-- `page.tsx` — A write-only secret input: never renders the stored value, only whether one (~2234 tok)
+- `page.tsx` — A write-only secret input: never renders the stored value, only whether one (~2226 tok)
 
 ## app/sign-in/
 
@@ -103,7 +112,7 @@
 
 ## components/
 
-- `app-nav.tsx` — LINKS (~590 tok)
+- `app-nav.tsx` — LINKS (~608 tok)
 - `auto-submit-select.tsx` — A <select> that submits its enclosing form as soon as the value changes, (~163 tok)
 - `export-button.tsx` — Download link to the CSV export endpoint, carrying the current filters. (~245 tok)
 - `filter-bar.tsx` — A GET-form filter bar: store selector + free-text search, plus any extra (~658 tok)
@@ -136,6 +145,7 @@
 - `password.test.ts` — Declares hash (~520 tok)
 - `password.ts` — Password hashing and verification. (~395 tok)
 - `scan.ts` — Outcome of the WhatsApp send attempt for this scan. (~3486 tok)
+- `sheets-sync.ts` — Pushes each store's data into its Google Sheet. (~1631 tok)
 - `store-lock.test.ts` — Declares MORSLON (~418 tok)
 - `store-lock.ts` — Per-store locking for the scan flow. (~329 tok)
 - `webhook.test.ts` — Declares secret (~2007 tok)
@@ -145,7 +155,7 @@
 
 ## prisma/
 
-- `schema.prisma` (~1901 tok)
+- `schema.prisma` (~2000 tok)
 - `seed.ts` — Seed script: creates the two campaign stores, and optionally seeds an admin (~809 tok)
 
 ## prisma/migrations/
