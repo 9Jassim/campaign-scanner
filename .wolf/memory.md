@@ -182,3 +182,113 @@
 | 13:21 | Created lib/webhook.test.ts | — | ~1164 |
 | 13:22 | Created app/api/webhook/route.ts | — | ~1400 |
 | 13:25 | Session end: 19 writes across 9 files (page.tsx, whatsapp.ts, scan.ts, whatsapp.test.ts, route.ts) | 2 reads | ~15313 tok |
+| 13:29 | Created ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/commitmsg.txt | — | ~378 |
+| 13:30 | Session end: 20 writes across 10 files (page.tsx, whatsapp.ts, scan.ts, whatsapp.test.ts, route.ts) | 2 reads | ~15718 tok |
+| 13:44 | Created prisma.config.ts | — | ~274 |
+| 13:44 | Edited package.json | 3→4 lines | ~38 |
+| 13:47 | Created ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/fixmsg.txt | — | ~299 |
+| 13:48 | Session end: 23 writes across 13 files (page.tsx, whatsapp.ts, scan.ts, whatsapp.test.ts, route.ts) | 3 reads | ~16485 tok |
+| 14:00 | Edited app/api/webhook/route.ts | modified if() | ~167 |
+| 14:00 | Edited app/api/webhook/route.ts | modified for() | ~239 |
+| 14:00 | Edited app/api/webhook/route.ts | modified if() | ~245 |
+| 14:01 | Session end: 26 writes across 13 files (page.tsx, whatsapp.ts, scan.ts, whatsapp.test.ts, route.ts) | 3 reads | ~17136 tok |
+| 14:08 | Session end: 26 writes across 13 files (page.tsx, whatsapp.ts, scan.ts, whatsapp.test.ts, route.ts) | 3 reads | ~17136 tok |
+| 14:14 | Session end: 26 writes across 13 files (page.tsx, whatsapp.ts, scan.ts, whatsapp.test.ts, route.ts) | 3 reads | ~17136 tok |
+| 14:24 | Session end: 26 writes across 13 files (page.tsx, whatsapp.ts, scan.ts, whatsapp.test.ts, route.ts) | 3 reads | ~17136 tok |
+| 14:30 | Session end: 26 writes across 13 files (page.tsx, whatsapp.ts, scan.ts, whatsapp.test.ts, route.ts) | 3 reads | ~17136 tok |
+| 14:37 | Session end: 26 writes across 13 files (page.tsx, whatsapp.ts, scan.ts, whatsapp.test.ts, route.ts) | 3 reads | ~17136 tok |
+| 14:47 | Edited prisma/schema.prisma | 2→5 lines | ~95 |
+| 14:48 | Edited lib/webhook.ts | added 1 condition(s) | ~351 |
+| 14:48 | Edited app/api/webhook/route.ts | added 1 import(s) | ~50 |
+| 14:48 | Edited app/api/webhook/route.ts | modified if() | ~218 |
+| 14:48 | Edited app/api/webhook/route.ts | added error handling | ~316 |
+| 14:48 | Edited app/settings/actions.ts | added 1 condition(s) | ~149 |
+| 14:49 | Edited app/settings/page.tsx | reduced (-14 lines) | ~163 |
+| 14:49 | Edited app/settings/page.tsx | modified SecretField() | ~403 |
+| 14:49 | Edited lib/webhook.test.ts | 5→6 lines | ~35 |
+| 14:49 | Edited lib/webhook.test.ts | expanded (+42 lines) | ~499 |
+| 14:52 | Created ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/multiapp.txt | — | ~310 |
+| 14:52 | Session end: 37 writes across 16 files (page.tsx, whatsapp.ts, scan.ts, whatsapp.test.ts, route.ts) | 4 reads | ~21484 tok |
+
+## Session: 2026-07-15 16:19
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-15 17:38
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 17:39 | Created components/status-badge.tsx | — | ~321 |
+| 17:40 | Created app/contacts/page.tsx | — | ~2365 |
+| 17:40 | Edited app/receipts/page.tsx | added 1 import(s) | ~62 |
+| 17:40 | Edited app/receipts/page.tsx | 11→6 lines | ~66 |
+| 17:40 | Edited app/receipts/page.tsx | removed 10 lines | ~13 |
+| 17:45 | Session end: 5 writes across 2 files (status-badge.tsx, page.tsx) | 0 reads | ~2827 tok |
+| 17:46 | Created components/pagination.tsx | — | ~718 |
+| 17:46 | Edited app/contacts/page.tsx | added 1 import(s) | ~114 |
+| 17:46 | Edited app/contacts/page.tsx | 3→3 lines | ~22 |
+| 17:46 | Edited app/contacts/page.tsx | CSS: skip | ~130 |
+| 17:46 | Edited app/contacts/page.tsx | 25→23 lines | ~181 |
+| 17:46 | Edited app/contacts/page.tsx | 5→4 lines | ~54 |
+| 17:47 | Edited app/contacts/page.tsx | CSS: storeId | ~98 |
+| 17:47 | Edited app/receipts/page.tsx | added 1 import(s) | ~66 |
+| 17:47 | Edited app/receipts/page.tsx | 2→7 lines | ~30 |
+| 17:47 | Edited app/receipts/page.tsx | CSS: skip | ~147 |
+| 17:47 | Edited app/receipts/page.tsx | 4→3 lines | ~31 |
+| 17:47 | Edited app/receipts/page.tsx | CSS: storeId | ~94 |
+| 17:47 | Edited app/raffle/page.tsx | added 1 import(s) | ~67 |
+| 17:48 | Edited app/raffle/page.tsx | 2→2 lines | ~20 |
+| 17:48 | Edited app/raffle/page.tsx | CSS: skip | ~127 |
+| 17:48 | Edited app/raffle/page.tsx | 4→3 lines | ~31 |
+| 17:48 | Edited app/raffle/page.tsx | CSS: storeId | ~92 |
+| 17:49 | Edited app/raffle/page.tsx | inline fix | ~18 |
+| 17:50 | Edited app/raffle/page.tsx | inline fix | ~6 |
+| 17:52 | Session end: 24 writes across 3 files (status-badge.tsx, page.tsx, pagination.tsx) | 3 reads | ~10666 tok |
+| 17:53 | Edited app/contacts/page.tsx | CSS: column | ~426 |
+| 17:54 | Session end: 25 writes across 3 files (status-badge.tsx, page.tsx, pagination.tsx) | 3 reads | ~11155 tok |
+
+## Session: 2026-07-15 18:00
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-15 18:47
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-15 18:47
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-16 12:32
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-16 12:32
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 12:37 | Created lib/datetime.ts | — | ~742 |
+| 12:37 | Created lib/datetime.test.ts | — | ~633 |
+| 12:38 | Edited app/contacts/page.tsx | added 1 import(s) | ~47 |
+| 12:38 | Edited app/contacts/page.tsx | toLocaleString() → formatDateTime() | ~40 |
+| 12:38 | Edited app/contacts/page.tsx | toLocaleString() → formatDateTime() | ~35 |
+| 12:38 | Edited app/receipts/page.tsx | added 1 import(s) | ~47 |
+| 12:38 | Edited app/receipts/page.tsx | toLocaleString() → formatDateTime() | ~40 |
+| 12:38 | Edited app/raffle/page.tsx | added 1 import(s) | ~47 |
+| 12:39 | Edited app/raffle/page.tsx | toLocaleString() → formatDateTime() | ~40 |
+| 12:39 | Edited app/api/export/route.ts | added 1 import(s) | ~42 |
+| 12:39 | Edited app/api/export/route.ts | toISOString() → formatDateTimeCsv() | ~22 |
+| 12:39 | Edited app/api/export/route.ts | — | ~0 |
+| 12:39 | Edited app/api/export/route.ts | inline fix | ~11 |
+| 12:39 | Edited app/api/export/route.ts | inline fix | ~12 |
+| 12:39 | Edited app/api/export/route.ts | fmtDate() → formatDateTimeCsv() | ~41 |
+| 12:39 | Edited app/api/export/route.ts | 3→2 lines | ~37 |
+| 12:39 | Edited app/api/export/route.ts | 5→5 lines | ~30 |
+| 12:39 | Edited app/api/export/route.ts | 4→4 lines | ~22 |
+| 12:45 | Fixed invoice times showing 3h early (bug-034): display-only, storage was already correct UTC. Server components used toLocaleString() → server zone = UTC on Vercel. Added lib/datetime.ts (Asia/Bahrain formatters) + 9 tests; replaced all call sites in contacts/receipts/raffle/export. Verified against real DB rows under TZ=UTC: 11:35 AM → 14:35. | lib/datetime.ts, lib/datetime.test.ts, app/contacts/page.tsx, app/receipts/page.tsx, app/raffle/page.tsx, app/api/export/route.ts | 59 tests pass, typecheck+lint+build clean | ~9000 |
+| 12:45 | Edited app/api/export/route.ts | inline fix | ~23 |

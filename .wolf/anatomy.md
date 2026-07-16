@@ -1,7 +1,13 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-15T10:22:02.638Z
-> Files: 59 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T09:45:10.919Z
+> Files: 66 tracked | Anatomy hits: 0 | Misses: 0
+
+## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
+
+- `commitmsg.txt` (~354 tok)
+- `fixmsg.txt` (~280 tok)
+- `multiapp.txt` (~291 tok)
 
 ## ./
 
@@ -13,8 +19,8 @@
 - `drizzle.config.ts` (~134 tok)
 - `middleware.ts` — The middleware uses only the edge-safe config (no DB, no bcrypt). Route (~143 tok)
 - `next.config.mjs` — Declares nextConfig (~33 tok)
-- `package.json` — Node.js package manifest (~299 tok)
-- `prisma.config.ts` — Load .env.local (Next.js convention) before reading connection strings. (~135 tok)
+- `package.json` — Node.js package manifest (~333 tok)
+- `prisma.config.ts` — Load .env.local (Next.js convention) for local development. In hosted (~274 tok)
 - `README.md` — Project documentation (~1186 tok)
 
 ## .claude/
@@ -45,7 +51,7 @@
 
 ## app/api/export/
 
-- `route.ts` — Next.js API route: GET (~1374 tok)
+- `route.ts` — Next.js API route: GET (~1389 tok)
 
 ## app/api/scan/
 
@@ -53,19 +59,19 @@
 
 ## app/api/webhook/
 
-- `route.ts` — Meta WhatsApp webhook. (~1400 tok)
+- `route.ts` — Meta WhatsApp webhook. (~2081 tok)
 
 ## app/contacts/
 
-- `page.tsx` — dynamic — renders table (~1359 tok)
+- `page.tsx` — Cap invoices shown per contact — a six-month campaign can rack them up. (~2568 tok)
 
 ## app/raffle/
 
-- `page.tsx` — dynamic — renders table (~1358 tok)
+- `page.tsx` — dynamic — renders table (~1500 tok)
 
 ## app/receipts/
 
-- `page.tsx` — dynamic — renders table (~2083 tok)
+- `page.tsx` — dynamic — renders table (~2009 tok)
 
 ## app/scanner/
 
@@ -74,8 +80,8 @@
 
 ## app/settings/
 
-- `actions.ts` — API routes: GET (1 endpoints) (~567 tok)
-- `page.tsx` — dynamic — renders form (~1930 tok)
+- `actions.ts` — API routes: GET (1 endpoints) (~648 tok)
+- `page.tsx` — A write-only secret input: never renders the stored value, only whether one (~2113 tok)
 
 ## app/sign-in/
 
@@ -96,7 +102,9 @@
 - `auto-submit-select.tsx` — A <select> that submits its enclosing form as soon as the value changes, (~163 tok)
 - `export-button.tsx` — Download link to the CSV export endpoint, carrying the current filters. (~245 tok)
 - `filter-bar.tsx` — A GET-form filter bar: store selector + free-text search, plus any extra (~658 tok)
+- `pagination.tsx` — URL-based pager. Keeps the current filters in the links so paging never (~718 tok)
 - `sign-out-button.tsx` — SignOutButton — renders form (~145 tok)
+- `status-badge.tsx` — WhatsApp message status pill. Hover shows the underlying Meta error, which (~321 tok)
 
 ## db/
 
@@ -110,16 +118,18 @@
 - `barcode.ts` — Barcode parsing for receipt barcodes. (~673 tok)
 - `crypto.test.ts` — Declares KEY (~498 tok)
 - `crypto.ts` — AES-256-GCM encryption for secrets stored at rest (e.g. Meta access tokens). (~538 tok)
+- `datetime.test.ts` — Bahrain time formatting: +3 offset, midnight rollover, no-DST, CSV format. Passes under any TZ. (~633 tok)
+- `datetime.ts` — Renders UTC-stored timestamps in Asia/Bahrain. formatDateTime (UI), formatDateTimeCsv (export), todayInBahrain (filenames). NEVER use toLocaleString/toISOString in pages: they follow the server's zone (UTC on Vercel) and render times 3h early. (~742 tok)
 - `db.ts` — Prisma 7 requires a driver adapter at runtime. We use the Neon serverless (~220 tok)
 - `scan.ts` — Outcome of the WhatsApp send attempt for this scan. (~2576 tok)
-- `webhook.test.ts` — Declares secret (~1164 tok)
-- `webhook.ts` — Pure helpers for the Meta WhatsApp webhook. (~864 tok)
+- `webhook.test.ts` — Declares secret (~1598 tok)
+- `webhook.ts` — Pure helpers for the Meta WhatsApp webhook. (~1066 tok)
 - `whatsapp.test.ts` — Declares makeStore (~1209 tok)
 - `whatsapp.ts` — WhatsApp sending via the Meta Cloud API. (~1379 tok)
 
 ## prisma/
 
-- `schema.prisma` (~1685 tok)
+- `schema.prisma` (~1743 tok)
 - `seed.ts` — Seed script: creates the two campaign stores, and optionally seeds an admin (~805 tok)
 
 ## prisma/migrations/

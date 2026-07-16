@@ -4,6 +4,7 @@ import AppNav from '@/components/app-nav';
 import FilterBar from '@/components/filter-bar';
 import ExportButton from '@/components/export-button';
 import Pagination, { parsePageParam } from '@/components/pagination';
+import { formatDateTime } from '@/lib/datetime';
 import type { Prisma } from '@prisma/client';
 
 export const dynamic = 'force-dynamic';
@@ -126,7 +127,7 @@ export default async function RafflePage({
                     <td className="px-3 py-2 font-mono text-xs">{e.phone}</td>
                     <td className="px-3 py-2 font-mono text-xs">{e.invoiceId}</td>
                     <td className="px-3 py-2 text-zinc-500">
-                      {e.createdAt ? e.createdAt.toLocaleString() : '—'}
+                      {formatDateTime(e.createdAt)}
                     </td>
                   </tr>
                 ))

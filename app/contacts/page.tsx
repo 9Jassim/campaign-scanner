@@ -5,6 +5,7 @@ import FilterBar from '@/components/filter-bar';
 import ExportButton from '@/components/export-button';
 import StatusBadge from '@/components/status-badge';
 import Pagination, { parsePageParam } from '@/components/pagination';
+import { formatDateTime } from '@/lib/datetime';
 import type { Prisma } from '@prisma/client';
 
 export const dynamic = 'force-dynamic';
@@ -156,7 +157,7 @@ export default async function ContactsPage({
                       {c.invoiceCount}
                     </span>
                     <span className="truncate text-zinc-500">
-                      {c.lastSeen ? c.lastSeen.toLocaleString() : '—'}
+                      {formatDateTime(c.lastSeen)}
                     </span>
                   </summary>
 
@@ -228,7 +229,7 @@ function InvoiceList({
             >
               <td className="py-1.5 pr-4 font-mono text-xs">{r.invoiceId}</td>
               <td className="py-1.5 pr-4 text-zinc-500">
-                {r.createdAt ? r.createdAt.toLocaleString() : '—'}
+                {formatDateTime(r.createdAt)}
               </td>
               <td className="py-1.5 pr-4 text-right tabular-nums">
                 {Number(r.amount).toFixed(3)}

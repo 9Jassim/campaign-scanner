@@ -4,6 +4,7 @@ import {
   resolveActiveStore,
 } from '@/lib/auth';
 import { db } from '@/lib/db';
+import { formatDateTimeCsv, todayInBahrain } from '@/lib/datetime';
 import type { Prisma } from '@prisma/client';
 
 export const runtime = 'nodejs';
@@ -21,10 +22,6 @@ function csvCell(v: unknown): string {
 
 function csvRow(cells: unknown[]): string {
   return cells.map(csvCell).join(',');
-}
-
-function fmtDate(d: Date | null): string {
-  return d ? d.toISOString() : '';
 }
 
 export async function GET(request: Request) {
@@ -75,7 +72,7 @@ export async function GET(request: Request) {
       'Total BD',
       'Total Entries',
       'Invoice Count',
-      'Last Seen',
+      'Last Seen (Bahrain)',
       'Invoice IDs',
     ];
     rows = contacts.map((c) =>
@@ -85,7 +82,7 @@ export async function GET(request: Request) {
         Number(c.totalBd).toFixed(3),
         c.totalEntries,
         c.invoiceCount,
-        fmtDate(c.lastSeen),
+        formatDateTimeCsv(c.lastSeen),
         c.invoiceIds.join(' | '),
       ]),
     );
@@ -109,7 +106,7 @@ export async function GET(request: Request) {
       take: MAX_ROWS,
     });
     header = [
-      'Timestamp',
+      'Timestamp (Bahrain)',
       'Invoice ID',
       'Name',
       'Phone',
@@ -122,7 +119,7 @@ export async function GET(request: Request) {
     ];
     rows = receipts.map((r) =>
       csvRow([
-        fmtDate(r.createdAt),
+        formatDateTimeCsv(r.createdAt),
         r.invoiceId,
         r.contact.name,
         r.contact.phone,
@@ -152,16 +149,21 @@ export async function GET(request: Request) {
       orderBy: { entryNumber: 'asc' },
       take: MAX_ROWS,
     });
-    header = ['Entry #', 'Name', 'Phone', 'Invoice ID', 'Timestamp'];
+    header = ['Entry #', 'Name', 'Phone', 'Invoice ID', 'Timestamp (Bahrain)'];
     rows = entries.map((e) =>
-      csvRow([e.entryNumber, e.name, e.phone, e.invoiceId, fmtDate(e.createdAt)]),
+      csvRow([
+        e.entryNumber,
+        e.name,
+        e.phone,
+        e.invoiceId,
+        formatDateTimeCsv(e.createdAt),
+      ]),
     );
   }
 
   // Prepend a UTF-8 BOM so Excel renders Arabic names correctly.
   const csv = '﻿' + [csvRow(header), ...rows].join('\r\n');
-  const date = new Date().toISOString().slice(0, 10);
-  const filename = `${type}-${store.slug}-${date}.csv`;
+  const filename = `${type}-${store.slug}-${todayInBahrain()}.csv`;
 
   return new Response(csv, {
     status: 200,

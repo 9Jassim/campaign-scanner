@@ -336,6 +336,239 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-15T10:04:02.082Z"
+    },
+    {
+      "id": "bug-022",
+      "timestamp": "2026-07-15T11:00:44.501Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/api/webhook/route.ts",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 13→28 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-15T11:00:44.501Z"
+    },
+    {
+      "id": "bug-023",
+      "timestamp": "2026-07-15T11:48:35.409Z",
+      "error_message": "Missing await",
+      "file": "app/api/webhook/route.ts",
+      "root_cause": "Async call without await — returned Promise instead of value",
+      "fix": "Added await to async call",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-15T11:48:35.409Z"
+    },
+    {
+      "id": "bug-024",
+      "timestamp": "2026-07-15T11:48:45.956Z",
+      "error_message": "Missing error handling in function",
+      "file": "app/api/webhook/route.ts",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-15T11:48:45.956Z"
+    },
+    {
+      "id": "bug-025",
+      "timestamp": "2026-07-15T11:48:56.551Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/settings/actions.ts",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 6→13 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-15T11:48:56.551Z"
+    },
+    {
+      "id": "bug-026",
+      "timestamp": "2026-07-15T11:49:10.498Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/settings/page.tsx",
+      "root_cause": "26 lines replaced/restructured",
+      "fix": "Rewrote 29→15 lines (26 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-15T11:49:10.498Z"
+    },
+    {
+      "id": "bug-027",
+      "timestamp": "2026-07-15T14:40:44.587Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/receipts/page.tsx",
+      "root_cause": "9 lines replaced/restructured",
+      "fix": "Rewrote 11→6 lines (9 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-15T14:40:44.587Z"
+    },
+    {
+      "id": "bug-028",
+      "timestamp": "2026-07-15T14:46:33.712Z",
+      "error_message": "CSS fix: take",
+      "file": "app/contacts/page.tsx",
+      "root_cause": "take: PAGE_LIMIT, → PER_PAGE,",
+      "fix": "Changed take: PAGE_LIMIT, → PER_PAGE,",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 4,
+      "last_seen": "2026-07-15T14:48:13.096Z"
+    },
+    {
+      "id": "bug-029",
+      "timestamp": "2026-07-15T14:49:05.418Z",
+      "error_message": "Wrong reference: 100 should be 5",
+      "file": "app/raffle/page.tsx",
+      "root_cause": "Used \"100\" instead of \"5\"",
+      "fix": "Changed 100 → 5",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-15T14:49:05.419Z"
+    },
+    {
+      "id": "bug-030",
+      "timestamp": "2026-07-16T09:38:39.251Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/contacts/page.tsx",
+      "root_cause": "Had '@prisma/client'",
+      "fix": "Changed to '@/lib/datetime'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-07-16T09:38:57.732Z"
+    },
+    {
+      "id": "bug-031",
+      "timestamp": "2026-07-16T09:39:05.827Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/api/export/route.ts",
+      "root_cause": "Had '@prisma/client'",
+      "fix": "Changed to '@/lib/datetime'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-16T09:39:31.955Z"
+    },
+    {
+      "id": "bug-032",
+      "timestamp": "2026-07-16T09:39:10.040Z",
+      "error_message": "Wrong return value",
+      "file": "app/api/export/route.ts",
+      "root_cause": "Was returning: d ? d.toISOString() : '';",
+      "fix": "Now returns: formatDateTimeCsv(d);",
+      "tags": [
+        "auto-detected",
+        "return-value",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T09:39:10.040Z"
+    },
+    {
+      "id": "bug-033",
+      "timestamp": "2026-07-16T09:39:17.810Z",
+      "error_message": "Wrong reference: fmtDate should be formatDateTimeCsv",
+      "file": "app/api/export/route.ts",
+      "root_cause": "Used \"fmtDate\" instead of \"formatDateTimeCsv\"",
+      "fix": "Changed fmtDate → formatDateTimeCsv",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-16T09:39:20.800Z"
+    },
+    {
+      "id": "bug-034",
+      "timestamp": "2026-07-16T09:40:00.000Z",
+      "error_message": "User: 'the time captured in the invoices is incorrect it could be because it's not adding +3 for bahrain time zone'",
+      "file": "lib/datetime.ts",
+      "root_cause": "Display-only bug; storage was already correct. Verified: Postgres TimeZone=GMT, receipts.created_at is 'timestamp without time zone', and JS now() vs PG now() drift measured 0.8s — so timestamps are stored in clean UTC. The pages (contacts/receipts/raffle) are SERVER components, so Date.toLocaleString() with no explicit zone formats in the SERVER's timezone, which is UTC on Vercel. Every invoice therefore rendered 3 hours early in production. It looked correct in local dev ONLY because the dev machine's zone is Asia/Bahrain, so the bug could never reproduce locally. The CSV export shared the fault via toISOString() (UTC by definition), and the export filename used toISOString().slice(0,10), which stamps yesterday's date between 00:00-03:00 Bahrain.",
+      "fix": "Added lib/datetime.ts exposing formatDateTime / formatDateTimeCsv / todayInBahrain, all passing timeZone:'Asia/Bahrain' explicitly to module-level Intl.DateTimeFormat instances (hourCycle:'h23' so midnight renders 00:00, not 24:00). Replaced every toLocaleString()/toISOString() in app/contacts/page.tsx, app/receipts/page.tsx, app/raffle/page.tsx and app/api/export/route.ts; deleted the now-redundant fmtDate helper. CSV headers relabelled 'Timestamp (Bahrain)' / 'Last Seen (Bahrain)' since cells are no longer ISO/UTC. No data migration required. Verified by running the real formatter against real DB rows under TZ=UTC: IN-000545 went from '7/15/2026, 11:35:11 AM' to '15/07/2026, 14:35'. 9 unit tests in lib/datetime.test.ts pass identically under TZ=UTC, TZ=Asia/Bahrain and TZ=America/New_York.",
+      "tags": [
+        "timezone",
+        "bahrain",
+        "utc",
+        "server-component",
+        "date-formatting",
+        "vercel",
+        "prod-only",
+        "csv-export"
+      ],
+      "related_bugs": [
+        "bug-031",
+        "bug-032",
+        "bug-033"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T09:40:00.000Z"
+    },
+    {
+      "id": "bug-035",
+      "timestamp": "2026-07-16T09:45:10.934Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/api/export/route.ts",
+      "root_cause": "Had 'Timestamp'",
+      "fix": "Changed to 'Timestamp (Bahrain)'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T09:45:10.934Z"
     }
   ]
 }

@@ -6,6 +6,7 @@ import AutoSubmitSelect from '@/components/auto-submit-select';
 import ExportButton from '@/components/export-button';
 import StatusBadge from '@/components/status-badge';
 import Pagination, { parsePageParam } from '@/components/pagination';
+import { formatDateTime } from '@/lib/datetime';
 import type { Prisma } from '@prisma/client';
 
 export const dynamic = 'force-dynamic';
@@ -160,7 +161,7 @@ export default async function ReceiptsPage({
                     className="border-t border-black/5 dark:border-white/5"
                   >
                     <td className="px-3 py-2 text-zinc-500">
-                      {r.createdAt ? r.createdAt.toLocaleString() : '—'}
+                      {formatDateTime(r.createdAt)}
                     </td>
                     <td className="px-3 py-2 font-mono text-xs">{r.invoiceId}</td>
                     <td className="px-3 py-2">
