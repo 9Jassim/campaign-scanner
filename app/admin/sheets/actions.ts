@@ -3,27 +3,60 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { requireAdmin } from '@/lib/auth';
-import { syncAllStores } from '@/lib/sheets-sync';
+import { db } from '@/lib/db';
+import { syncAllStores, syncStore } from '@/lib/sheets-sync';
 
 /**
- * Run the Google Sheets sync now, rather than waiting for tonight's cron.
- * Admin only — it writes to both companies' sheets.
+ * Manual Google Sheets syncs, for admins who don't want to wait for tonight's
+ * cron. Admin only: these write to both companies' sheets.
  */
-export async function syncNow(formData: FormData) {
-  await requireAdmin();
 
-  // Only ever from the explicit "force" button, which spells out what it does.
-  const force = formData.get('force') === '1';
-
-  let summary: string;
-  try {
-    const results = await syncAllStores({ force });
-    summary = results.map((r) => `${r.store}: ${r.status}`).join(' · ');
-  } catch (err) {
-    summary = err instanceof Error ? err.message : String(err);
-    redirect(`/admin/sheets?error=${encodeURIComponent(summary)}`);
-  }
-
+function done(summary: string): never {
   revalidatePath('/admin/sheets');
   redirect(`/admin/sheets?ran=${encodeURIComponent(summary)}`);
+}
+
+function failed(message: string): never {
+  redirect(`/admin/sheets?error=${encodeURIComponent(message)}`);
+}
+
+/** Sync one store. Forcing is per-store only — see the note on syncAll. */
+export async function syncOneStore(formData: FormData) {
+  await requireAdmin();
+
+  const storeId = String(formData.get('storeId') ?? '');
+  const force = formData.get('force') === '1';
+  if (!storeId) failed('Missing store.');
+
+  const store = await db.store.findUnique({
+    where: { id: storeId },
+    select: { id: true, slug: true, nameEn: true, googleSheetId: true },
+  });
+  if (!store) failed('Unknown store.');
+
+  // Never throws — a failure comes back as the result, and is also recorded on
+  // the store so the page shows it.
+  const result = await syncStore(store.id, store.slug, store.googleSheetId, {
+    force,
+  });
+  done(`${store.nameEn} — ${result.status}: ${result.detail}`);
+}
+
+/**
+ * Sync every store.
+ *
+ * Deliberately has no force option: forcing lets a sheet shrink, so it should
+ * be a decision made about one store at a time rather than applied to both
+ * companies with a single click.
+ */
+export async function syncAll() {
+  await requireAdmin();
+
+  let results;
+  try {
+    results = await syncAllStores();
+  } catch (err) {
+    failed(err instanceof Error ? err.message : String(err));
+  }
+  done(results.map((r) => `${r.store}: ${r.status}`).join(' · '));
 }

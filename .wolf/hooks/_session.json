@@ -11,6 +11,11 @@
       "count": 1,
       "tokens": 590,
       "first_read": "2026-07-16T15:44:09.092Z"
+    },
+    "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/actions.ts": {
+      "count": 1,
+      "tokens": 272,
+      "first_read": "2026-07-16T15:52:34.132Z"
     }
   },
   "files_written": [
@@ -139,6 +144,36 @@
       "action": "edit",
       "tokens": 126,
       "at": "2026-07-16T15:44:43.424Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/actions.ts",
+      "action": "create",
+      "tokens": 546,
+      "at": "2026-07-16T15:52:45.258Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+      "action": "edit",
+      "tokens": 27,
+      "at": "2026-07-16T15:52:53.652Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+      "action": "edit",
+      "tokens": 481,
+      "at": "2026-07-16T15:53:05.300Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+      "action": "edit",
+      "tokens": 346,
+      "at": "2026-07-16T15:53:17.206Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+      "action": "edit",
+      "tokens": 63,
+      "at": "2026-07-16T15:53:23.689Z"
     }
   ],
   "edit_counts": {
@@ -154,13 +189,13 @@
     "prisma/schema.prisma": 1,
     "lib/sheets-sync.ts": 1,
     "app/api/cron/sheets-sync/route.ts": 1,
-    "app/admin/sheets/actions.ts": 1,
-    "app/admin/sheets/page.tsx": 1,
+    "app/admin/sheets/actions.ts": 2,
+    "app/admin/sheets/page.tsx": 5,
     "components/app-nav.tsx": 1
   },
-  "anatomy_hits": 1,
+  "anatomy_hits": 2,
   "anatomy_misses": 1,
   "repeated_reads_warned": 0,
   "cerebrum_warnings": 0,
-  "stop_count": 7
+  "stop_count": 8
 }

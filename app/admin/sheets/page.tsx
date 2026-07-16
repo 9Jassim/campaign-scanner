@@ -3,7 +3,7 @@ import { db } from '@/lib/db';
 import { hasSheetsCredentials } from '@/lib/google-sheets';
 import { formatDateTime } from '@/lib/datetime';
 import AppNav from '@/components/app-nav';
-import { syncNow } from './actions';
+import { syncAll, syncOneStore } from './actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,6 +32,9 @@ export default async function SheetsPage({
     },
   });
   const credentialsReady = hasSheetsCredentials();
+  /** Nothing to sync without both a service account and somewhere to write. */
+  const canSync = (sheetId: string | null) =>
+    credentialsReady && Boolean(sheetId);
 
   return (
     <>
@@ -119,39 +122,57 @@ export default async function SheetsPage({
                   </>
                 )}
               </dl>
+
+              <div className="mt-4 flex flex-wrap items-center gap-2">
+                <form action={syncOneStore}>
+                  <input type="hidden" name="storeId" value={store.id} />
+                  <button
+                    type="submit"
+                    disabled={!canSync(store.googleSheetId)}
+                    className="flex h-9 items-center justify-center rounded-full bg-foreground px-4 text-sm font-medium text-background transition-colors hover:opacity-90 disabled:opacity-40"
+                  >
+                    Sync this store
+                  </button>
+                </form>
+
+                <form action={syncOneStore}>
+                  <input type="hidden" name="storeId" value={store.id} />
+                  <input type="hidden" name="force" value="1" />
+                  <button
+                    type="submit"
+                    disabled={!canSync(store.googleSheetId)}
+                    className="flex h-9 items-center justify-center rounded-full border border-amber-400 px-4 text-sm font-medium text-amber-700 transition-colors hover:bg-amber-50 disabled:opacity-40 dark:border-amber-700 dark:text-amber-400 dark:hover:bg-amber-950/40"
+                  >
+                    Force
+                  </button>
+                </form>
+              </div>
             </div>
           ))}
         </div>
 
         <div className="flex flex-wrap items-center gap-3 border-t border-black/10 pt-4 dark:border-white/10">
-          <form action={syncNow}>
+          <form action={syncAll}>
             <button
               type="submit"
               disabled={!credentialsReady}
-              className="flex h-11 items-center justify-center rounded-full bg-foreground px-6 text-sm font-medium text-background transition-colors hover:opacity-90 disabled:opacity-40"
+              className="flex h-11 items-center justify-center rounded-full border border-black/10 px-6 text-sm font-medium transition-colors hover:bg-black/[.04] disabled:opacity-40 dark:border-white/15 dark:hover:bg-white/[.06]"
             >
-              Sync now
+              Sync all stores
             </button>
           </form>
-
-          <form action={syncNow}>
-            <input type="hidden" name="force" value="1" />
-            <button
-              type="submit"
-              disabled={!credentialsReady}
-              className="flex h-11 items-center justify-center rounded-full border border-amber-400 px-6 text-sm font-medium text-amber-700 transition-colors hover:bg-amber-50 disabled:opacity-40 dark:border-amber-700 dark:text-amber-400 dark:hover:bg-amber-950/40"
-            >
-              Sync now (force)
-            </button>
-          </form>
+          <span className="text-xs text-zinc-500">
+            The same thing tonight&apos;s job does.
+          </span>
         </div>
 
         <p className="text-xs text-zinc-500">
           A sync refuses to write when it would delete rows — that usually means
           something is wrong rather than that rows really went away.{' '}
           <strong className="font-medium">Force</strong> overrides that and lets
-          the sheet shrink to match the portal. Use it after deliberately
-          clearing data, and not otherwise.
+          a sheet shrink to match the portal. Use it after deliberately clearing
+          data, and not otherwise. It is offered per store on purpose: letting a
+          sheet lose rows is worth deciding one store at a time.
         </p>
       </main>
     </>

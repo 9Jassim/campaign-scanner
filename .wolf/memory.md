@@ -395,3 +395,10 @@
 | 18:44 | Edited README.md | expanded (+7 lines) | ~313 |
 | 18:44 | Edited README.md | modified terminal() | ~117 |
 | 15:50 | Google Sheets sync now working end-to-end. Diagnosed the user's setup failure: they pasted private_key_id (40 hex) instead of private_key (~1700 PEM) — same wrong value locally and in Vercel. Then per user request switched weekly->DAILY sync (sheet is now a readable view; their Apps Script still archives weekly Sun 02:00 +3), renamed /api/cron/backup -> /api/cron/sheets-sync, extracted lib/sheets-sync.ts so the cron and the new admin page share it, added last_sync_at/status/detail to stores (migration 0004, applied), built /admin/sheets with Sync now + Sync now (force). Verified: both stores sync, every tab row count matches the DB exactly. | prisma/schema.prisma, prisma/migrations/0004_store_last_sync, lib/sheets-sync.ts, app/api/cron/sheets-sync/route.ts, app/admin/sheets/*, components/app-nav.tsx, vercel.json, app/settings/page.tsx, README.md | 110 tests pass, typecheck+lint+build clean, migration 0004 applied to Neon | ~20000 |
+| 18:49 | Session end: 21 writes across 13 files (google-sheets.ts, backup.ts, route.ts, auth.config.ts, vercel.json) | 2 reads | ~13617 tok |
+| 18:52 | Created app/admin/sheets/actions.ts | — | ~546 |
+| 18:52 | Edited app/admin/sheets/page.tsx | 2→2 lines | ~27 |
+| 18:53 | Edited app/admin/sheets/page.tsx | expanded (+25 lines) | ~481 |
+| 18:53 | Edited app/admin/sheets/page.tsx | CSS: purpose | ~346 |
+| 18:53 | Edited app/admin/sheets/page.tsx | CSS: sheetId | ~63 |
+| 15:56 | Added per-store sync buttons to /admin/sheets (user: "maybe we don't want to sync both"). syncOneStore action + "Sync this store"/"Force" per card; global reduced to "Sync all stores" with force REMOVED — forcing lets a sheet shrink, so it's a per-store decision, not one click across two companies. Buttons disabled when a store has no Sheet ID. Verified syncing morslon alone left modern-sources' lastSyncAt untouched. | app/admin/sheets/actions.ts, app/admin/sheets/page.tsx | 110 tests pass, typecheck+lint+build clean, no migration | ~6000 |

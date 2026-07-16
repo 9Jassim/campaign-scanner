@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T15:44:43.414Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T15:53:23.679Z
 > Files: 83 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
@@ -43,8 +43,8 @@
 
 ## app/admin/sheets/
 
-- `actions.ts` — Run the Google Sheets sync now, rather than waiting for tonight's cron. (~272 tok)
-- `page.tsx` — dynamic — renders form (~1818 tok)
+- `actions.ts` — Manual Google Sheets syncs, for admins who don't want to wait for tonight's (~546 tok)
+- `page.tsx` — Nothing to sync without both a service account and somewhere to write. (~2170 tok)
 
 ## app/admin/users/
 
