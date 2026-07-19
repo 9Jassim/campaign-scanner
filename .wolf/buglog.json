@@ -622,22 +622,6 @@
       "last_seen": "2026-07-16T10:45:00.000Z"
     },
     {
-      "id": "bug-048",
-      "timestamp": "2026-07-16T10:55:45.171Z",
-      "error_message": "Null/undefined access in ",
-      "file": "app/api/scan/route.ts",
-      "root_cause": "Property access on potentially null/undefined value",
-      "fix": "Added null safety (optional chaining or null check)",
-      "tags": [
-        "auto-detected",
-        "null-safety",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-07-16T10:55:45.171Z"
-    },
-    {
       "id": "bug-049",
       "timestamp": "2026-07-16T10:55:51.570Z",
       "error_message": "Type error",
@@ -1200,6 +1184,60 @@
       ],
       "occurrences": 1,
       "last_seen": "2026-07-19T16:15:00.000Z"
+    },
+    {
+      "id": "bug-071",
+      "timestamp": "2026-07-19T14:10:25.739Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/globals.css",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 25→45 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "css"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-19T14:10:25.739Z"
+    },
+    {
+      "id": "bug-072",
+      "timestamp": "2026-07-19T14:11:41.222Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/sign-in/page.tsx",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 20→27 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-19T14:11:41.222Z"
+    },
+    {
+      "id": "bug-048",
+      "timestamp": "2026-07-19T14:30:00.000Z",
+      "error_message": "User: 'add dark/light theme mode' — the app followed the OS via prefers-color-scheme with no way to override it.",
+      "file": "app/globals.css",
+      "root_cause": "Dark mode existed but was entirely OS-driven: globals.css used @media (prefers-color-scheme: dark) and every component uses Tailwind `dark:` utilities, which in Tailwind v4 also follow prefers-color-scheme by default. A toggle that only swapped the CSS variables would have left every `dark:border-white/10` in the app still obeying the OS — the two would visibly disagree.",
+      "fix": "Drive the theme from a `data-theme` attribute on <html> and redirect Tailwind's variant at it with `@custom-variant dark (&:where([data-theme=\"dark\"], [data-theme=\"dark\"] *))`. localStorage holds the PREFERENCE (light|dark|system); data-theme holds the RESOLVED value and is always concrete, so the CSS never reasons about 'system'. A blocking inline <script> in <head> (components/theme-script.tsx) applies it before first paint — anything waiting on React would paint the wrong theme first. <html suppressHydrationWarning> because the script legitimately changes the attribute before hydration; the toggle starts as 'system' on both server and client and reads localStorage in an effect, so no marker flashes as active. matchMedia listener keeps 'system' live without a reload. Toggle added to the nav AND the sign-in page, which has no nav.",
+      "fix_verified": "In-browser with computed styles: OS prefers dark, clicked Light -> data-theme=light, body #fff, and a `dark:border-white/15` input border flipped to black/0.1, proving the Tailwind variant follows the attribute not the OS. Survived reload (script in <head>). System restored OS-following. No hydration warnings in console.",
+      "tags": [
+        "ui",
+        "theme",
+        "dark-mode",
+        "tailwind-v4",
+        "custom-variant",
+        "fouc",
+        "hydration",
+        "localstorage"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-19T14:30:00.000Z"
     }
   ]
 }

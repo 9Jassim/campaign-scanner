@@ -2,14 +2,14 @@
   "version": 1,
   "created_at": "2026-07-14T12:19:01.896Z",
   "lifetime": {
-    "total_tokens_estimated": 500594,
-    "total_reads": 126,
-    "total_writes": 948,
-    "total_sessions": 25,
-    "anatomy_hits": 78,
-    "anatomy_misses": 48,
+    "total_tokens_estimated": 505599,
+    "total_reads": 128,
+    "total_writes": 953,
+    "total_sessions": 27,
+    "anatomy_hits": 79,
+    "anatomy_misses": 49,
     "repeated_reads_blocked": 90,
-    "estimated_savings_vs_bare_cli": 208816
+    "estimated_savings_vs_bare_cli": 209016
   },
   "sessions": [
     {
@@ -6230,6 +6230,60 @@
         "writes_count": 36,
         "repeated_reads_blocked": 7,
         "anatomy_lookups": 3
+      }
+    },
+    {
+      "id": "session-2026-07-19-1602",
+      "started": "2026-07-19T13:02:17.373Z",
+      "ended": "2026-07-19T13:14:52.767Z",
+      "reads": [
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/export/route.ts",
+          "tokens_estimated": 1388,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/tasks/bhfd85j3s.output",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/google-sheets.ts",
+          "tokens_estimated": 555,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/export/route.ts",
+          "tokens_estimated": 2346,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/pagination.tsx",
+          "tokens_estimated": 419,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/pagination.tsx",
+          "tokens_estimated": 216,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/export/route.ts",
+          "tokens_estimated": 81,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 1388,
+        "output_tokens_estimated": 3617,
+        "reads_count": 2,
+        "writes_count": 5,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
       }
     }
   ],

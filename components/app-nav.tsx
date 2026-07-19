@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { UserProfile } from '@prisma/client';
 import SignOutButton from './sign-out-button';
+import ThemeToggle from './theme-toggle';
 
 interface NavLink {
   href: string;
@@ -53,6 +54,7 @@ export default function AppNav({
           <span className="hidden text-xs text-zinc-500 sm:inline">
             {profile.fullName ?? profile.username} · {profile.role}
           </span>
+          <ThemeToggle />
           <SignOutButton />
         </div>
       </div>

@@ -1,6 +1,17 @@
 @import "tailwindcss";
 
-:root {
+/* The theme is driven by `data-theme` on <html>, which the inline script in
+   layout.tsx sets before first paint. It always holds a concrete value —
+   "light" or "dark" — even when the user's preference is "system"; the script
+   resolves that and keeps it in step with the OS.
+
+   Tailwind's `dark:` variant follows prefers-color-scheme out of the box, which
+   would ignore the toggle. Point it at the attribute instead, or every
+   `dark:border-white/10` in the app would disagree with the chosen theme. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root,
+:root[data-theme="light"] {
   --background: #ffffff;
   --foreground: #171717;
   --surface: #ffffff;
@@ -15,8 +26,17 @@
   --font-sans: var(--font-sans);
 }
 
+:root[data-theme="dark"] {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --surface: #1a1a1a;
+  color-scheme: dark;
+}
+
+/* Fallback for the moment before the script runs, and for anyone with
+   JavaScript disabled: follow the OS as the app did before the toggle. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --background: #0a0a0a;
     --foreground: #ededed;
     --surface: #1a1a1a;

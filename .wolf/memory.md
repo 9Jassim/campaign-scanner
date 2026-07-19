@@ -484,3 +484,23 @@
 | 16:10 | Edited components/pagination.tsx | modified PageLink() | ~216 |
 | 16:12 | Edited app/api/export/route.ts | 2→6 lines | ~81 |
 | 16:15 | User: expecting far more raffle entries than assumed. Modelled the breakpoints and fixed three: (1) CSV export silently truncated at 10,000 rows — now streams with id-cursor paging, no cap (verified 25,000 rows exported complete in 4.7s); (2) Sheets sync wrote each tab in ONE request, dying past ~50k rows (50k=4.3MB, 300k=25.9MB) — now batched at 10k/request, unit-tested to 300k = exactly 30 requests, every row once; (3) pagination had Next/Prev only across thousands of pages — added first/last + page-number box. KEY CONTEXT: the prize draw is run off the Google Sheet, so sheet completeness is a correctness requirement. | lib/google-sheets.ts, lib/google-sheets.test.ts, app/api/export/route.ts, components/pagination.tsx | 115 tests pass, typecheck+lint+build clean, no migration | ~24000 |
+| 16:14 | Session end: 5 writes across 3 files (google-sheets.ts, route.ts, pagination.tsx) | 2 reads | ~5005 tok |
+
+## Session: 2026-07-19 17:08
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-19 17:09
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 17:10 | Edited app/globals.css | modified media() | ~410 |
+| 17:10 | Created components/theme-script.tsx | — | ~354 |
+| 17:11 | Created components/theme-toggle.tsx | — | ~1297 |
+| 17:11 | Edited app/layout.tsx | added 1 import(s) | ~45 |
+| 17:11 | Edited app/layout.tsx | CSS: suppressHydrationWarning | ~129 |
+| 17:11 | Edited components/app-nav.tsx | added 1 import(s) | ~26 |
+| 17:11 | Edited components/app-nav.tsx | 6→7 lines | ~78 |
+| 17:11 | Edited app/sign-in/page.tsx | modified SignInPage() | ~276 |
+| 14:30 | Added a Light/Dark/System theme toggle. The app already followed the OS, but every component uses Tailwind `dark:` utilities which in v4 also follow prefers-color-scheme — so the fix was redirecting the variant with @custom-variant at a data-theme attribute, not just swapping CSS vars. Pre-paint inline script avoids FOUC; localStorage holds the preference, data-theme the resolved value. Verified in-browser: OS prefers dark, chose Light, body went white AND a dark:border-white/15 input flipped to black/0.1; survived reload; System restored OS-following; no hydration warnings. | app/globals.css, app/layout.tsx, app/sign-in/page.tsx, components/theme-script.tsx, components/theme-toggle.tsx, components/app-nav.tsx | 115 tests pass, typecheck+lint+build clean, no migration | ~11000 |

@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-19T13:12:09.901Z
-> Files: 83 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-19T14:11:41.207Z
+> Files: 85 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
 
@@ -36,8 +36,8 @@
 
 ## app/
 
-- `globals.css` — Styles: 4 rules, 9 vars (~378 tok)
-- `layout.tsx` — inter (~166 tok)
+- `globals.css` — Styles: 5 rules, 12 vars (~636 tok)
+- `layout.tsx` — inter (~262 tok)
 - `page.tsx` — Home (~359 tok)
 - `sign-out-button.tsx` — SignOutButton — renders form (~145 tok)
 
@@ -99,7 +99,7 @@
 
 ## app/sign-in/
 
-- `page.tsx` — SignInPage (~168 tok)
+- `page.tsx` — SignInPage (~276 tok)
 - `sign-in-form.tsx` — SignInForm — renders form (~699 tok)
 
 ## app/sign-in/[[...sign-in]]/
@@ -112,13 +112,15 @@
 
 ## components/
 
-- `app-nav.tsx` — LINKS (~614 tok)
+- `app-nav.tsx` — LINKS (~634 tok)
 - `auto-submit-select.tsx` — A <select> that submits its enclosing form as soon as the value changes, (~163 tok)
 - `export-button.tsx` — Download link to the CSV export endpoint, carrying the current filters. (~245 tok)
 - `filter-bar.tsx` — A GET-form filter bar: store selector + free-text search, plus any extra (~658 tok)
 - `pagination.tsx` — URL-based pager. Keeps the current filters in the links so paging never (~1072 tok)
 - `sign-out-button.tsx` — SignOutButton — renders form (~145 tok)
 - `status-badge.tsx` — WhatsApp message status pill. Hover shows the underlying Meta error, which (~321 tok)
+- `theme-script.tsx` — Applies the saved theme before the page paints. (~354 tok)
+- `theme-toggle.tsx` — Resolve a preference to the concrete theme the page should show. (~1297 tok)
 
 ## db/
 
