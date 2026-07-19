@@ -157,7 +157,6 @@ export default function ScannerClient({ stores }: { stores: ScannerStore[] }) {
           value={barcode}
           onChange={(e) => setBarcode(e.target.value)}
           onKeyDown={handleBarcodeKeyDown}
-          placeholder="SI-100008 | HASSAN MAHMOOD | +97333959565 | 45,500"
           autoComplete="off"
           className="rounded-md border border-black/10 bg-transparent px-3 py-2 font-mono text-sm dark:border-white/15"
         />

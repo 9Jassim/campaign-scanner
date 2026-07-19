@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-19T14:11:41.207Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-19T16:07:37.755Z
 > Files: 85 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
@@ -90,7 +90,7 @@
 ## app/scanner/
 
 - `page.tsx` — dynamic (~364 tok)
-- `scanner-client.tsx` — The scan is already saved at this point — this only reports what happened to (~2633 tok)
+- `scanner-client.tsx` — The scan is already saved at this point — this only reports what happened to (~2612 tok)
 
 ## app/settings/
 

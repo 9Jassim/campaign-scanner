@@ -1238,6 +1238,22 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-19T14:30:00.000Z"
+    },
+    {
+      "id": "bug-073",
+      "timestamp": "2026-07-19T16:07:37.768Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/scanner/scanner-client.tsx",
+      "root_cause": "Had \"SI-100008 | HASSAN MAHMOOD | +97333959565 | 45,50",
+      "fix": "Changed to \"off\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-19T16:07:37.768Z"
     }
   ]
 }

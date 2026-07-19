@@ -504,3 +504,16 @@
 | 17:11 | Edited components/app-nav.tsx | 6→7 lines | ~78 |
 | 17:11 | Edited app/sign-in/page.tsx | modified SignInPage() | ~276 |
 | 14:30 | Added a Light/Dark/System theme toggle. The app already followed the OS, but every component uses Tailwind `dark:` utilities which in v4 also follow prefers-color-scheme — so the fix was redirecting the variant with @custom-variant at a data-theme attribute, not just swapping CSS vars. Pre-paint inline script avoids FOUC; localStorage holds the preference, data-theme the resolved value. Verified in-browser: OS prefers dark, chose Light, body went white AND a dark:border-white/15 input flipped to black/0.1; survived reload; System restored OS-following; no hydration warnings. | app/globals.css, app/layout.tsx, app/sign-in/page.tsx, components/theme-script.tsx, components/theme-toggle.tsx, components/app-nav.tsx | 115 tests pass, typecheck+lint+build clean, no migration | ~11000 |
+| 17:16 | Session end: 8 writes across 6 files (globals.css, theme-script.tsx, theme-toggle.tsx, layout.tsx, app-nav.tsx) | 4 reads | ~3327 tok |
+
+## Session: 2026-07-19 18:24
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-19 19:06
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 19:07 | Edited app/scanner/scanner-client.tsx | 3→2 lines | ~21 |
+| 16:10 | Removed the barcode input's placeholder on the scanner (it showed a realistic-looking sample name and phone: "SI-100008 | HASSAN MAHMOOD | +97333959565 | 45,500"). Label and the "Press Enter to parse" hint kept. | app/scanner/scanner-client.tsx | 115 tests pass, typecheck+lint clean | ~1500 |
