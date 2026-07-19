@@ -27,24 +27,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
       credentials: {
-        email: { label: 'Email', type: 'email' },
+        username: { label: 'Username', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, request) {
-        const email = String(credentials?.email ?? '')
+        const username = String(credentials?.username ?? '')
           .toLowerCase()
           .trim();
         const password = String(credentials?.password ?? '');
-        if (!email || !password) return null;
+        if (!username || !password) return null;
 
-        const keys = throttleKeys(email, clientIp(request));
+        const keys = throttleKeys(username, clientIp(request));
 
         const retryAfter = await retryAfterSeconds(keys);
         if (retryAfter > 0) {
           throw new TooManyAttemptsError(retryAfter);
         }
 
-        const user = await db.userProfile.findUnique({ where: { email } });
+        const user = await db.userProfile.findUnique({ where: { username } });
 
         // Runs a real comparison even when there is no such user, so the
         // response time cannot be used to tell which emails exist.
@@ -53,7 +53,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!user?.passwordHash || !valid) {
           await recordFailure(keys);
           // Otherwise nothing anywhere records that guessing is happening.
-          console.warn(`[auth] failed sign-in for ${email}`);
+          console.warn(`[auth] failed sign-in for ${username}`);
           return null;
         }
 
@@ -61,8 +61,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         return {
           id: user.id,
-          email: user.email,
-          name: user.fullName ?? undefined,
+          email: user.email ?? undefined,
+          name: user.fullName ?? user.username,
           role: user.role,
         };
       },

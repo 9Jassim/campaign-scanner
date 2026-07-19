@@ -32,6 +32,7 @@ export default async function UsersPage({
   if (roleFilter) where.role = roleFilter;
   if (q) {
     where.OR = [
+      { username: { contains: q, mode: 'insensitive' } },
       { email: { contains: q, mode: 'insensitive' } },
       { fullName: { contains: q, mode: 'insensitive' } },
     ];
@@ -79,8 +80,13 @@ export default async function UsersPage({
           </h2>
           <form action={createUser} className="flex flex-col gap-4">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <TextInput name="email" label="Email" type="email" required />
+              <TextInput
+                name="username"
+                label="Username (used to sign in)"
+                required
+              />
               <TextInput name="fullName" label="Full name" />
+              <TextInput name="email" label="Email (optional)" type="email" />
               <TextInput
                 name="password"
                 label="Password (min 8 chars)"
@@ -192,9 +198,11 @@ export default async function UsersPage({
                       </svg>
                     </span>
                     <div>
-                      <div className="font-medium">{u.email}</div>
-                      {u.fullName && (
-                        <div className="text-xs text-zinc-500">{u.fullName}</div>
+                      <div className="font-medium">{u.username}</div>
+                      {(u.fullName || u.email) && (
+                        <div className="text-xs text-zinc-500">
+                          {[u.fullName, u.email].filter(Boolean).join(' · ')}
+                        </div>
                       )}
                     </div>
                   </div>

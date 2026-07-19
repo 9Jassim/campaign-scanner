@@ -402,3 +402,67 @@
 | 18:53 | Edited app/admin/sheets/page.tsx | CSS: purpose | ~346 |
 | 18:53 | Edited app/admin/sheets/page.tsx | CSS: sheetId | ~63 |
 | 15:56 | Added per-store sync buttons to /admin/sheets (user: "maybe we don't want to sync both"). syncOneStore action + "Sync this store"/"Force" per card; global reduced to "Sync all stores" with force REMOVED — forcing lets a sheet shrink, so it's a per-store decision, not one click across two companies. Buttons disabled when a store has no Sheet ID. Verified syncing morslon alone left modern-sources' lastSyncAt untouched. | app/admin/sheets/actions.ts, app/admin/sheets/page.tsx | 110 tests pass, typecheck+lint+build clean, no migration | ~6000 |
+| 18:55 | Session end: 26 writes across 13 files (google-sheets.ts, backup.ts, route.ts, auth.config.ts, vercel.json) | 3 reads | ~15352 tok |
+
+## Session: 2026-07-16 19:43
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-19 12:27
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-19 12:28
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-19 12:31
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-19 12:31
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 12:43 | Edited auth.config.ts | expanded (+13 lines) | ~178 |
+| 12:43 | Edited prisma/schema.prisma | 4→7 lines | ~87 |
+| 12:43 | Edited prisma/schema.prisma | 2→4 lines | ~59 |
+| 12:44 | Edited auth.ts | modified authorize() | ~201 |
+| 12:44 | Edited auth.ts | modified if() | ~132 |
+| 12:44 | Edited lib/login-throttle.ts | 7→7 lines | ~129 |
+| 12:45 | Edited lib/login-throttle.ts | 2→2 lines | ~36 |
+| 12:45 | Edited lib/login-throttle.ts | modified throttleKeys() | ~131 |
+| 12:45 | Edited lib/login-throttle.ts | inline fix | ~21 |
+| 12:45 | Edited lib/login-throttle.ts | modified signInErrorMessage() | ~213 |
+| 12:45 | Edited lib/login-attempts.ts | 5→6 lines | ~33 |
+| 12:45 | Edited lib/login-attempts.ts | 2→2 lines | ~38 |
+| 12:45 | Edited lib/login-attempts.ts | modified clearFailures() | ~144 |
+| 12:45 | Edited app/sign-in/sign-in-form.tsx | modified SignInForm() | ~146 |
+| 12:45 | Edited app/sign-in/sign-in-form.tsx | setEmail() → setUsername() | ~163 |
+| 12:45 | Edited lib/scan.ts | 2→2 lines | ~26 |
+| 12:46 | Edited app/receipts/page.tsx | inline fix | ~14 |
+| 12:46 | Edited app/api/export/route.ts | 4→4 lines | ~20 |
+| 12:46 | Edited app/api/export/route.ts | inline fix | ~10 |
+| 12:46 | Edited components/app-nav.tsx | added nullish coalescing | ~20 |
+| 12:46 | Edited app/admin/users/page.tsx | CSS: username | ~56 |
+| 12:46 | Edited app/admin/users/page.tsx | 8→13 lines | ~134 |
+| 12:46 | Edited app/admin/users/page.tsx | 6→8 lines | ~107 |
+| 12:46 | Edited app/admin/users/actions.ts | added nullish coalescing | ~154 |
+| 12:47 | Edited app/admin/users/actions.ts | added 2 condition(s) | ~485 |
+| 12:47 | Edited prisma/seed.ts | modified if() | ~204 |
+| 12:47 | Edited prisma/seed.ts | "\nℹ No admin seeded. Set " → "\nℹ No admin seeded. Set " | ~29 |
+| 12:47 | Edited prisma/seed.ts | 3→4 lines | ~50 |
+| 12:48 | Edited lib/login-throttle.test.ts | "tolerates far more failur" → "tolerates far more failur" | ~22 |
+| 12:48 | Edited lib/login-throttle.test.ts | 12→9 lines | ~117 |
+| 12:48 | Edited lib/login-throttle.test.ts | 2→2 lines | ~44 |
+| 12:49 | Edited lib/login-throttle.test.ts | 6→8 lines | ~105 |
+| 12:53 | Edited README.md | 2→3 lines | ~54 |
+| 12:53 | Edited README.md | 2→2 lines | ~32 |
+| 12:53 | Edited README.md | 2→2 lines | ~35 |
+| 12:53 | Edited README.md | expanded (+18 lines) | ~228 |
+| 11:55 | Added 2h sliding session expiry (maxAge 7200 + updateAge 300 — maxAge ALONE does not slide) and switched login from email to username (migration 0005: nullable-backfill-NOT NULL, email now optional, receipts.cashier_email renamed cashier_username). Renamed throttle key prefix email:->user: via shared ACCOUNT_KEY_PREFIX. Verified end-to-end with a throwaway account: correct creds sign in, wrong password/unknown user/old email all rejected, and an account with NO email signs in fine. Cookie expires in exactly 2.00h. | auth.config.ts, auth.ts, prisma/schema.prisma, prisma/migrations/0005_username_login, lib/login-throttle.ts, lib/login-attempts.ts, lib/scan.ts, app/sign-in/sign-in-form.tsx, app/admin/users/*, app/receipts/page.tsx, app/api/export/route.ts, components/app-nav.tsx, prisma/seed.ts, README.md, .env.example | 110 tests pass, typecheck+lint clean, migration 0005 applied to Neon | ~22000 |
+| 12:56 | Session end: 36 writes across 14 files (auth.config.ts, schema.prisma, auth.ts, login-throttle.ts, login-attempts.ts) | 3 reads | ~8075 tok |

@@ -8,7 +8,7 @@ by `store_id`.
 
 - **Framework:** Next.js 14 (App Router, TypeScript)
 - **Styling:** Tailwind CSS v4
-- **Auth:** NextAuth / Auth.js v5 (email + password credentials)
+- **Auth:** NextAuth / Auth.js v5 (username + password credentials, 2-hour idle sessions)
 - **Database:** Neon Postgres (serverless)
 - **ORM:** Prisma 7 (with the Neon driver adapter)
 - **Hosting:** Vercel
@@ -38,8 +38,9 @@ cp .env.example .env.local
   `DATABASE_URL` and the **direct** (unpooled) string into `DIRECT_URL`.
 - **`AUTH_SECRET`:** Secret used to sign session tokens. Generate one with
   `npx auth secret` (or `openssl rand -base64 33`).
-- **`SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD`:** The first admin login, created
-  by the seed script (see step 3a).
+- **`SEED_ADMIN_USERNAME` / `SEED_ADMIN_PASSWORD`:** The first admin login,
+  created by the seed script (see step 3a). Staff sign in with a username;
+  `SEED_ADMIN_EMAIL` is optional contact detail.
 - **`ENCRYPTION_KEY`:** Generate a 32-byte base64 key:
   ```bash
   node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
@@ -64,7 +65,7 @@ npm run db:generate
 
 ### 3a. Seed stores and an admin login
 
-Creates the two stores and, if `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` are
+Creates the two stores and, if `SEED_ADMIN_USERNAME` / `SEED_ADMIN_PASSWORD` are
 set, an admin user you can log in with:
 
 ```bash
@@ -99,7 +100,7 @@ Open [http://localhost:3000](http://localhost:3000).
 app/                      App Router pages & layouts
   layout.tsx              Root layout
   page.tsx                Landing page
-  sign-in/                Email + password sign-in form
+  sign-in/                Username + password sign-in form
   scanner/                Cashier scanner page
   api/scan/               POST endpoint for logging a scan
   api/auth/[...nextauth]/ NextAuth route handlers
@@ -124,6 +125,24 @@ The schema (see `prisma/schema.prisma`) defines: `stores`, `user_profiles`,
 `store_users`, `contacts`, `receipts`, `raffle_entries`, `customer_messages`,
 `audit_log`, and `retry_queue`. Multi-store isolation is enforced by scoping
 every query to `store_id`.
+
+## Signing in
+
+Staff sign in with a **username**, not an email — till workers rarely have a
+work address, and a short name is faster to type on a shared device. Email is
+optional contact detail. Usernames are lowercase and limited to letters,
+numbers, dot, dash and underscore (3–32 characters); admins set them in
+**Users**.
+
+Sessions last **2 hours and slide**: the clock restarts on every request, so
+somebody scanning through a shift is never logged out mid-queue, while a till
+left idle for two hours stops being signed in. Nothing has to be done to renew
+it — using the portal is enough.
+
+Repeated failures lock an account for a minute, doubling to a 15-minute cap.
+The per-IP limit is deliberately much looser, because a shop's tills share one
+address and locking the whole store out mid-shift would be worse than the
+attack.
 
 ## Google Sheets sync
 
@@ -156,7 +175,7 @@ Setup (once):
    Vercel.
 4. **Share each store's sheet with the service account address as Editor** —
    without this the write fails with a permission error.
-5. Paste each sheet's ID (from its URL) into **Settings → Weekly backup** for
+5. Paste each sheet's ID (from its URL) into **Settings → Google Sheets** for
    that store. A store with no Sheet ID is skipped.
 
 The schedule lives in `vercel.json` (`0 21 * * *` — 21:00 UTC nightly, i.e.

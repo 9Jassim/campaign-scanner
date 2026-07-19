@@ -5,9 +5,22 @@ import type { NextAuthConfig } from 'next-auth';
  * Must NOT import the database, bcrypt, or any Node-only module — the
  * middleware runs on the edge runtime.
  */
+/** Idle timeout. A till left unattended stops being signed in. */
+const SESSION_MAX_AGE_SECONDS = 2 * 60 * 60;
+
 export const authConfig = {
   trustHost: true,
-  session: { strategy: 'jwt' },
+  session: {
+    strategy: 'jwt',
+    // Sliding, not absolute: the clock restarts on every request, so someone
+    // scanning all shift is never logged out mid-queue, while a till idle for
+    // two hours is.
+    maxAge: SESSION_MAX_AGE_SECONDS,
+    // How often an active session is rewritten to push its expiry out. Without
+    // this the token is only refreshed once a day and the sliding window would
+    // not actually slide.
+    updateAge: 5 * 60,
+  },
   pages: {
     signIn: '/sign-in',
   },

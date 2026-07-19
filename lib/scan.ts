@@ -173,7 +173,7 @@ export async function processScan(
               totalEntriesAtTime: contact.totalEntries,
               cashierNote: input.note ?? null,
               cashierUserId: cashier.id,
-              cashierEmail: cashier.email,
+              cashierUsername: cashier.username,
               // Sending happens after the transaction commits; stores without
               // WhatsApp credentials stay 'skipped'.
               messageStatus: willSend ? 'pending' : 'skipped',

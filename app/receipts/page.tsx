@@ -183,7 +183,7 @@ export default async function ReceiptsPage({
                       />
                     </td>
                     <td className="px-3 py-2 text-xs text-zinc-500">
-                      {r.cashierEmail ?? '—'}
+                      {r.cashierUsername ?? '—'}
                     </td>
                   </tr>
                 ))

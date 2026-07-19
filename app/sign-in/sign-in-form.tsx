@@ -7,7 +7,7 @@ import { signInErrorMessage } from '@/lib/login-throttle';
 
 export default function SignInForm() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -18,7 +18,7 @@ export default function SignInForm() {
     setError(null);
 
     const res = await signIn('credentials', {
-      email,
+      username,
       password,
       redirect: false,
     });
@@ -37,14 +37,17 @@ export default function SignInForm() {
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <label className="flex flex-col gap-1 text-sm">
         <span className="font-medium text-zinc-600 dark:text-zinc-400">
-          Email
+          Username
         </span>
         <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
-          autoComplete="email"
+          autoComplete="username"
+          autoCapitalize="none"
+          autoCorrect="off"
+          spellCheck={false}
           autoFocus
           className="rounded-md border border-black/10 bg-transparent px-3 py-2 dark:border-white/15"
         />

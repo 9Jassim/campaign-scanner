@@ -51,7 +51,7 @@ export default function AppNav({
         </nav>
         <div className="flex items-center gap-3">
           <span className="hidden text-xs text-zinc-500 sm:inline">
-            {profile.email} · {profile.role}
+            {profile.fullName ?? profile.username} · {profile.role}
           </span>
           <SignOutButton />
         </div>

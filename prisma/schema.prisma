@@ -42,7 +42,10 @@ model Store {
 
 model UserProfile {
   id           String    @id @default(cuid())
-  email        String    @unique
+  // Staff sign in with this. Till workers rarely have a work email, so the
+  // username is the credential and the email is optional contact detail.
+  username     String    @unique
+  email        String?   @unique
   fullName     String?   @map("full_name")
   passwordHash String?   @map("password_hash") // bcrypt hash for credentials login
   role         String // 'admin' | 'manager' | 'cashier'
@@ -97,7 +100,9 @@ model Receipt {
   totalEntriesAtTime Int?      @map("total_entries_at_time")
   cashierNote        String?   @map("cashier_note")
   cashierUserId      String?   @map("cashier_user_id")
-  cashierEmail       String?   @map("cashier_email")
+  // Who rang it up, captured at scan time so the record survives the account
+  // being renamed or deleted.
+  cashierUsername    String?   @map("cashier_username")
   wamid              String?
   messageStatus      String?   @default("pending") @map("message_status") // pending, sent, delivered, read, failed, skipped
   messageError       String?   @map("message_error")

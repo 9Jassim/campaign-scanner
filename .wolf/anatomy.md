@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T15:53:23.679Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-19T09:53:37.832Z
 > Files: 83 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
@@ -13,15 +13,15 @@
 
 - `.eslintrc.json` (~12 tok)
 - `.gitignore` — Git ignore rules (~132 tok)
-- `auth.config.ts` — Edge-safe base config shared by the middleware and the full Node config. (~396 tok)
-- `auth.ts` — Thrown when the email or IP is locked out. NextAuth puts `code` on the (~637 tok)
+- `auth.config.ts` — Edge-safe base config shared by the middleware and the full Node config. (~552 tok)
+- `auth.ts` — Thrown when the email or IP is locked out. NextAuth puts `code` on the (~648 tok)
 - `CLAUDE.md` — OpenWolf (~57 tok)
 - `drizzle.config.ts` (~134 tok)
 - `middleware.ts` — The middleware uses only the edge-safe config (no DB, no bcrypt). Route (~143 tok)
 - `next.config.mjs` — Declares nextConfig (~33 tok)
 - `package.json` — Node.js package manifest (~333 tok)
 - `prisma.config.ts` — Load .env.local (Next.js convention) for local development. In hosted (~274 tok)
-- `README.md` — Project documentation (~1802 tok)
+- `README.md` — Project documentation (~2039 tok)
 - `vercel.json` (~45 tok)
 
 ## .claude/
@@ -48,8 +48,8 @@
 
 ## app/admin/users/
 
-- `actions.ts` — API routes: GET (10 endpoints) (~1024 tok)
-- `page.tsx` — dynamic — renders form (~3514 tok)
+- `actions.ts` — Usernames are typed at a till, often on a phone keyboard, so they are stored (~1280 tok)
+- `page.tsx` — dynamic — renders form (~3604 tok)
 
 ## app/api/auth/[...nextauth]/
 
@@ -65,7 +65,7 @@
 
 ## app/api/export/
 
-- `route.ts` — Next.js API route: GET (~1389 tok)
+- `route.ts` — Next.js API route: GET (~1388 tok)
 
 ## app/api/scan/
 
@@ -85,7 +85,7 @@
 
 ## app/receipts/
 
-- `page.tsx` — dynamic — renders table (~2009 tok)
+- `page.tsx` — dynamic — renders table (~2010 tok)
 
 ## app/scanner/
 
@@ -100,7 +100,7 @@
 ## app/sign-in/
 
 - `page.tsx` — SignInPage (~168 tok)
-- `sign-in-form.tsx` — SignInForm — renders form (~668 tok)
+- `sign-in-form.tsx` — SignInForm — renders form (~699 tok)
 
 ## app/sign-in/[[...sign-in]]/
 
@@ -112,7 +112,7 @@
 
 ## components/
 
-- `app-nav.tsx` — LINKS (~608 tok)
+- `app-nav.tsx` — LINKS (~614 tok)
 - `auto-submit-select.tsx` — A <select> that submits its enclosing form as soon as the value changes, (~163 tok)
 - `export-button.tsx` — Download link to the CSV export endpoint, carrying the current filters. (~245 tok)
 - `filter-bar.tsx` — A GET-form filter bar: store selector + free-text search, plus any extra (~658 tok)
@@ -139,12 +139,12 @@
 - `db.ts` — Prisma 7 requires a driver adapter at runtime. We use the Neon serverless (~220 tok)
 - `google-sheets.test.ts` — Declares EMAIL (~1128 tok)
 - `google-sheets.ts` — Minimal Google Sheets client. (~1632 tok)
-- `login-attempts.ts` — Persistence for sign-in throttling — reads and writes `login_attempts`. (~667 tok)
-- `login-throttle.test.ts` — Replay `count` consecutive failures, all at T0 unless a clock is given. (~1765 tok)
-- `login-throttle.ts` — Sign-in throttling policy. (~1453 tok)
+- `login-attempts.ts` — Persistence for sign-in throttling — reads and writes `login_attempts`. (~680 tok)
+- `login-throttle.test.ts` — Replay `count` consecutive failures, all at T0 unless a clock is given. (~1758 tok)
+- `login-throttle.ts` — Sign-in throttling policy. (~1502 tok)
 - `password.test.ts` — Declares hash (~520 tok)
 - `password.ts` — Password hashing and verification. (~395 tok)
-- `scan.ts` — Outcome of the WhatsApp send attempt for this scan. (~3486 tok)
+- `scan.ts` — Outcome of the WhatsApp send attempt for this scan. (~3488 tok)
 - `sheets-sync.ts` — Pushes each store's data into its Google Sheet. (~1631 tok)
 - `store-lock.test.ts` — Declares MORSLON (~418 tok)
 - `store-lock.ts` — Per-store locking for the scan flow. (~329 tok)
@@ -155,8 +155,8 @@
 
 ## prisma/
 
-- `schema.prisma` (~2000 tok)
-- `seed.ts` — Seed script: creates the two campaign stores, and optionally seeds an admin (~809 tok)
+- `schema.prisma` (~2079 tok)
+- `seed.ts` — Seed script: creates the two campaign stores, and optionally seeds an admin (~860 tok)
 
 ## prisma/migrations/
 

@@ -8,9 +8,10 @@
  * To also seed an admin you can log in with, set these env vars (in .env.local
  * or inline):
  *
- *   SEED_ADMIN_EMAIL=you@example.com
+ *   SEED_ADMIN_USERNAME=admin
  *   SEED_ADMIN_PASSWORD=some-strong-password
- *   SEED_ADMIN_NAME="Your Name"   # optional
+ *   SEED_ADMIN_NAME="Your Name"    # optional
+ *   SEED_ADMIN_EMAIL=you@example.com  # optional
  */
 import { config } from 'dotenv';
 import { PrismaClient } from '@prisma/client';
@@ -59,14 +60,16 @@ async function main() {
     console.log(`✔ Store ready: ${store.nameEn} (${store.slug})`);
   }
 
-  const adminEmail = process.env.SEED_ADMIN_EMAIL?.toLowerCase().trim();
+  const adminUsername = process.env.SEED_ADMIN_USERNAME?.toLowerCase().trim();
+  const adminEmail = process.env.SEED_ADMIN_EMAIL?.toLowerCase().trim() || null;
   const adminPassword = process.env.SEED_ADMIN_PASSWORD;
 
-  if (adminEmail && adminPassword) {
+  if (adminUsername && adminPassword) {
     const passwordHash = await hashPassword(adminPassword);
     const admin = await db.userProfile.upsert({
-      where: { email: adminEmail },
+      where: { username: adminUsername },
       create: {
+        username: adminUsername,
         email: adminEmail,
         fullName: process.env.SEED_ADMIN_NAME ?? null,
         passwordHash,
@@ -74,7 +77,7 @@ async function main() {
       },
       update: { passwordHash, role: 'admin' },
     });
-    console.log(`✔ Admin ready: ${admin.email} (${admin.id})`);
+    console.log(`✔ Admin ready: ${admin.username} (${admin.id})`);
 
     // Admins can access all stores implicitly, but we still record explicit
     // assignments so they show up in store-scoped listings.
@@ -88,7 +91,7 @@ async function main() {
     console.log('✔ Admin assigned to all stores');
   } else {
     console.log(
-      '\nℹ No admin seeded. Set SEED_ADMIN_EMAIL and SEED_ADMIN_PASSWORD to seed an admin login.',
+      '\nℹ No admin seeded. Set SEED_ADMIN_USERNAME and SEED_ADMIN_PASSWORD to seed an admin login.',
     );
   }
 }

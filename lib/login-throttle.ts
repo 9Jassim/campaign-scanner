@@ -3,11 +3,11 @@
  *
  * The portal is on the open internet with password auth, so without a limit an
  * attacker can guess as fast as they can send requests, and nothing would
- * record that it was happening. Failures are counted per email and per IP; once
- * a key trips its limit it locks, and the lock doubles with each further
+ * record that it was happening. Failures are counted per account and per IP;
+ * once a key trips its limit it locks, and the lock doubles with each further
  * failure, so a brute force stalls almost immediately.
  *
- * Per-email limits are tight. Per-IP limits are deliberately loose: a shop's
+ * Per-account limits are tight. Per-IP limits are deliberately loose: a shop's
  * cashiers all share one NAT address, and locking a whole store out mid-shift
  * would stop them scanning — a worse outcome than the attack for a business
  * whose tills depend on this.
@@ -30,7 +30,7 @@ export interface ThrottlePolicy {
 }
 
 /** One account under attack: lock early, since only its owner is affected. */
-export const EMAIL_POLICY: ThrottlePolicy = {
+export const ACCOUNT_POLICY: ThrottlePolicy = {
   maxFailures: 5,
   windowMs: 15 * MINUTE,
   baseLockMs: MINUTE,
@@ -96,9 +96,17 @@ export function registerFailure(
   return { failures, firstFailedAt, lockedUntil };
 }
 
+/** Prefix for the per-account key; `lib/login-attempts.ts` clears by it. */
+export const ACCOUNT_KEY_PREFIX = 'user:';
+
 /** The throttle keys a sign-in attempt counts against. */
-export function throttleKeys(email: string, ip: string | null): ThrottleKey[] {
-  const keys: ThrottleKey[] = [{ key: `email:${email}`, policy: EMAIL_POLICY }];
+export function throttleKeys(
+  username: string,
+  ip: string | null,
+): ThrottleKey[] {
+  const keys: ThrottleKey[] = [
+    { key: `${ACCOUNT_KEY_PREFIX}${username}`, policy: ACCOUNT_POLICY },
+  ];
   if (ip) keys.push({ key: `ip:${ip}`, policy: IP_POLICY });
   return keys;
 }
@@ -107,7 +115,7 @@ export function throttleKeys(email: string, ip: string | null): ThrottleKey[] {
  * The client address, for per-IP throttling.
  *
  * Vercel sets `x-forwarded-for` itself and the client entry is first. Absent
- * locally, in which case throttling falls back to the email key alone.
+ * locally, in which case throttling falls back to the account key alone.
  */
 export function clientIp(request: Request | undefined): string | null {
   const forwarded = request?.headers.get('x-forwarded-for');
@@ -130,9 +138,9 @@ function formatWait(seconds: number): string {
 /**
  * Turn a failed sign-in's `code` into a message for the user.
  *
- * Naming the lockout plainly is safe: failures are counted against the email
+ * Naming the lockout plainly is safe: failures are counted against the username
  * whether or not the account exists, so a locked-out attacker probing a
- * made-up address sees exactly what they'd see for a real one. It gives away
+ * made-up name sees exactly what they'd see for a real one. It gives away
  * nothing, and it stops a locked-out cashier thinking they mistyped.
  */
 export function signInErrorMessage(code: string | undefined): string {
@@ -143,5 +151,5 @@ export function signInErrorMessage(code: string | undefined): string {
       ? `Too many failed attempts. Try again in ${formatWait(seconds)}.`
       : 'Too many failed attempts. Please try again shortly.';
   }
-  return 'Invalid email or password';
+  return 'Invalid username or password';
 }

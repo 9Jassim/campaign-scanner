@@ -6,7 +6,7 @@ import {
   clientIp,
   lockoutCode,
   signInErrorMessage,
-  EMAIL_POLICY,
+  ACCOUNT_POLICY,
   IP_POLICY,
   type AttemptRecord,
 } from './login-throttle';
@@ -19,7 +19,7 @@ const at = (ms: number) => new Date(T0.getTime() + ms);
 function failTimes(count: number, clock: (i: number) => Date = () => T0) {
   let record: AttemptRecord | null = null;
   for (let i = 0; i < count; i++) {
-    record = registerFailure(record, clock(i), EMAIL_POLICY);
+    record = registerFailure(record, clock(i), ACCOUNT_POLICY);
   }
   return record!;
 }
@@ -52,7 +52,7 @@ describe('sign-in throttling', () => {
       firstFailedAt: T0,
       lockedUntil: null,
     };
-    const next = registerFailure(stale, at(16 * MINUTE), EMAIL_POLICY);
+    const next = registerFailure(stale, at(16 * MINUTE), ACCOUNT_POLICY);
     expect(next.failures).toBe(1);
     expect(next.firstFailedAt).toEqual(at(16 * MINUTE));
   });
@@ -69,7 +69,7 @@ describe('sign-in throttling', () => {
     };
     expect(lockRemainingMs(deepLock, at(20 * MINUTE))).toBe(9 * MINUTE);
 
-    const next = registerFailure(deepLock, at(20 * MINUTE), EMAIL_POLICY);
+    const next = registerFailure(deepLock, at(20 * MINUTE), ACCOUNT_POLICY);
     expect(next.failures).toBe(10); // not reset to 1
     expect(next.firstFailedAt).toEqual(T0);
     expect(lockRemainingMs(next, at(20 * MINUTE))).toBe(15 * MINUTE);
@@ -86,7 +86,7 @@ describe('sign-in throttling', () => {
     expect(lockRemainingMs(null, T0)).toBe(0);
   });
 
-  it('tolerates far more failures from one IP than from one email', () => {
+  it('tolerates far more failures from one IP than from one account', () => {
     // A shop's cashiers share a NAT address; 5 typos between them must not
     // lock the store out.
     let record: AttemptRecord | null = null;
@@ -97,17 +97,14 @@ describe('sign-in throttling', () => {
     expect(lockRemainingMs(record, T0)).toBe(MINUTE);
   });
 
-  it('counts an attempt against both the email and the IP', () => {
-    const keys = throttleKeys('cashier@example.com', '1.2.3.4');
-    expect(keys.map((k) => k.key)).toEqual([
-      'email:cashier@example.com',
-      'ip:1.2.3.4',
-    ]);
+  it('counts an attempt against both the account and the IP', () => {
+    const keys = throttleKeys('cashier1', '1.2.3.4');
+    expect(keys.map((k) => k.key)).toEqual(['user:cashier1', 'ip:1.2.3.4']);
   });
 
-  it('falls back to the email key alone when there is no IP (local dev)', () => {
-    const keys = throttleKeys('cashier@example.com', null);
-    expect(keys.map((k) => k.key)).toEqual(['email:cashier@example.com']);
+  it('falls back to the account key alone when there is no IP (local dev)', () => {
+    const keys = throttleKeys('cashier1', null);
+    expect(keys.map((k) => k.key)).toEqual(['user:cashier1']);
   });
 
   it('takes the client address from the first x-forwarded-for entry', () => {
@@ -126,7 +123,7 @@ describe('sign-in throttling', () => {
 describe('what the user is told', () => {
   it('reads back a lockout the server emitted', () => {
     // Round-trip: auth.ts builds the code, the sign-in form parses it. If the
-    // two ever drift apart the lockout would read as "Invalid email".
+    // two ever drift apart the lockout would read as "Invalid username".
     expect(signInErrorMessage(lockoutCode(60))).toBe(
       'Too many failed attempts. Try again in 1 minute.',
     );
@@ -145,9 +142,11 @@ describe('what the user is told', () => {
 
   it('says nothing about whether the account exists', () => {
     // The generic wording is the whole point: a wrong password and an unknown
-    // email must be indistinguishable.
-    expect(signInErrorMessage('credentials')).toBe('Invalid email or password');
-    expect(signInErrorMessage(undefined)).toBe('Invalid email or password');
+    // username must be indistinguishable.
+    expect(signInErrorMessage('credentials')).toBe(
+      'Invalid username or password',
+    );
+    expect(signInErrorMessage(undefined)).toBe('Invalid username or password');
   });
 
   it('degrades to a sensible message if the wait is malformed', () => {

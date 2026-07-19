@@ -115,7 +115,7 @@ export async function GET(request: Request) {
       'Total Entries At Time',
       'Message Status',
       'Message Error',
-      'Cashier Email',
+      'Cashier',
     ];
     rows = receipts.map((r) =>
       csvRow([
@@ -128,7 +128,7 @@ export async function GET(request: Request) {
         r.totalEntriesAtTime ?? '',
         r.messageStatus ?? '',
         r.messageError ?? '',
-        r.cashierEmail ?? '',
+        r.cashierUsername ?? '',
       ]),
     );
   } else {

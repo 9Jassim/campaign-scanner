@@ -1,5 +1,6 @@
 import { db } from './db';
 import {
+  ACCOUNT_KEY_PREFIX,
   lockRemainingMs,
   registerFailure,
   type ThrottleKey,
@@ -20,8 +21,8 @@ const GC_AFTER_MS = 24 * 60 * MINUTE;
 /**
  * Seconds until the caller may try again; 0 when no key is locked.
  *
- * Counted against the email whether or not that account exists, so a lockout
- * reveals nothing about which emails are real.
+ * Counted against the username whether or not that account exists, so a lockout
+ * reveals nothing about which usernames are real.
  */
 export async function retryAfterSeconds(
   keys: ThrottleKey[],
@@ -54,7 +55,7 @@ export async function recordFailure(
 }
 
 /**
- * Clear the email counter after a successful sign-in.
+ * Clear the account counter after a successful sign-in.
  *
  * The IP counter is left to expire on its own: it is shared, so one valid login
  * must not hand an attacker on the same address a fresh budget.
@@ -63,11 +64,11 @@ export async function clearFailures(
   keys: ThrottleKey[],
   now: Date = new Date(),
 ): Promise<void> {
-  const emailKeys = keys
-    .filter((k) => k.key.startsWith('email:'))
+  const accountKeys = keys
+    .filter((k) => k.key.startsWith(ACCOUNT_KEY_PREFIX))
     .map((k) => k.key);
 
-  await db.loginAttempt.deleteMany({ where: { key: { in: emailKeys } } });
+  await db.loginAttempt.deleteMany({ where: { key: { in: accountKeys } } });
 
   // Opportunistic GC of settled rows so the table can't grow without bound.
   // Cheap, because successful logins are rare.

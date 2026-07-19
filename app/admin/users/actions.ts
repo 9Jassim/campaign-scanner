@@ -17,9 +17,23 @@ function normalizeRole(raw: FormDataEntryValue | null): Role {
   return ROLES.includes(raw as Role) ? (raw as Role) : 'cashier';
 }
 
+/**
+ * Usernames are typed at a till, often on a phone keyboard, so they are stored
+ * lowercase and restricted to characters that survive that: no spaces, no
+ * accidental capitals, nothing that looks like something else.
+ */
+const USERNAME_PATTERN = /^[a-z0-9._-]{3,32}$/;
+
+function normalizeUsername(raw: FormDataEntryValue | null): string {
+  return String(raw ?? '')
+    .toLowerCase()
+    .trim();
+}
+
 export async function createUser(formData: FormData) {
   await requireAdmin();
 
+  const username = normalizeUsername(formData.get('username'));
   const email = String(formData.get('email') ?? '')
     .toLowerCase()
     .trim();
@@ -29,8 +43,13 @@ export async function createUser(formData: FormData) {
   const storeIds = formData.getAll('storeIds').map(String);
   const canExport = formData.get('canExport') === 'on';
 
-  if (!email || !password) {
-    backWithError('Email and password are required.');
+  if (!username || !password) {
+    backWithError('Username and password are required.');
+  }
+  if (!USERNAME_PATTERN.test(username)) {
+    backWithError(
+      'Username must be 3–32 characters, using only lowercase letters, numbers, dot, dash or underscore.',
+    );
   }
   if (password.length < 8) {
     backWithError('Password must be at least 8 characters.');
@@ -40,8 +59,11 @@ export async function createUser(formData: FormData) {
     backWithError('Select at least one store for a manager or cashier.');
   }
 
-  const existing = await db.userProfile.findUnique({ where: { email } });
+  const existing = await db.userProfile.findUnique({ where: { username } });
   if (existing) {
+    backWithError(`The username ${username} is already taken.`);
+  }
+  if (email && (await db.userProfile.findUnique({ where: { email } }))) {
     backWithError(`A user with email ${email} already exists.`);
   }
 
@@ -49,7 +71,9 @@ export async function createUser(formData: FormData) {
 
   await db.userProfile.create({
     data: {
-      email,
+      username,
+      // Optional: staff at a till often have no work address.
+      email: email || null,
       fullName,
       role,
       passwordHash,
