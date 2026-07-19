@@ -2,9 +2,9 @@
   "version": 1,
   "created_at": "2026-07-14T12:19:01.896Z",
   "lifetime": {
-    "total_tokens_estimated": 508926,
+    "total_tokens_estimated": 508947,
     "total_reads": 132,
-    "total_writes": 961,
+    "total_writes": 962,
     "total_sessions": 29,
     "anatomy_hits": 82,
     "anatomy_misses": 50,
@@ -6365,6 +6365,27 @@
         "writes_count": 8,
         "repeated_reads_blocked": 0,
         "anatomy_lookups": 3
+      }
+    },
+    {
+      "id": "session-2026-07-19-1906",
+      "started": "2026-07-19T16:06:44.903Z",
+      "ended": "2026-07-19T16:08:33.695Z",
+      "reads": [],
+      "writes": [
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 21,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 21,
+        "reads_count": 0,
+        "writes_count": 1,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
       }
     }
   ],

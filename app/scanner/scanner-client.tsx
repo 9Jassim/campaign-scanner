@@ -150,7 +150,7 @@ export default function ScannerClient({ stores }: { stores: ScannerStore[] }) {
 
       <label className="flex flex-col gap-1 text-sm">
         <span className="font-medium text-zinc-600 dark:text-zinc-400">
-          Scan or paste barcode
+          Scan or paste QR code
         </span>
         <input
           ref={barcodeRef}

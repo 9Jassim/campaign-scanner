@@ -517,3 +517,6 @@
 |------|--------|---------|---------|--------|
 | 19:07 | Edited app/scanner/scanner-client.tsx | 3→2 lines | ~21 |
 | 16:10 | Removed the barcode input's placeholder on the scanner (it showed a realistic-looking sample name and phone: "SI-100008 | HASSAN MAHMOOD | +97333959565 | 45,500"). Label and the "Press Enter to parse" hint kept. | app/scanner/scanner-client.tsx | 115 tests pass, typecheck+lint clean | ~1500 |
+| 19:08 | Session end: 1 writes across 1 files (scanner-client.tsx) | 0 reads | ~21 tok |
+| 19:09 | Edited app/scanner/scanner-client.tsx | inline fix | ~9 |
+| 16:20 | Renamed the scanner's visible label "Scan or paste barcode" -> "Scan or paste QR code". Internal naming (lib/barcode.ts, parseBarcode, barcodeRef) left alone — offered to rename separately. | app/scanner/scanner-client.tsx | 115 tests pass, typecheck+lint clean | ~1500 |
