@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-19T09:53:37.832Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-19T13:12:09.901Z
 > Files: 83 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
@@ -65,7 +65,7 @@
 
 ## app/api/export/
 
-- `route.ts` — Next.js API route: GET (~1388 tok)
+- `route.ts` — Rows fetched per query while streaming. (~2401 tok)
 
 ## app/api/scan/
 
@@ -116,7 +116,7 @@
 - `auto-submit-select.tsx` — A <select> that submits its enclosing form as soon as the value changes, (~163 tok)
 - `export-button.tsx` — Download link to the CSV export endpoint, carrying the current filters. (~245 tok)
 - `filter-bar.tsx` — A GET-form filter bar: store selector + free-text search, plus any extra (~658 tok)
-- `pagination.tsx` — URL-based pager. Keeps the current filters in the links so paging never (~718 tok)
+- `pagination.tsx` — URL-based pager. Keeps the current filters in the links so paging never (~1072 tok)
 - `sign-out-button.tsx` — SignOutButton — renders form (~145 tok)
 - `status-badge.tsx` — WhatsApp message status pill. Hover shows the underlying Meta error, which (~321 tok)
 
@@ -138,7 +138,7 @@
 - `datetime.ts` — Renders UTC-stored timestamps in Asia/Bahrain. formatDateTime (UI), formatDateTimeCsv (export), todayInBahrain (filenames). NEVER use toLocaleString/toISOString in pages: they follow the server's zone (UTC on Vercel) and render times 3h early. (~742 tok)
 - `db.ts` — Prisma 7 requires a driver adapter at runtime. We use the Neon serverless (~220 tok)
 - `google-sheets.test.ts` — Declares EMAIL (~1128 tok)
-- `google-sheets.ts` — Minimal Google Sheets client. (~1632 tok)
+- `google-sheets.ts` — Minimal Google Sheets client. (~1905 tok)
 - `login-attempts.ts` — Persistence for sign-in throttling — reads and writes `login_attempts`. (~680 tok)
 - `login-throttle.test.ts` — Replay `count` consecutive failures, all at T0 unless a clock is given. (~1758 tok)
 - `login-throttle.ts` — Sign-in throttling policy. (~1502 tok)

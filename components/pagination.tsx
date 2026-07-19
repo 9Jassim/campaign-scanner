@@ -46,12 +46,44 @@ export default function Pagination({
         Showing {first}–{last} of {totalItems} · Page {page} of {totalPages}
       </span>
 
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
+        <PageLink href={hrefFor(1)} disabled={page <= 1} title="First page">
+          ««
+        </PageLink>
         <PageLink href={hrefFor(page - 1)} disabled={page <= 1}>
           ← Previous
         </PageLink>
+
+        {/* Typing a page number is the only practical way to reach the middle
+            of a six-month raffle, which runs to thousands of pages. */}
+        <form method="GET" action={basePath} className="flex items-center gap-1">
+          {Object.entries(params).map(
+            ([key, value]) =>
+              value && (
+                <input key={key} type="hidden" name={key} value={value} />
+              ),
+          )}
+          <input
+            type="number"
+            name="page"
+            min={1}
+            max={totalPages}
+            defaultValue={page}
+            aria-label={`Page number, 1 to ${totalPages}`}
+            className="h-9 w-16 rounded-md border border-black/10 bg-transparent px-2 text-center text-sm tabular-nums dark:border-white/15"
+          />
+          <span className="text-xs text-zinc-500">/ {totalPages}</span>
+        </form>
+
         <PageLink href={hrefFor(page + 1)} disabled={page >= totalPages}>
           Next →
+        </PageLink>
+        <PageLink
+          href={hrefFor(totalPages)}
+          disabled={page >= totalPages}
+          title="Last page"
+        >
+          »»
         </PageLink>
       </div>
     </nav>
@@ -61,10 +93,12 @@ export default function Pagination({
 function PageLink({
   href,
   disabled,
+  title,
   children,
 }: {
   href: string;
   disabled: boolean;
+  title?: string;
   children: React.ReactNode;
 }) {
   const base =
@@ -74,6 +108,7 @@ function PageLink({
     return (
       <span
         aria-disabled="true"
+        title={title}
         className={`${base} cursor-not-allowed border-black/5 text-zinc-400 dark:border-white/5 dark:text-zinc-600`}
       >
         {children}
@@ -84,6 +119,7 @@ function PageLink({
   return (
     <Link
       href={href}
+      title={title}
       className={`${base} border-black/10 hover:bg-black/[.04] dark:border-white/15 dark:hover:bg-white/[.06]`}
     >
       {children}

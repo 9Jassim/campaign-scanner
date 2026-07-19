@@ -466,3 +466,21 @@
 | 12:53 | Edited README.md | expanded (+18 lines) | ~228 |
 | 11:55 | Added 2h sliding session expiry (maxAge 7200 + updateAge 300 — maxAge ALONE does not slide) and switched login from email to username (migration 0005: nullable-backfill-NOT NULL, email now optional, receipts.cashier_email renamed cashier_username). Renamed throttle key prefix email:->user: via shared ACCOUNT_KEY_PREFIX. Verified end-to-end with a throwaway account: correct creds sign in, wrong password/unknown user/old email all rejected, and an account with NO email signs in fine. Cookie expires in exactly 2.00h. | auth.config.ts, auth.ts, prisma/schema.prisma, prisma/migrations/0005_username_login, lib/login-throttle.ts, lib/login-attempts.ts, lib/scan.ts, app/sign-in/sign-in-form.tsx, app/admin/users/*, app/receipts/page.tsx, app/api/export/route.ts, components/app-nav.tsx, prisma/seed.ts, README.md, .env.example | 110 tests pass, typecheck+lint clean, migration 0005 applied to Neon | ~22000 |
 | 12:56 | Session end: 36 writes across 14 files (auth.config.ts, schema.prisma, auth.ts, login-throttle.ts, login-attempts.ts) | 3 reads | ~8075 tok |
+| 13:00 | Session end: 36 writes across 14 files (auth.config.ts, schema.prisma, auth.ts, login-throttle.ts, login-attempts.ts) | 4 reads | ~8075 tok |
+| 13:07 | Session end: 36 writes across 14 files (auth.config.ts, schema.prisma, auth.ts, login-throttle.ts, login-attempts.ts) | 5 reads | ~10708 tok |
+
+## Session: 2026-07-19 15:09
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-19 16:02
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 16:09 | Edited lib/google-sheets.ts | modified overwriteTab() | ~555 |
+| 16:10 | Created app/api/export/route.ts | — | ~2346 |
+| 16:10 | Edited components/pagination.tsx | CSS: dark | ~419 |
+| 16:10 | Edited components/pagination.tsx | modified PageLink() | ~216 |
+| 16:12 | Edited app/api/export/route.ts | 2→6 lines | ~81 |
+| 16:15 | User: expecting far more raffle entries than assumed. Modelled the breakpoints and fixed three: (1) CSV export silently truncated at 10,000 rows — now streams with id-cursor paging, no cap (verified 25,000 rows exported complete in 4.7s); (2) Sheets sync wrote each tab in ONE request, dying past ~50k rows (50k=4.3MB, 300k=25.9MB) — now batched at 10k/request, unit-tested to 300k = exactly 30 requests, every row once; (3) pagination had Next/Prev only across thousands of pages — added first/last + page-number box. KEY CONTEXT: the prize draw is run off the Google Sheet, so sheet completeness is a correctness requirement. | lib/google-sheets.ts, lib/google-sheets.test.ts, app/api/export/route.ts, components/pagination.tsx | 115 tests pass, typecheck+lint+build clean, no migration | ~24000 |

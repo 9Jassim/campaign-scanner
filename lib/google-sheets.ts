@@ -147,12 +147,29 @@ export async function tabRowCount(
 }
 
 /**
+ * Rows per write request.
+ *
+ * The whole snapshot in one request stops working as the campaign grows: a
+ * six-month raffle can reach hundreds of thousands of entries, and at ~90 bytes
+ * a row that is a payload Google rejects or times out on. 10k rows is roughly
+ * 1 MB, comfortably inside the limits, and keeps each request quick enough that
+ * a retry is cheap.
+ */
+const ROWS_PER_REQUEST = 10_000;
+
+/**
  * Replace a tab's contents with `values` (row 1 being the header).
  *
- * Writes first, then trims any rows left over from a longer previous snapshot.
- * Deliberately not clear-then-write: that leaves the tab empty in between, so a
- * failure at the wrong moment would wipe the backup rather than leave the old
- * copy in place. Since the data only grows, the trim is usually a no-op.
+ * Writes in batches, then trims any rows left over from a longer previous
+ * snapshot. Deliberately not clear-then-write: that leaves the tab empty in
+ * between, so a failure at the wrong moment would wipe the backup rather than
+ * leave the old copy in place. Since the data only grows, the trim is usually
+ * a no-op.
+ *
+ * Batches are written top-down, and the tabs large enough to need several are
+ * append-only in a stable order (raffle by entry number, log by time), so a
+ * failure partway leaves the earlier rows correct and the later ones stale —
+ * never scrambled — and the next sync repairs it.
  */
 export async function overwriteTab(
   sheetId: string,
@@ -162,10 +179,16 @@ export async function overwriteTab(
   const id = encodeURIComponent(sheetId);
   const before = await tabRowCount(sheetId, tab);
 
-  await sheetsFetch(
-    `${id}/values/${encodeURIComponent(`${tab}!A1`)}?valueInputOption=RAW`,
-    { method: 'PUT', body: JSON.stringify({ values }) },
-  );
+  for (let offset = 0; offset < values.length; offset += ROWS_PER_REQUEST) {
+    const chunk = values.slice(offset, offset + ROWS_PER_REQUEST);
+    const firstRow = offset + 1; // Sheets rows are 1-based
+    await sheetsFetch(
+      `${id}/values/${encodeURIComponent(
+        `${tab}!A${firstRow}`,
+      )}?valueInputOption=RAW`,
+      { method: 'PUT', body: JSON.stringify({ values: chunk }) },
+    );
+  }
 
   if (before > values.length) {
     await sheetsFetch(

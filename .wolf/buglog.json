@@ -622,38 +622,6 @@
       "last_seen": "2026-07-16T10:45:00.000Z"
     },
     {
-      "id": "bug-046",
-      "timestamp": "2026-07-16T10:55:15.063Z",
-      "error_message": "Type error",
-      "file": "lib/scan.ts",
-      "root_cause": "Missing or incorrect type annotation",
-      "fix": "Added type assertion/annotation | Also: //; // $executeRaw, not $queryRaw: the function returns `void`, ",
-      "tags": [
-        "auto-detected",
-        "type-fix",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 2,
-      "last_seen": "2026-07-16T10:58:51.156Z"
-    },
-    {
-      "id": "bug-047",
-      "timestamp": "2026-07-16T10:55:30.956Z",
-      "error_message": "Missing guard clause",
-      "file": "lib/scan.ts",
-      "root_cause": "No early return/throw for edge case: err instanceof ScanError",
-      "fix": "Added guard clause: if (err instanceof ScanError)",
-      "tags": [
-        "auto-detected",
-        "guard-clause",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-07-16T10:55:30.956Z"
-    },
-    {
       "id": "bug-048",
       "timestamp": "2026-07-16T10:55:45.171Z",
       "error_message": "Null/undefined access in ",
@@ -1157,6 +1125,81 @@
       ],
       "occurrences": 1,
       "last_seen": "2026-07-19T11:55:00.000Z"
+    },
+    {
+      "id": "bug-069",
+      "timestamp": "2026-07-19T13:09:12.474Z",
+      "error_message": "Type error",
+      "file": "lib/google-sheets.ts",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-19T13:09:12.474Z"
+    },
+    {
+      "id": "bug-070",
+      "timestamp": "2026-07-19T13:12:09.915Z",
+      "error_message": "Type error",
+      "file": "app/api/export/route.ts",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-19T13:12:09.915Z"
+    },
+    {
+      "id": "bug-046",
+      "timestamp": "2026-07-19T16:15:00.000Z",
+      "error_message": "CSV export silently truncated at 10,000 rows. The prize draw is run off exported data, so entries beyond 10k could never win and nothing said so.",
+      "file": "app/api/export/route.ts",
+      "root_cause": "MAX_ROWS = 10000 was a hard `take:` on every export query, with all rows buffered in memory and joined into one string. At 50k raffle entries the file contained 10k rows and no warning; at 300k it dropped 290k. Modelled from real row shapes, not guessed.",
+      "fix": "Removed the cap entirely and switched to a ReadableStream that pages the DB (PAGE_SIZE 5000) while the browser downloads, so memory is flat regardless of size. Paging is by id CURSOR, not skip/offset, which degrades badly past ~100k. Every orderBy now ends with `{ id: 'asc' }` so the ordering is total — rows sharing a timestamp cannot shuffle between pages and get duplicated or skipped. A mid-stream failure appends an 'EXPORT FAILED — this file is incomplete' row, because the 200 status is already sent and a short file would otherwise look complete. Verified end-to-end: 25,000 entries exported in 4.7s, entry 1 through 25,000, no gaps.",
+      "tags": [
+        "export",
+        "csv",
+        "silent-truncation",
+        "streaming",
+        "cursor-pagination",
+        "scale",
+        "draw-integrity"
+      ],
+      "related_bugs": [
+        "bug-047"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-19T16:15:00.000Z"
+    },
+    {
+      "id": "bug-047",
+      "timestamp": "2026-07-19T16:15:00.000Z",
+      "error_message": "The nightly Google Sheets sync would have started failing partway through the campaign: it wrote each tab in ONE request, which Google rejects or times out on past roughly 50k rows.",
+      "file": "lib/google-sheets.ts",
+      "root_cause": "overwriteTab() PUT the entire values array in a single request. Measured payload sizes from real row shapes: 50k entries = 4.3 MB, 100k = 8.6 MB, 300k = 25.9 MB. The user confirmed the PRIZE DRAW IS RUN OFF THE SHEET, so a failed or stale sync means entries missing from the draw — this was draw integrity, not just a performance issue. (Google's 10M cell limit is further out, ~2M cells at 300k entries, so request size bites first.)",
+      "fix": "Write in ROWS_PER_REQUEST = 10,000 chunks at computed A1 offsets (A1, A10001, A20001...). Batches go top-down and the large tabs are append-only in a stable order (raffle by entryNumber, log by createdAt), so a failure partway leaves earlier rows correct and later ones stale — never scrambled — and the next sync repairs it. The trim of leftover rows still runs afterwards. Unit-tested with a stubbed fetch: 300k rows becomes exactly 30 requests, none over 10k, every row written once, offsets contiguous.",
+      "tags": [
+        "google-sheets",
+        "batching",
+        "scale",
+        "draw-integrity",
+        "payload-limit",
+        "cron"
+      ],
+      "related_bugs": [
+        "bug-046"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-19T16:15:00.000Z"
     }
   ]
 }
