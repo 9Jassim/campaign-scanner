@@ -622,38 +622,6 @@
       "last_seen": "2026-07-16T10:45:00.000Z"
     },
     {
-      "id": "bug-049",
-      "timestamp": "2026-07-16T10:55:51.570Z",
-      "error_message": "Type error",
-      "file": "app/api/scan/route.ts",
-      "root_cause": "Missing or incorrect type annotation",
-      "fix": "Added type assertion/annotation",
-      "tags": [
-        "auto-detected",
-        "type-fix",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-07-16T10:55:51.570Z"
-    },
-    {
-      "id": "bug-050",
-      "timestamp": "2026-07-16T10:56:28.132Z",
-      "error_message": "Significant refactor of ",
-      "file": "lib/store-lock.test.ts",
-      "root_cause": "2 lines replaced/restructured",
-      "fix": "Rewrote 3→4 lines (2 removed)",
-      "tags": [
-        "auto-detected",
-        "refactor",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-07-16T10:56:28.132Z"
-    },
-    {
       "id": "bug-051",
       "timestamp": "2026-07-16T10:57:01.553Z",
       "error_message": "Incorrect value in code",
@@ -1270,6 +1238,79 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-19T16:09:04.773Z"
+    },
+    {
+      "id": "bug-075",
+      "timestamp": "2026-07-20T09:51:09.439Z",
+      "error_message": "Type error",
+      "file": "app/scanner/scanner-client.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-20T09:51:09.439Z"
+    },
+    {
+      "id": "bug-076",
+      "timestamp": "2026-07-20T09:51:21.719Z",
+      "error_message": "CSS fix: dark",
+      "file": "app/scanner/scanner-client.tsx",
+      "root_cause": "dark: text-zinc-400\"> → border-amber-800 dark:bg-amber-950/40 dark:text-amber-200\"",
+      "fix": "Changed dark: text-zinc-400\"> → border-amber-800 dark:bg-amber-950/40 dark:text-amber-200\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-20T09:51:21.719Z"
+    },
+    {
+      "id": "bug-049",
+      "timestamp": "2026-07-20T10:05:00.000Z",
+      "error_message": "The scanner parsed hand-typed amounts differently from QR-scanned ones: a cashier typing \"1,200.00\" got 0 entries instead of 120, silently.",
+      "file": "app/scanner/scanner-client.tsx",
+      "root_cause": "scanner-client.tsx computed the amount with `parseFloat(fields.amount.replace(',', '.'))`. String.replace with a string argument only replaces the FIRST occurrence, so '1,200.00' became '1.200.00' and parseFloat stopped at the second dot -> 1.2 BD. lib/barcode.ts parseAmount() handles this correctly (last separator is the decimal), but the scanner never called it — the QR path only worked because parseBarcode stores an already-normalised number. So the bug only bit on MANUAL entry or editing, which is exactly the path with no second check. Both the on-screen preview AND the POSTed amount used the wrong value, so they agreed with each other and looked consistent.",
+      "fix": "Use parseAmount() in the scanner, the same function the QR path uses. Verified in-browser: typing '1,200.00' by hand now shows 120 entries (was 0). Added tests in barcode.test.ts for grouped two-decimal amounts in both conventions.",
+      "tags": [
+        "scanner",
+        "parsing",
+        "amount",
+        "silent-failure",
+        "string-replace",
+        "entries"
+      ],
+      "related_bugs": [
+        "bug-050"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-20T10:05:00.000Z"
+    },
+    {
+      "id": "bug-050",
+      "timestamp": "2026-07-20T10:05:00.000Z",
+      "error_message": "User: 'have a warning if the receipt doesn't qualify for any entries' — a non-qualifying receipt just greyed out the Confirm button with no explanation.",
+      "file": "app/scanner/scanner-client.tsx",
+      "root_cause": "canConfirm already required entries >= 1, so the button disabled itself, but nothing said why. A cashier seeing a dead button could not tell whether the receipt was genuinely under the minimum, a field was missing, or the app was broken — and with bug-049 present, a perfectly valid 1,200 BD receipt looked identical to a 9.99 BD one.",
+      "fix": "Amber panel + role=alert warning whenever an amount is entered and entries < 1, naming the actual figures ('9.990 BD is under the 10 BD needed for one entry') and prompting the cashier to check the amount reads as it does on the receipt. Only shows once an amount exists — an empty form is not an error. Verified in-browser at both states.",
+      "tags": [
+        "scanner",
+        "ux",
+        "warning",
+        "below-minimum",
+        "accessibility"
+      ],
+      "related_bugs": [
+        "bug-049"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-20T10:05:00.000Z"
     }
   ]
 }

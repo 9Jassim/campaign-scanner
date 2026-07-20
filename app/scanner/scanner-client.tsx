@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { parseBarcode } from '@/lib/barcode';
+import { parseAmount, parseBarcode } from '@/lib/barcode';
 
 export interface ScannerStore {
   id: string;
@@ -49,11 +49,19 @@ export default function ScannerClient({ stores }: { stores: ScannerStore[] }) {
     [stores, storeId],
   );
 
-  const amountNum = parseFloat(fields.amount.replace(',', '.'));
+  // parseAmount, not parseFloat: the same reading the QR code gets. A naive
+  // `replace(',', '.')` only swaps the FIRST separator, so a hand-typed
+  // "1,200.00" became "1.200.00" and parsed as 1.2 BD — a hundred and twenty
+  // entries lost, with nothing on screen to say so.
+  const amountNum = parseAmount(fields.amount);
   const entries =
     Number.isFinite(amountNum) && amountNum > 0
       ? Math.floor(amountNum / store.bdPerEntry)
       : 0;
+
+  // Only warn once there is something to judge: an empty form is not an error.
+  const hasAmount = fields.amount.trim().length > 0;
+  const belowMinimum = hasAmount && entries < 1;
 
   // Keep focus on the barcode input, ready for the next scan.
   useEffect(() => {
@@ -189,12 +197,52 @@ export default function ScannerClient({ stores }: { stores: ScannerStore[] }) {
         />
       </div>
 
-      <div className="flex items-center justify-between rounded-md bg-zinc-100 px-4 py-3 text-sm dark:bg-zinc-900">
-        <span className="text-zinc-600 dark:text-zinc-400">
+      <div
+        className={
+          belowMinimum
+            ? 'flex items-center justify-between rounded-md border border-amber-300 bg-amber-50 px-4 py-3 text-sm dark:border-amber-800 dark:bg-amber-950/40'
+            : 'flex items-center justify-between rounded-md bg-zinc-100 px-4 py-3 text-sm dark:bg-zinc-900'
+        }
+      >
+        <span
+          className={
+            belowMinimum
+              ? 'text-amber-800 dark:text-amber-200'
+              : 'text-zinc-600 dark:text-zinc-400'
+          }
+        >
           Entries this receipt
         </span>
-        <span className="text-lg font-semibold tabular-nums">{entries}</span>
+        <span
+          className={
+            belowMinimum
+              ? 'text-lg font-semibold tabular-nums text-amber-800 dark:text-amber-200'
+              : 'text-lg font-semibold tabular-nums'
+          }
+        >
+          {entries}
+        </span>
       </div>
+
+      {belowMinimum && (
+        <p
+          role="alert"
+          className="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-800 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200"
+        >
+          <strong className="font-medium">
+            This receipt does not qualify for any entries.
+          </strong>{' '}
+          {Number.isFinite(amountNum) && amountNum > 0 ? (
+            <>
+              {amountNum.toFixed(3)} BD is under the {store.bdPerEntry} BD
+              needed for one entry. Check the amount reads the way it does on
+              the receipt before logging it.
+            </>
+          ) : (
+            <>Enter the receipt amount to see how many entries it earns.</>
+          )}
+        </p>
+      )}
 
       <div className="flex gap-3">
         <button

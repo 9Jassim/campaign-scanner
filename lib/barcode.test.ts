@@ -45,6 +45,28 @@ describe('parseAmount', () => {
   it('handles thousands grouping by treating the last separator as decimal', () => {
     expect(parseAmount('1,234.500')).toBe(1234.5);
   });
+
+  // The scanner used to parse hand-typed amounts with
+  // `parseFloat(s.replace(',', '.'))`, which only swaps the FIRST separator:
+  // "1,200.00" became "1.200.00" and read as 1.2 BD. At 10 BD per entry that
+  // silently cost the customer 120 entries, so these are the shapes a cashier
+  // is most likely to type.
+  it('reads a grouped two-decimal amount, as printed on a large receipt', () => {
+    expect(parseAmount('1,200.00')).toBe(1200);
+    expect(parseAmount('12,345.67')).toBe(12345.67);
+    expect(parseAmount('999,999.99')).toBe(999999.99);
+  });
+
+  it('reads the same amounts written the European way round', () => {
+    expect(parseAmount('1.200,00')).toBe(1200);
+    expect(parseAmount('12.345,67')).toBe(12345.67);
+  });
+
+  it('reads a plain two-decimal amount', () => {
+    expect(parseAmount('15.00')).toBe(15);
+    expect(parseAmount('15,00')).toBe(15);
+    expect(parseAmount('9.99')).toBe(9.99);
+  });
 });
 
 describe('parseBarcode', () => {

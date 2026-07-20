@@ -520,3 +520,24 @@
 | 19:08 | Session end: 1 writes across 1 files (scanner-client.tsx) | 0 reads | ~21 tok |
 | 19:09 | Edited app/scanner/scanner-client.tsx | inline fix | ~9 |
 | 16:20 | Renamed the scanner's visible label "Scan or paste barcode" -> "Scan or paste QR code". Internal naming (lib/barcode.ts, parseBarcode, barcodeRef) left alone — offered to rename separately. | app/scanner/scanner-client.tsx | 115 tests pass, typecheck+lint clean | ~1500 |
+| 19:09 | Session end: 2 writes across 1 files (scanner-client.tsx) | 0 reads | ~30 tok |
+
+## Session: 2026-07-19 19:30
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-20 12:31
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-20 12:32
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 12:50 | Edited app/scanner/scanner-client.tsx | inline fix | ~17 |
+| 12:51 | Edited app/scanner/scanner-client.tsx | CSS: parseFloat, judge | ~182 |
+| 12:51 | Edited app/scanner/scanner-client.tsx | expanded (+40 lines) | ~462 |
+| 12:51 | Edited lib/barcode.test.ts | expanded (+22 lines) | ~307 |
+| 10:05 | Added the below-minimum warning the user asked for, and found a real bug while doing it: the scanner computed amounts with parseFloat(s.replace(',','.')) — String.replace only swaps the FIRST separator, so a hand-typed "1,200.00" became "1.200.00" -> 1.2 BD -> 0 entries instead of 120, silently. The QR path was fine (parseBarcode stores a normalised number), so this only bit manual entry. Now uses parseAmount everywhere. Warning is amber + role=alert, names the actual figures, only shows once an amount exists. Verified in-browser via HTTP-obtained session cookie (no password typed): 9.99 BD -> warning + Confirm disabled; hand-typed 1,200.00 -> 120 entries, no warning, Confirm enabled. Did NOT click Confirm — would have written a real receipt. | app/scanner/scanner-client.tsx, lib/barcode.test.ts | 118 tests pass, typecheck+lint+build clean | ~9000 |

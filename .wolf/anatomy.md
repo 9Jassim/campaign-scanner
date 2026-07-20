@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-19T16:09:04.761Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-20T09:51:48.138Z
 > Files: 85 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
@@ -90,7 +90,7 @@
 ## app/scanner/
 
 - `page.tsx` — dynamic (~364 tok)
-- `scanner-client.tsx` — The scan is already saved at this point — this only reports what happened to (~2612 tok)
+- `scanner-client.tsx` — The scan is already saved at this point — this only reports what happened to (~3115 tok)
 
 ## app/settings/
 
@@ -132,7 +132,7 @@
 - `auth.ts` — Per-user permission overrides stored in `user_profiles.permissions` (jsonb). (~1242 tok)
 - `backup.test.ts` — Declares dec (~1312 tok)
 - `backup.ts` — Weekly backup snapshot for a store's Google Sheet. (~1210 tok)
-- `barcode.test.ts` — Declares result (~671 tok)
+- `barcode.test.ts` — Declares result (~936 tok)
 - `barcode.ts` — Barcode parsing for receipt barcodes. (~673 tok)
 - `crypto.test.ts` — Declares KEY (~498 tok)
 - `crypto.ts` — AES-256-GCM encryption for secrets stored at rest (e.g. Meta access tokens). (~538 tok)
