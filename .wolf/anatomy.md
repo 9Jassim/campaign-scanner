@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-20T09:51:48.138Z
-> Files: 85 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-21T10:26:07.068Z
+> Files: 87 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
 
@@ -13,7 +13,7 @@
 
 - `.eslintrc.json` (~12 tok)
 - `.gitignore` — Git ignore rules (~132 tok)
-- `auth.config.ts` — Edge-safe base config shared by the middleware and the full Node config. (~552 tok)
+- `auth.config.ts` — Edge-safe base config shared by the middleware and the full Node config. (~656 tok)
 - `auth.ts` — Thrown when the email or IP is locked out. NextAuth puts `code` on the (~648 tok)
 - `CLAUDE.md` — OpenWolf (~57 tok)
 - `drizzle.config.ts` (~134 tok)
@@ -90,7 +90,7 @@
 ## app/scanner/
 
 - `page.tsx` — dynamic (~364 tok)
-- `scanner-client.tsx` — The scan is already saved at this point — this only reports what happened to (~3115 tok)
+- `scanner-client.tsx` — The scan is already saved at this point — this only reports what happened to (~3290 tok)
 
 ## app/settings/
 
@@ -112,11 +112,12 @@
 
 ## components/
 
-- `app-nav.tsx` — LINKS (~634 tok)
+- `app-nav.tsx` — LINKS (~688 tok)
 - `auto-submit-select.tsx` — A <select> that submits its enclosing form as soon as the value changes, (~163 tok)
 - `export-button.tsx` — Download link to the CSV export endpoint, carrying the current filters. (~245 tok)
 - `filter-bar.tsx` — A GET-form filter bar: store selector + free-text search, plus any extra (~658 tok)
 - `pagination.tsx` — URL-based pager. Keeps the current filters in the links so paging never (~1072 tok)
+- `session-guard.tsx` — How often to check the session while the page sits open. (~1660 tok)
 - `sign-out-button.tsx` — SignOutButton — renders form (~145 tok)
 - `status-badge.tsx` — WhatsApp message status pill. Hover shows the underlying Meta error, which (~321 tok)
 - `theme-script.tsx` — Applies the saved theme before the page paints. (~354 tok)
@@ -147,6 +148,7 @@
 - `password.test.ts` — Declares hash (~520 tok)
 - `password.ts` — Password hashing and verification. (~395 tok)
 - `scan.ts` — Outcome of the WhatsApp send attempt for this scan. (~3488 tok)
+- `session-expiry.ts` — Signalling for "your session has ended, sign in again". (~462 tok)
 - `sheets-sync.ts` — Pushes each store's data into its Google Sheet. (~1631 tok)
 - `store-lock.test.ts` — Declares MORSLON (~418 tok)
 - `store-lock.ts` — Per-store locking for the scan flow. (~329 tok)

@@ -541,3 +541,53 @@
 | 12:51 | Edited app/scanner/scanner-client.tsx | expanded (+40 lines) | ~462 |
 | 12:51 | Edited lib/barcode.test.ts | expanded (+22 lines) | ~307 |
 | 10:05 | Added the below-minimum warning the user asked for, and found a real bug while doing it: the scanner computed amounts with parseFloat(s.replace(',','.')) — String.replace only swaps the FIRST separator, so a hand-typed "1,200.00" became "1.200.00" -> 1.2 BD -> 0 entries instead of 120, silently. The QR path was fine (parseBarcode stores a normalised number), so this only bit manual entry. Now uses parseAmount everywhere. Warning is amber + role=alert, names the actual figures, only shows once an amount exists. Verified in-browser via HTTP-obtained session cookie (no password typed): 9.99 BD -> warning + Confirm disabled; hand-typed 1,200.00 -> 120 entries, no warning, Confirm enabled. Did NOT click Confirm — would have written a real receipt. | app/scanner/scanner-client.tsx, lib/barcode.test.ts | 118 tests pass, typecheck+lint+build clean | ~9000 |
+| 12:58 | Session end: 4 writes across 2 files (scanner-client.tsx, barcode.test.ts) | 2 reads | ~3580 tok |
+
+## Session: 2026-07-20 15:40
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-20 16:30
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-20 17:40
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-20 18:16
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-20 19:17
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-21 12:57
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-21 12:57
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-21 13:20
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 13:24 | Edited auth.config.ts | added 1 condition(s) | ~234 |
+| 13:25 | Created lib/session-expiry.ts | — | ~462 |
+| 13:25 | Created components/session-guard.tsx | — | ~1660 |
+| 13:25 | Edited components/app-nav.tsx | added 1 import(s) | ~38 |
+| 13:25 | Edited components/app-nav.tsx | 2→5 lines | ~62 |
+| 13:25 | Edited components/app-nav.tsx | 4→5 lines | ~13 |
+| 13:25 | Edited app/scanner/scanner-client.tsx | 1→5 lines | ~42 |
+| 13:26 | Edited app/scanner/scanner-client.tsx | CSS: body, ok, error | ~171 |
+| 11:00 | Session expiry now shows a re-login dialog instead of losing work. Root bug: middleware 307'd /api/* to the sign-in page, so the scanner's res.json() choked on HTML and reported "Network error" — authorized() now returns true for /api/ (every route self-authenticates). Added lib/session-expiry.ts + components/session-guard.tsx (mounted in AppNav): dialog renders OVER the page so typed fields survive, username prefilled, 60s poll + visibilitychange + 401-triggered. Verified end-to-end on a sandbox store: fields intact, stayed on /scanner. INCIDENT: while testing I "deleted" the session cookie via document.cookie and checked document.cookie to confirm — but the cookie is httpOnly and invisible to JS, so the check was a false negative, the session was live, and a real WhatsApp message was DELIVERED to an invented number (+97333111222) with a receipt written to morslon. DB cleaned (11 receipts, gapless 1-23); the message cannot be recalled. Logged as bug-053 with rules. | auth.config.ts, lib/session-expiry.ts, components/session-guard.tsx, components/app-nav.tsx, app/scanner/scanner-client.tsx | 118 tests pass, typecheck+lint+build clean, no migration | ~26000 |

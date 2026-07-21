@@ -32,11 +32,16 @@ export const authConfig = {
       const isLoggedIn = !!auth?.user;
       const { pathname } = nextUrl;
 
-      const isPublic =
-        pathname === '/' ||
-        pathname.startsWith('/sign-in') ||
-        pathname.startsWith('/api/webhook') || // Meta webhook: own token, not auth
-        pathname.startsWith('/api/cron'); // Vercel Cron: CRON_SECRET, not a session
+      // Every API route authenticates itself — /api/scan and /api/export check
+      // the session, /api/webhook checks a signature, /api/cron checks
+      // CRON_SECRET. Let them answer for themselves so they can reply with
+      // JSON. Redirecting here instead sent a 307 to the sign-in page, which
+      // fetch follows, so `res.json()` choked on HTML and a cashier whose
+      // session had lapsed mid-scan was told "Network error — please try
+      // again" and lost the scan on retry.
+      if (pathname.startsWith('/api/')) return true;
+
+      const isPublic = pathname === '/' || pathname.startsWith('/sign-in');
 
       if (isPublic) return true;
       return isLoggedIn;

@@ -622,22 +622,6 @@
       "last_seen": "2026-07-16T10:45:00.000Z"
     },
     {
-      "id": "bug-051",
-      "timestamp": "2026-07-16T10:57:01.553Z",
-      "error_message": "Incorrect value in code",
-      "file": "lib/store-lock.test.ts",
-      "root_cause": "Had './scan'",
-      "fix": "Changed to './store-lock'",
-      "tags": [
-        "auto-detected",
-        "wrong-value",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-07-16T10:57:01.553Z"
-    },
-    {
       "id": "bug-038",
       "timestamp": "2026-07-16T11:15:00.000Z",
       "error_message": "RACE_CONDITION_HANDLING.md as written would have shipped an advisory lock that protected nothing: it specified pg_advisory_xact_lock() but left the transaction at Serializable.",
@@ -704,22 +688,6 @@
       "last_seen": "2026-07-16T11:15:00.000Z"
     },
     {
-      "id": "bug-052",
-      "timestamp": "2026-07-16T14:48:11.030Z",
-      "error_message": "Type error",
-      "file": "app/settings/page.tsx",
-      "root_cause": "Missing or incorrect type annotation",
-      "fix": "Added type assertion/annotation",
-      "tags": [
-        "auto-detected",
-        "type-fix",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-07-16T14:48:11.030Z"
-    },
-    {
       "id": "bug-041",
       "timestamp": "2026-07-16T15:00:00.000Z",
       "error_message": "User: 'is the connector to google spreadsheet work?' — Settings showed a 'Sheet ID (optional)' field that saved fine and did absolutely nothing.",
@@ -739,22 +707,6 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-16T15:00:00.000Z"
-    },
-    {
-      "id": "bug-053",
-      "timestamp": "2026-07-16T15:44:14.565Z",
-      "error_message": "CSS fix: href",
-      "file": "components/app-nav.tsx",
-      "root_cause": "href: '/admin/users', label: 'Users', roles: ['admin'] → '/admin/sheets', label: 'Sheets', roles: ['admin']",
-      "fix": "Changed href: '/admin/users', label: 'Users', roles: ['admin'] → '/admin/sheets', label: 'Sheets', roles: ['admin']",
-      "tags": [
-        "auto-detected",
-        "style-fix",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-07-16T15:44:14.565Z"
     },
     {
       "id": "bug-054",
@@ -1311,6 +1263,120 @@
       ],
       "occurrences": 1,
       "last_seen": "2026-07-20T10:05:00.000Z"
+    },
+    {
+      "id": "bug-077",
+      "timestamp": "2026-07-21T10:24:41.375Z",
+      "error_message": "Significant refactor of ",
+      "file": "auth.config.ts",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 13→18 lines (5 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-21T10:24:41.375Z"
+    },
+    {
+      "id": "bug-078",
+      "timestamp": "2026-07-21T10:25:36.150Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/app-nav.tsx",
+      "root_cause": "Had './sign-out-button'",
+      "fix": "Changed to './session-guard'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-21T10:25:36.150Z"
+    },
+    {
+      "id": "bug-079",
+      "timestamp": "2026-07-21T10:26:07.096Z",
+      "error_message": "Wrong condition in logic",
+      "file": "app/scanner/scanner-client.tsx",
+      "root_cause": "Condition was: if (res.ok && data.success)",
+      "fix": "Changed to: if (isSignedOutResponse(res)",
+      "tags": [
+        "auto-detected",
+        "logic-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-21T10:26:07.096Z"
+    },
+    {
+      "id": "bug-051",
+      "timestamp": "2026-07-21T11:00:00.000Z",
+      "error_message": "A cashier whose session lapsed mid-scan pressed Confirm and was told \"Network error — please try again\", then lost the whole scan.",
+      "file": "auth.config.ts",
+      "root_cause": "The middleware matcher covered /api/*, and the `authorized` callback returned false for an unauthenticated request, so NextAuth answered POST /api/scan with a 307 redirect to /sign-in. fetch follows redirects, so the scanner received the sign-in PAGE, `res.json()` threw on HTML, and the catch block reported a network error. Retrying could not work, and any navigation then bounced them to sign-in, discarding the typed invoice, name, phone and amount with a customer waiting.",
+      "fix": "Return true from `authorized` for /api/ paths: every API route already authenticates itself (scan/export check the session, webhook checks a signature, cron checks CRON_SECRET), so they can answer with their own JSON. Verified: POST /api/scan with no session is now 401 {\"error\":\"Unauthorized\"}; pages still 307 to sign-in; /api/webhook still 403s on a bad token and /api/cron still 401s without its secret.",
+      "tags": [
+        "auth",
+        "middleware",
+        "api",
+        "redirect",
+        "session-expiry",
+        "data-loss",
+        "scanner"
+      ],
+      "related_bugs": [
+        "bug-052"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-21T11:00:00.000Z"
+    },
+    {
+      "id": "bug-052",
+      "timestamp": "2026-07-21T11:00:00.000Z",
+      "error_message": "User: 'when the session expire ... it should show a popup to login again ... so the user don't enter scan and after when they press confirm and log it navigate them to the login page'",
+      "file": "components/session-guard.tsx",
+      "root_cause": "Nothing detected expiry client-side. Sessions are 2h sliding, so a till left over a quiet spell lapses; the first sign was a failed submit.",
+      "fix": "Added lib/session-expiry.ts (a DOM event + isSignedOutResponse) and components/session-guard.tsx, mounted in AppNav so it covers every signed-in page. It shows a 'Signed out' dialog OVER the page — nothing unmounts, so typed fields survive — with the username prefilled and only a password to enter, then signIn({redirect:false}) + router.refresh(). Two triggers: a 60s poll (skipped while the tab is hidden) plus a visibilitychange check, and notifySessionExpired() raised by the scanner the instant an API call returns 401.",
+      "fix_verified": "In-browser end to end: signed in on a sandbox store, filled a scan, deleted the profile server-side to invalidate the session, pressed Confirm. Stayed on /scanner, dialog appeared with username prefilled, and all four fields (SANDBOX-1 / TEST CUSTOMER / +97337110807 / 45.5) were intact.",
+      "tags": [
+        "auth",
+        "session-expiry",
+        "ux",
+        "modal",
+        "scanner",
+        "data-loss"
+      ],
+      "related_bugs": [
+        "bug-051"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-21T11:00:00.000Z"
+    },
+    {
+      "id": "bug-053",
+      "timestamp": "2026-07-21T11:00:00.000Z",
+      "error_message": "INCIDENT (self-inflicted): a real WhatsApp template message was delivered to +97333111222, a phone number invented for a test, and a real receipt + 4 raffle entries were written to the live morslon store.",
+      "file": "process",
+      "root_cause": "While testing session expiry I tried to simulate it by deleting the session cookie with `document.cookie = '...expires=1970'`, then checked `document.cookie.includes('session-token')` and got false — which I read as 'cookie deleted'. But NextAuth's session cookie is httpOnly and therefore INVISIBLE to document.cookie: the check was a false negative and could never have shown otherwise. The session was still live, Confirm succeeded for real, and because it ran against morslon (which has Meta credentials) a template message was sent and delivered. The user had explicitly said to test with 37110807 or nothing at all; I used a made-up number instead.",
+      "fix": "Deleted the receipt, its 4 raffle entries and the contact; morslon is back to 11 receipts and a gapless 1-23. The message itself cannot be recalled. RULES FOR NEXT TIME: (1) never scan against a store that has Meta credentials — create a throwaway store with none, so hasWhatsAppCredentials() is false and no send is possible whatever else goes wrong; (2) if a phone number is unavoidable, use ONLY the one the user nominated; (3) never verify a security precondition with a method that cannot observe it — httpOnly cookies are invisible to JS, so simulate expiry SERVER-side (delete the profile) instead of touching cookies.",
+      "tags": [
+        "incident",
+        "testing",
+        "whatsapp",
+        "production-data",
+        "httponly",
+        "false-negative",
+        "process"
+      ],
+      "related_bugs": [
+        "bug-052"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-21T11:00:00.000Z"
     }
   ]
 }

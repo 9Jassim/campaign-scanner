@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { UserProfile } from '@prisma/client';
+import SessionGuard from './session-guard';
 import SignOutButton from './sign-out-button';
 import ThemeToggle from './theme-toggle';
 
@@ -30,7 +31,10 @@ export default function AppNav({
   const links = LINKS.filter((l) => l.roles.includes(role));
 
   return (
-    <header className="border-b border-black/10 dark:border-white/10">
+    <>
+      {/* Lives here because the nav renders on every signed-in page. */}
+      <SessionGuard username={profile.username} />
+      <header className="border-b border-black/10 dark:border-white/10">
       <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-3 px-6 py-3">
         <nav className="flex flex-wrap items-center gap-1">
           {links.map((l) => {
@@ -57,7 +61,8 @@ export default function AppNav({
           <ThemeToggle />
           <SignOutButton />
         </div>
-      </div>
-    </header>
+        </div>
+      </header>
+    </>
   );
 }

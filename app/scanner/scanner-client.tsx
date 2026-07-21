@@ -2,6 +2,10 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { parseAmount, parseBarcode } from '@/lib/barcode';
+import {
+  isSignedOutResponse,
+  notifySessionExpired,
+} from '@/lib/session-expiry';
 
 export interface ScannerStore {
   id: string;
@@ -110,6 +114,19 @@ export default function ScannerClient({ stores }: { stores: ScannerStore[] }) {
           amount: Number.isFinite(amountNum) ? amountNum : 0,
         }),
       });
+      // Check before reading the body: a lapsed session must raise the sign-in
+      // dialog, not look like a failed scan. Nothing here is cleared, so the
+      // cashier signs in and presses Confirm again on the same details.
+      if (isSignedOutResponse(res)) {
+        notifySessionExpired();
+        setOutcome({
+          ok: false,
+          error:
+            'Your session ended, so this scan was not logged. Sign in above, then press Confirm again — nothing has been lost.',
+        });
+        return;
+      }
+
       const data = await res.json();
       if (res.ok && data.success) {
         setOutcome({
