@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-21T10:26:07.068Z
-> Files: 87 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-21T11:25:52.315Z
+> Files: 88 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
 
@@ -79,6 +79,10 @@
 
 - `page.tsx` — Cap invoices shown per contact — a six-month campaign can rack them up. (~2568 tok)
 
+## app/messages/
+
+- `page.tsx` — Messages customers have sent to the store's WhatsApp number. (~1904 tok)
+
 ## app/raffle/
 
 - `page.tsx` — dynamic — renders table (~1500 tok)
@@ -112,7 +116,7 @@
 
 ## components/
 
-- `app-nav.tsx` — LINKS (~688 tok)
+- `app-nav.tsx` — LINKS (~709 tok)
 - `auto-submit-select.tsx` — A <select> that submits its enclosing form as soon as the value changes, (~163 tok)
 - `export-button.tsx` — Download link to the CSV export endpoint, carrying the current filters. (~245 tok)
 - `filter-bar.tsx` — A GET-form filter bar: store selector + free-text search, plus any extra (~658 tok)

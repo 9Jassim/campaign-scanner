@@ -15,6 +15,7 @@ const LINKS: NavLink[] = [
   { href: '/contacts', label: 'Contacts', roles: ['admin', 'manager'] },
   { href: '/receipts', label: 'Receipts', roles: ['admin', 'manager'] },
   { href: '/raffle', label: 'Raffle', roles: ['admin', 'manager'] },
+  { href: '/messages', label: 'Messages', roles: ['admin', 'manager'] },
   { href: '/settings', label: 'Settings', roles: ['admin', 'manager'] },
   { href: '/admin/users', label: 'Users', roles: ['admin'] },
   { href: '/admin/sheets', label: 'Sheets', roles: ['admin'] },

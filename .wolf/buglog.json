@@ -1377,6 +1377,22 @@
       ],
       "occurrences": 1,
       "last_seen": "2026-07-21T11:00:00.000Z"
+    },
+    {
+      "id": "bug-080",
+      "timestamp": "2026-07-21T11:25:52.328Z",
+      "error_message": "CSS fix: href",
+      "file": "components/app-nav.tsx",
+      "root_cause": "href: '/raffle', label: 'Raffle', roles: ['admin', 'manager'] → '/messages', label: 'Messages', roles: ['admin', 'manager']",
+      "fix": "Changed href: '/raffle', label: 'Raffle', roles: ['admin', 'manager'] → '/messages', label: 'Messages', roles: ['admin', 'manager']",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-21T11:25:52.328Z"
     }
   ]
 }
