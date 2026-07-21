@@ -2,12 +2,12 @@
   "version": 1,
   "created_at": "2026-07-14T12:19:01.896Z",
   "lifetime": {
-    "total_tokens_estimated": 525967,
-    "total_reads": 139,
-    "total_writes": 1008,
+    "total_tokens_estimated": 530594,
+    "total_reads": 141,
+    "total_writes": 1018,
     "total_sessions": 40,
     "anatomy_hits": 83,
-    "anatomy_misses": 56,
+    "anatomy_misses": 58,
     "repeated_reads_blocked": 91,
     "estimated_savings_vs_bare_cli": 212428
   },
@@ -6774,6 +6774,85 @@
         "output_tokens_estimated": 2682,
         "reads_count": 1,
         "writes_count": 8,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-07-21-1320",
+      "started": "2026-07-21T10:20:18.250Z",
+      "ended": "2026-07-21T11:32:11.407Z",
+      "reads": [
+        {
+          "file": "C:/Users/jassi/AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/fa9524d3-b4a7-4982-b993-c953501b7615/tasks/b2n4b1648.output",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/fa9524d3-b4a7-4982-b993-c953501b7615/tasks/bac831pwa.output",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/auth.config.ts",
+          "tokens_estimated": 234,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/session-expiry.ts",
+          "tokens_estimated": 462,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/session-guard.tsx",
+          "tokens_estimated": 1660,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
+          "tokens_estimated": 38,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
+          "tokens_estimated": 62,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
+          "tokens_estimated": 13,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 42,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 171,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/messages/page.tsx",
+          "tokens_estimated": 1904,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
+          "tokens_estimated": 41,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 4627,
+        "reads_count": 2,
+        "writes_count": 10,
         "repeated_reads_blocked": 0,
         "anatomy_lookups": 0
       }

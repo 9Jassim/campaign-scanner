@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-21T11:25:52.315Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-21T11:37:51.329Z
 > Files: 88 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
@@ -81,7 +81,7 @@
 
 ## app/messages/
 
-- `page.tsx` — Messages customers have sent to the store's WhatsApp number. (~1904 tok)
+- `page.tsx` — Conversations per page — one row per person who has written in. (~2911 tok)
 
 ## app/raffle/
 
