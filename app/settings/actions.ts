@@ -15,8 +15,10 @@ function field(formData: FormData, key: string): string | null {
 }
 
 export async function saveStoreSettings(formData: FormData) {
+  // Admin only, matching the page guard — a manager must not be able to save
+  // settings by POSTing the action directly.
   const profile = await getCurrentUserProfile();
-  if (!profile || (profile.role !== 'admin' && profile.role !== 'manager')) {
+  if (!profile || profile.role !== 'admin') {
     throw new Error('Forbidden');
   }
 

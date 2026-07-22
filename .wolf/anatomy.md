@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-22T14:10:02.744Z
-> Files: 100 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-22T15:05:43.079Z
+> Files: 101 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
 
@@ -111,8 +111,8 @@
 
 ## app/settings/
 
-- `actions.ts` — API routes: GET (1 endpoints) (~665 tok)
-- `page.tsx` — A write-only secret input: never renders the stored value, only whether one (~2358 tok)
+- `actions.ts` — API routes: GET (1 endpoints) (~691 tok)
+- `page.tsx` — A write-only secret input: never renders the stored value, only whether one (~2399 tok)
 
 ## app/sign-in/
 
@@ -129,7 +129,8 @@
 
 ## components/
 
-- `app-nav.tsx` — LINKS (~730 tok)
+- `admin-menu.tsx` — The admin-only pages folded into one dropdown, so the nav stays short. (~833 tok)
+- `app-nav.tsx` — Daily-use pages keep top-level links; admin-only pages live in the menu. (~793 tok)
 - `auto-submit-select.tsx` — A <select> that submits its enclosing form as soon as the value changes, (~163 tok)
 - `export-button.tsx` — Download link to the CSV export endpoint, carrying the current filters. (~245 tok)
 - `filter-bar.tsx` — A GET-form filter bar: store selector + free-text search, plus any extra (~658 tok)

@@ -687,3 +687,16 @@
 | 17:10 | Edited app/scanner/scanner-client.tsx | 3→4 lines | ~60 |
 | 17:25 | Scanner auto-log: Enter after a clean scan submits immediately; pauses (fields+warning) for bad/incomplete/below-min codes. Verified live on recreated zz-sandbox (no creds, cashier scoped to it, number 37110807 only): auto-log 2 entries, below-min paused, garbage errored, duplicate 409 shown. Sandbox+user deleted after. | app/scanner/scanner-client.tsx | 4/4 scenarios pass, tsc+lint+build clean | ~6000 |
 | 17:17 | Session end: 24 writes across 11 files (schema.prisma, migration.sql, sheets-sync.ts, actions.ts, route.ts) | 6 reads | ~17137 tok |
+| 17:37 | Session end: 24 writes across 11 files (schema.prisma, migration.sql, sheets-sync.ts, actions.ts, route.ts) | 6 reads | ~17137 tok |
+| 17:55 | Created components/admin-menu.tsx | — | ~833 |
+| 17:55 | Edited components/app-nav.tsx | CSS: ADMIN_LINKS | ~323 |
+| 17:55 | Edited components/app-nav.tsx | 3→6 lines | ~44 |
+| 18:05 | Condensed nav: 3 admin links folded into an "Admin" dropdown (components/admin-menu.tsx); verified live as throwaway admin zz-navtest (read-only pages only, deleted after). Learned: sign OUT before deleting a test user, else the orphaned JWT cookie causes a /sign-in <-> /scanner redirect loop. | components/admin-menu.tsx, components/app-nav.tsx | verified, build clean | ~4000 |
+| 18:01 | Session end: 27 writes across 13 files (schema.prisma, migration.sql, sheets-sync.ts, actions.ts, route.ts) | 6 reads | ~18337 tok |
+| 18:04 | Edited app/settings/page.tsx | inline fix | ~17 |
+| 18:04 | Edited app/settings/page.tsx | requireManager() → requireAdmin() | ~54 |
+| 18:04 | Edited app/settings/actions.ts | modified if() | ~74 |
+| 18:04 | Edited components/app-nav.tsx | 6→6 lines | ~57 |
+| 18:05 | Edited lib/auth.ts | inline fix | ~22 |
+| 18:20 | Settings made admin-only: requireAdmin on page, admin-only role check in saveStoreSettings, moved into the Admin dropdown | app/settings/*, components/app-nav.tsx, lib/auth.ts | tsc+lint+build clean | ~1500 |
+| 18:06 | Session end: 32 writes across 14 files (schema.prisma, migration.sql, sheets-sync.ts, actions.ts, route.ts) | 6 reads | ~18561 tok |

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { UserProfile } from '@prisma/client';
+import AdminMenu, { type AdminLink } from './admin-menu';
 import SessionGuard from './session-guard';
 import SignOutButton from './sign-out-button';
 import ThemeToggle from './theme-toggle';
@@ -10,16 +11,20 @@ interface NavLink {
   roles: Array<'admin' | 'manager' | 'cashier'>;
 }
 
+/** Daily-use pages keep top-level links; admin-only pages live in the menu. */
 const LINKS: NavLink[] = [
   { href: '/scanner', label: 'Scanner', roles: ['admin', 'manager', 'cashier'] },
   { href: '/contacts', label: 'Contacts', roles: ['admin', 'manager'] },
   { href: '/receipts', label: 'Receipts', roles: ['admin', 'manager'] },
   { href: '/raffle', label: 'Raffle', roles: ['admin', 'manager'] },
   { href: '/messages', label: 'Messages', roles: ['admin', 'manager'] },
-  { href: '/settings', label: 'Settings', roles: ['admin', 'manager'] },
-  { href: '/admin/users', label: 'Users', roles: ['admin'] },
-  { href: '/admin/sheets', label: 'Sheets', roles: ['admin'] },
-  { href: '/admin/import-failover', label: 'Failover', roles: ['admin'] },
+];
+
+const ADMIN_LINKS: AdminLink[] = [
+  { href: '/settings', label: 'Settings' },
+  { href: '/admin/users', label: 'Users' },
+  { href: '/admin/sheets', label: 'Google Sheets' },
+  { href: '/admin/import-failover', label: 'Failover import' },
 ];
 
 export default function AppNav({
@@ -55,6 +60,9 @@ export default function AppNav({
               </Link>
             );
           })}
+          {role === 'admin' && (
+            <AdminMenu links={ADMIN_LINKS} current={current} />
+          )}
         </nav>
         <div className="flex items-center gap-3">
           <span className="hidden text-xs text-zinc-500 sm:inline">

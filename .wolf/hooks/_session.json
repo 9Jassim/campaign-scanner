@@ -177,6 +177,54 @@
       "action": "edit",
       "tokens": 60,
       "at": "2026-07-22T14:10:02.760Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/admin-menu.tsx",
+      "action": "create",
+      "tokens": 833,
+      "at": "2026-07-22T14:55:12.323Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
+      "action": "edit",
+      "tokens": 323,
+      "at": "2026-07-22T14:55:28.158Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
+      "action": "edit",
+      "tokens": 44,
+      "at": "2026-07-22T14:55:42.158Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/page.tsx",
+      "action": "edit",
+      "tokens": 17,
+      "at": "2026-07-22T15:04:21.927Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/page.tsx",
+      "action": "edit",
+      "tokens": 54,
+      "at": "2026-07-22T15:04:34.748Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/actions.ts",
+      "action": "edit",
+      "tokens": 74,
+      "at": "2026-07-22T15:04:38.292Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
+      "action": "edit",
+      "tokens": 57,
+      "at": "2026-07-22T15:04:47.330Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/auth.ts",
+      "action": "edit",
+      "tokens": 22,
+      "at": "2026-07-22T15:05:43.090Z"
     }
   ],
   "edit_counts": {
@@ -186,18 +234,21 @@
     "app/admin/sheets/actions.ts": 2,
     "app/api/cron/sheets-sync/route.ts": 1,
     "app/admin/sheets/page.tsx": 6,
-    "app/settings/actions.ts": 1,
-    "app/settings/page.tsx": 1,
+    "app/settings/actions.ts": 2,
+    "app/settings/page.tsx": 3,
     "lib/retry-policy.ts": 1,
     "lib/retry-runner.ts": 1,
     "app/api/cron/retry-queue/route.ts": 1,
     "vercel.json": 1,
     "lib/retry-policy.test.ts": 1,
-    "app/scanner/scanner-client.tsx": 5
+    "app/scanner/scanner-client.tsx": 5,
+    "components/admin-menu.tsx": 1,
+    "components/app-nav.tsx": 3,
+    "lib/auth.ts": 1
   },
   "anatomy_hits": 6,
   "anatomy_misses": 0,
   "repeated_reads_warned": 0,
   "cerebrum_warnings": 0,
-  "stop_count": 5
+  "stop_count": 8
 }

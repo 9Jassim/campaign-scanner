@@ -91,7 +91,7 @@ export async function assertStoreAccess(
 }
 
 /**
- * Page guard for the management portal (contacts/receipts/raffle/settings).
+ * Page guard for the management portal (contacts/receipts/raffle/messages).
  * Redirects unauthenticated users to sign-in and cashiers to the scanner
  * (cashiers are scanner-only). Returns the profile for allowed users.
  */

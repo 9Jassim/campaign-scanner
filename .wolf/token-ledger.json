@@ -2,14 +2,14 @@
   "version": 1,
   "created_at": "2026-07-14T12:19:01.896Z",
   "lifetime": {
-    "total_tokens_estimated": 621816,
-    "total_reads": 177,
-    "total_writes": 1128,
+    "total_tokens_estimated": 675851,
+    "total_reads": 195,
+    "total_writes": 1211,
     "total_sessions": 47,
-    "anatomy_hits": 114,
+    "anatomy_hits": 132,
     "anatomy_misses": 62,
     "repeated_reads_blocked": 91,
-    "estimated_savings_vs_bare_cli": 218628
+    "estimated_savings_vs_bare_cli": 222228
   },
   "sessions": [
     {
@@ -7738,6 +7738,580 @@
         "output_tokens_estimated": 8909,
         "reads_count": 6,
         "writes_count": 24,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 6
+      }
+    },
+    {
+      "id": "session-2026-07-22-1535",
+      "started": "2026-07-22T12:35:27.217Z",
+      "ended": "2026-07-22T14:37:46.773Z",
+      "reads": [
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/cron/sheets-sync/route.ts",
+          "tokens_estimated": 508,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/actions.ts",
+          "tokens_estimated": 648,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/page.tsx",
+          "tokens_estimated": 2358,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/whatsapp.ts",
+          "tokens_estimated": 1379,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/vercel.json",
+          "tokens_estimated": 45,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 3290,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/prisma/schema.prisma",
+          "tokens_estimated": 191,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/prisma/migrations/0007_failover_sync_status/migration.sql",
+          "tokens_estimated": 54,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/sheets-sync.ts",
+          "tokens_estimated": 2830,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/actions.ts",
+          "tokens_estimated": 164,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/actions.ts",
+          "tokens_estimated": 35,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/cron/sheets-sync/route.ts",
+          "tokens_estimated": 142,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 85,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 168,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 468,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 406,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 88,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 8,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/actions.ts",
+          "tokens_estimated": 33,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/page.tsx",
+          "tokens_estimated": 217,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/retry-policy.ts",
+          "tokens_estimated": 700,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/retry-runner.ts",
+          "tokens_estimated": 1439,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/cron/retry-queue/route.ts",
+          "tokens_estimated": 468,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/vercel.json",
+          "tokens_estimated": 52,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/retry-policy.test.ts",
+          "tokens_estimated": 594,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 442,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 142,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 14,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 109,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 60,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 8228,
+        "output_tokens_estimated": 8909,
+        "reads_count": 6,
+        "writes_count": 24,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 6
+      }
+    },
+    {
+      "id": "session-2026-07-22-1535",
+      "started": "2026-07-22T12:35:27.217Z",
+      "ended": "2026-07-22T15:01:00.573Z",
+      "reads": [
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/cron/sheets-sync/route.ts",
+          "tokens_estimated": 508,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/actions.ts",
+          "tokens_estimated": 648,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/page.tsx",
+          "tokens_estimated": 2358,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/whatsapp.ts",
+          "tokens_estimated": 1379,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/vercel.json",
+          "tokens_estimated": 45,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 3290,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/prisma/schema.prisma",
+          "tokens_estimated": 191,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/prisma/migrations/0007_failover_sync_status/migration.sql",
+          "tokens_estimated": 54,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/sheets-sync.ts",
+          "tokens_estimated": 2830,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/actions.ts",
+          "tokens_estimated": 164,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/actions.ts",
+          "tokens_estimated": 35,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/cron/sheets-sync/route.ts",
+          "tokens_estimated": 142,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 85,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 168,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 468,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 406,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 88,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 8,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/actions.ts",
+          "tokens_estimated": 33,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/page.tsx",
+          "tokens_estimated": 217,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/retry-policy.ts",
+          "tokens_estimated": 700,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/retry-runner.ts",
+          "tokens_estimated": 1439,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/cron/retry-queue/route.ts",
+          "tokens_estimated": 468,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/vercel.json",
+          "tokens_estimated": 52,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/retry-policy.test.ts",
+          "tokens_estimated": 594,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 442,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 142,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 14,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 109,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 60,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/admin-menu.tsx",
+          "tokens_estimated": 833,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
+          "tokens_estimated": 323,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
+          "tokens_estimated": 44,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 8228,
+        "output_tokens_estimated": 10109,
+        "reads_count": 6,
+        "writes_count": 27,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 6
+      }
+    },
+    {
+      "id": "session-2026-07-22-1535",
+      "started": "2026-07-22T12:35:27.217Z",
+      "ended": "2026-07-22T15:06:15.739Z",
+      "reads": [
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/cron/sheets-sync/route.ts",
+          "tokens_estimated": 508,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/actions.ts",
+          "tokens_estimated": 648,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/page.tsx",
+          "tokens_estimated": 2358,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/whatsapp.ts",
+          "tokens_estimated": 1379,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/vercel.json",
+          "tokens_estimated": 45,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 3290,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/prisma/schema.prisma",
+          "tokens_estimated": 191,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/prisma/migrations/0007_failover_sync_status/migration.sql",
+          "tokens_estimated": 54,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/sheets-sync.ts",
+          "tokens_estimated": 2830,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/actions.ts",
+          "tokens_estimated": 164,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/actions.ts",
+          "tokens_estimated": 35,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/cron/sheets-sync/route.ts",
+          "tokens_estimated": 142,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 85,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 168,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 468,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 406,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 88,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
+          "tokens_estimated": 8,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/actions.ts",
+          "tokens_estimated": 33,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/page.tsx",
+          "tokens_estimated": 217,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/retry-policy.ts",
+          "tokens_estimated": 700,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/retry-runner.ts",
+          "tokens_estimated": 1439,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/cron/retry-queue/route.ts",
+          "tokens_estimated": 468,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/vercel.json",
+          "tokens_estimated": 52,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/retry-policy.test.ts",
+          "tokens_estimated": 594,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 442,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 142,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 14,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 109,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+          "tokens_estimated": 60,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/admin-menu.tsx",
+          "tokens_estimated": 833,
+          "action": "create"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
+          "tokens_estimated": 323,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
+          "tokens_estimated": 44,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/page.tsx",
+          "tokens_estimated": 17,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/page.tsx",
+          "tokens_estimated": 54,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/actions.ts",
+          "tokens_estimated": 74,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
+          "tokens_estimated": 57,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/auth.ts",
+          "tokens_estimated": 22,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 8228,
+        "output_tokens_estimated": 10333,
+        "reads_count": 6,
+        "writes_count": 32,
         "repeated_reads_blocked": 0,
         "anatomy_lookups": 6
       }

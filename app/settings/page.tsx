@@ -1,4 +1,4 @@
-import { requireManager, getUserStores } from '@/lib/auth';
+import { requireAdmin, getUserStores } from '@/lib/auth';
 import { isEncryptionConfigured } from '@/lib/crypto';
 import AppNav from '@/components/app-nav';
 import AutoSubmitSelect from '@/components/auto-submit-select';
@@ -11,7 +11,9 @@ export default async function SettingsPage({
 }: {
   searchParams: { storeId?: string; saved?: string };
 }) {
-  const profile = await requireManager();
+  // Admin only: this page holds Meta credentials, sheet IDs and the BD-per-
+  // entry rate — per-store configuration, not day-to-day management.
+  const profile = await requireAdmin();
   const stores = await getUserStores(profile);
 
   if (stores.length === 0) {
