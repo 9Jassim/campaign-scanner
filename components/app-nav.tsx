@@ -19,6 +19,7 @@ const LINKS: NavLink[] = [
   { href: '/settings', label: 'Settings', roles: ['admin', 'manager'] },
   { href: '/admin/users', label: 'Users', roles: ['admin'] },
   { href: '/admin/sheets', label: 'Sheets', roles: ['admin'] },
+  { href: '/admin/import-failover', label: 'Failover', roles: ['admin'] },
 ];
 
 export default function AppNav({

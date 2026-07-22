@@ -24,11 +24,20 @@ model Store {
   metaTemplateName         String?   @default("campaign_entry_confirmation") @map("meta_template_name")
   metaTemplateLang         String?   @default("ar") @map("meta_template_lang")
   googleSheetId            String?   @map("google_sheet_id")
+  // Standalone Google Sheets scanner used only while the portal is down. Its
+  // captured scans are pulled back in from /admin/import-failover on recovery.
+  failoverSheetId          String?   @map("failover_sheet_id")
   // Outcome of the last Google Sheets sync, so the admin page can show whether
   // the nightly job is still running and staleness is visible at a glance.
   lastSyncAt               DateTime? @map("last_sync_at")
   lastSyncStatus           String?   @map("last_sync_status") // ok | skipped | refused | failed
   lastSyncDetail           String?   @map("last_sync_detail")
+  // Outcome of the nightly Contacts push into the failover sheet, kept apart
+  // from the mirror's status so a broken failover sheet is loud on /admin/sheets
+  // without making the mirror look unhealthy.
+  lastFailoverSyncAt       DateTime? @map("last_failover_sync_at")
+  lastFailoverSyncStatus   String?   @map("last_failover_sync_status") // ok | skipped | refused | failed
+  lastFailoverSyncDetail   String?   @map("last_failover_sync_detail")
   createdAt                DateTime? @default(now()) @map("created_at")
 
   storeUsers       StoreUser[]

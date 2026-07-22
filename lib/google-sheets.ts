@@ -134,6 +134,28 @@ async function sheetsFetch(
   return data;
 }
 
+/**
+ * Read a tab's values as a grid of strings (row 1 being the header).
+ *
+ * Used by the failover import to pull scans a standalone sheet captured while
+ * the portal was down. Google returns *display* values and drops trailing empty
+ * cells, so a phone stored as `'+973…` comes back as `+973…` (apostrophe gone)
+ * and short rows have fewer than the full column count — callers must tolerate
+ * both.
+ */
+export async function readTab(
+  sheetId: string,
+  range: string,
+): Promise<string[][]> {
+  const data = (await sheetsFetch(
+    `${encodeURIComponent(sheetId)}/values/${encodeURIComponent(range)}`,
+    { method: 'GET' },
+  )) as { values?: unknown[][] };
+  return (data.values ?? []).map((row) =>
+    row.map((cell) => (cell == null ? '' : String(cell))),
+  );
+}
+
 /** How many rows a tab currently holds (including its header). */
 export async function tabRowCount(
   sheetId: string,
