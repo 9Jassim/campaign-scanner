@@ -4,6 +4,10 @@
     {
       "path": "/api/cron/sheets-sync",
       "schedule": "0 21 * * *"
+    },
+    {
+      "path": "/api/cron/retry-queue",
+      "schedule": "0 7 * * *"
     }
   ]
 }
