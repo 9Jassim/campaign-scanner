@@ -72,25 +72,49 @@ export default function ScannerClient({ stores }: { stores: ScannerStore[] }) {
     barcodeRef.current?.focus();
   }, []);
 
-  function applyBarcode(raw: string) {
-    const parsed = parseBarcode(raw);
-    if (parsed) {
-      setFields({
-        invoice: parsed.invoice,
-        name: parsed.name,
-        phone: parsed.phone,
-        amount: String(parsed.amount),
-      });
-      setOutcome(null);
-    }
-  }
-
   function handleBarcodeKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    // Most scanners emit the text followed by Enter.
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      applyBarcode(barcode);
+    // Scanners emit the text followed by Enter — and on Enter the scan is
+    // logged immediately, no button press. The fields and Confirm button exist
+    // for the cases that SHOULD pause: a code that doesn't parse, a missing
+    // field, an amount below the minimum, or a hand correction.
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    if (submitting) return; // scan gun double-trigger — one log at a time
+
+    const parsed = parseBarcode(barcode);
+    if (!parsed) {
+      if (barcode.trim()) {
+        setOutcome({
+          ok: false,
+          error:
+            'That code could not be read — scan it again, or fill the fields in by hand.',
+        });
+      }
+      return;
     }
+
+    setFields({
+      invoice: parsed.invoice,
+      name: parsed.name,
+      phone: parsed.phone,
+      amount: String(parsed.amount),
+    });
+    setOutcome(null);
+
+    // Anything that needs a human eye stays on screen instead of logging:
+    // the filled-in fields (and the below-minimum warning) say what to fix.
+    const scanEntries =
+      parsed.amount > 0 ? Math.floor(parsed.amount / store.bdPerEntry) : 0;
+    const complete = parsed.invoice && parsed.name && parsed.phone;
+    if (!complete || scanEntries < 1) return;
+
+    // Submit from the parsed values, not state — setFields hasn't landed yet.
+    void submitScan({
+      invoice: parsed.invoice,
+      name: parsed.name,
+      phone: parsed.phone,
+      amount: parsed.amount,
+    });
   }
 
   function resetForNext() {
@@ -99,7 +123,12 @@ export default function ScannerClient({ stores }: { stores: ScannerStore[] }) {
     barcodeRef.current?.focus();
   }
 
-  async function handleConfirm() {
+  async function submitScan(scan: {
+    invoice: string;
+    name: string;
+    phone: string;
+    amount: number;
+  }) {
     setSubmitting(true);
     setOutcome(null);
     try {
@@ -108,10 +137,10 @@ export default function ScannerClient({ stores }: { stores: ScannerStore[] }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           storeId,
-          invoiceId: fields.invoice,
-          name: fields.name,
-          phone: fields.phone,
-          amount: Number.isFinite(amountNum) ? amountNum : 0,
+          invoiceId: scan.invoice,
+          name: scan.name,
+          phone: scan.phone,
+          amount: scan.amount,
         }),
       });
       // Check before reading the body: a lapsed session must raise the sign-in
@@ -133,7 +162,7 @@ export default function ScannerClient({ stores }: { stores: ScannerStore[] }) {
           ok: true,
           entries: data.entries,
           totalEntries: data.totalEntries,
-          name: data.contact?.name ?? fields.name,
+          name: data.contact?.name ?? scan.name,
           message: data.message ?? { status: 'skipped' },
         });
         setBarcode('');
@@ -147,6 +176,16 @@ export default function ScannerClient({ stores }: { stores: ScannerStore[] }) {
     } finally {
       setSubmitting(false);
     }
+  }
+
+  /** Manual path: log whatever is in the fields (typed or corrected by hand). */
+  function handleConfirm() {
+    void submitScan({
+      invoice: fields.invoice,
+      name: fields.name,
+      phone: fields.phone,
+      amount: Number.isFinite(amountNum) ? amountNum : 0,
+    });
   }
 
   const canConfirm =
@@ -186,7 +225,8 @@ export default function ScannerClient({ stores }: { stores: ScannerStore[] }) {
           className="rounded-md border border-black/10 bg-transparent px-3 py-2 font-mono text-sm dark:border-white/15"
         />
         <span className="text-xs text-zinc-400">
-          Press Enter to parse. Fields below are editable before you confirm.
+          A good scan is logged immediately. The fields below fill in only when
+          something needs checking — fix them and press Confirm.
         </span>
       </label>
 

@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-21T11:37:51.329Z
-> Files: 88 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-22T14:10:02.744Z
+> Files: 100 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
 
@@ -22,7 +22,7 @@
 - `package.json` — Node.js package manifest (~333 tok)
 - `prisma.config.ts` — Load .env.local (Next.js convention) for local development. In hosted (~274 tok)
 - `README.md` — Project documentation (~2039 tok)
-- `vercel.json` (~45 tok)
+- `vercel.json` (~69 tok)
 
 ## .claude/
 
@@ -41,15 +41,24 @@
 - `page.tsx` — Home (~359 tok)
 - `sign-out-button.tsx` — SignOutButton — renders form (~145 tok)
 
+## app/admin/import-failover/
+
+- `import-failover-client.tsx` — Client UI: store + Sheet ID, Preview then Confirm, results table, post-import reset instructions. (~3266 tok)
+- `page.tsx` — Admin-only. Pull scans a standalone failover sheet captured during a portal outage back into the DB. (~600 tok)
+
 ## app/admin/sheets/
 
-- `actions.ts` — Manual Google Sheets syncs, for admins who don't want to wait for tonight's (~546 tok)
-- `page.tsx` — Nothing to sync without both a service account and somewhere to write. (~2170 tok)
+- `actions.ts` — Manual Google Sheets syncs, for admins who don't want to wait for tonight's (~592 tok)
+- `page.tsx` — Nothing to sync without a service account and at least one sheet to write. (~2908 tok)
 
 ## app/admin/users/
 
 - `actions.ts` — Usernames are typed at a till, often on a phone keyboard, so they are stored (~1280 tok)
 - `page.tsx` — dynamic — renders form (~3604 tok)
+
+## app/api/admin/import-failover/
+
+- `route.ts` — Preview or run a failover-sheet import. One POST endpoint; `mode` in the body (~602 tok)
 
 ## app/api/auth/[...nextauth]/
 
@@ -59,9 +68,13 @@
 
 - `route.ts` — Weekly backup: replace each store's Google Sheet with a full snapshot. (~1551 tok)
 
+## app/api/cron/retry-queue/
+
+- `route.ts` — Daily WhatsApp retry drain (see vercel.json — 07:00 UTC = 10:00 Bahrain, so (~468 tok)
+
 ## app/api/cron/sheets-sync/
 
-- `route.ts` — Nightly Google Sheets sync (see vercel.json). (~508 tok)
+- `route.ts` — Nightly Google Sheets sync (see vercel.json). (~592 tok)
 
 ## app/api/export/
 
@@ -94,12 +107,12 @@
 ## app/scanner/
 
 - `page.tsx` — dynamic (~364 tok)
-- `scanner-client.tsx` — The scan is already saved at this point — this only reports what happened to (~3290 tok)
+- `scanner-client.tsx` — Manual path: log whatever is in the fields (typed or corrected by hand). (~3701 tok)
 
 ## app/settings/
 
-- `actions.ts` — API routes: GET (1 endpoints) (~648 tok)
-- `page.tsx` — A write-only secret input: never renders the stored value, only whether one (~2226 tok)
+- `actions.ts` — API routes: GET (1 endpoints) (~665 tok)
+- `page.tsx` — A write-only secret input: never renders the stored value, only whether one (~2358 tok)
 
 ## app/sign-in/
 
@@ -116,7 +129,7 @@
 
 ## components/
 
-- `app-nav.tsx` — LINKS (~709 tok)
+- `app-nav.tsx` — LINKS (~730 tok)
 - `auto-submit-select.tsx` — A <select> that submits its enclosing form as soon as the value changes, (~163 tok)
 - `export-button.tsx` — Download link to the CSV export endpoint, carrying the current filters. (~245 tok)
 - `filter-bar.tsx` — A GET-form filter bar: store selector + free-text search, plus any extra (~658 tok)
@@ -144,16 +157,22 @@
 - `datetime.test.ts` — Bahrain time formatting: +3 offset, midnight rollover, no-DST, CSV format. Passes under any TZ. (~633 tok)
 - `datetime.ts` — Renders UTC-stored timestamps in Asia/Bahrain. formatDateTime (UI), formatDateTimeCsv (export), todayInBahrain (filenames). NEVER use toLocaleString/toISOString in pages: they follow the server's zone (UTC on Vercel) and render times 3h early. (~742 tok)
 - `db.ts` — Prisma 7 requires a driver adapter at runtime. We use the Neon serverless (~220 tok)
+- `failover-import.test.ts` — A well-formed Log row: [timestamp, invoice, name, phone, amount, ...]. (~1977 tok)
+- `failover-import.ts` — Pure parsing for the failover-sheet import. (~1553 tok)
+- `failover-sync.ts` — Database + Google Sheets side of the failover import. (~3196 tok)
 - `google-sheets.test.ts` — Declares EMAIL (~1128 tok)
-- `google-sheets.ts` — Minimal Google Sheets client. (~1905 tok)
+- `google-sheets.ts` — Minimal Google Sheets client. (~2127 tok)
 - `login-attempts.ts` — Persistence for sign-in throttling — reads and writes `login_attempts`. (~680 tok)
 - `login-throttle.test.ts` — Replay `count` consecutive failures, all at T0 unless a clock is given. (~1758 tok)
 - `login-throttle.ts` — Sign-in throttling policy. (~1502 tok)
 - `password.test.ts` — Declares hash (~520 tok)
 - `password.ts` — Password hashing and verification. (~395 tok)
+- `retry-policy.test.ts` — Declares d (~594 tok)
+- `retry-policy.ts` — Retry policy for rate-limited WhatsApp sends. (~700 tok)
+- `retry-runner.ts` — Drains the WhatsApp retry queue — receipts whose confirmation message was (~1439 tok)
 - `scan.ts` — Outcome of the WhatsApp send attempt for this scan. (~3488 tok)
 - `session-expiry.ts` — Signalling for "your session has ended, sign in again". (~462 tok)
-- `sheets-sync.ts` — Pushes each store's data into its Google Sheet. (~1631 tok)
+- `sheets-sync.ts` — Pushes each store's data into its Google Sheets. (~2830 tok)
 - `store-lock.test.ts` — Declares MORSLON (~418 tok)
 - `store-lock.ts` — Per-store locking for the scan flow. (~329 tok)
 - `webhook.test.ts` — Declares secret (~2007 tok)
@@ -163,7 +182,7 @@
 
 ## prisma/
 
-- `schema.prisma` (~2079 tok)
+- `schema.prisma` (~2258 tok)
 - `seed.ts` — Seed script: creates the two campaign stores, and optionally seeds an admin (~860 tok)
 
 ## prisma/migrations/
@@ -173,6 +192,14 @@
 ## prisma/migrations/0000_init/
 
 - `migration.sql` — CreateSchema (~1704 tok)
+
+## prisma/migrations/0006_failover_sheet_id/
+
+- `migration.sql` — AlterTable (~21 tok)
+
+## prisma/migrations/0007_failover_sync_status/
+
+- `migration.sql` — AlterTable (~50 tok)
 
 ## types/
 

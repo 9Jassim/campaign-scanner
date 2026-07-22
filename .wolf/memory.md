@@ -602,3 +602,88 @@
 | 14:32 | Session end: 10 writes across 6 files (auth.config.ts, session-expiry.ts, session-guard.tsx, app-nav.tsx, scanner-client.tsx) | 2 reads | ~4627 tok |
 | 14:37 | Created app/messages/page.tsx | — | ~2911 |
 | 11:55 | Grouped the messages page into conversations per sender (was a flat chronological list). Prisma groupBy on fromPhone ordered by _max.receivedAt; each row expands into a thread read oldest-first like a chat; pagination counts conversations not messages; a search hit shows the WHOLE thread so a message reads in context. Verified with 3 temporary messages added to an existing conversation then deleted (tagged wamid zz-test-, never touching Meta-issued rows): 5 messages collapsed to 2 conversations, thread ordered 13:23→14:08→14:53→16:23, search "twice" returned 1 conversation including the earlier message. | app/messages/page.tsx | 118 tests pass, typecheck+lint+build clean | ~7000 |
+| 14:42 | Session end: 11 writes across 6 files (auth.config.ts, session-expiry.ts, session-guard.tsx, app-nav.tsx, scanner-client.tsx) | 3 reads | ~7538 tok |
+
+## Session: 2026-07-21 15:57
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-21 19:39
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-22 12:57
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-22 12:57
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-22 13:00
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 13:07 | Edited prisma/schema.prisma | 1→4 lines | ~75 |
+| 13:07 | Created prisma/migrations/0006_failover_sheet_id/migration.sql | — | ~21 |
+| 13:07 | Edited lib/google-sheets.ts | added nullish coalescing | ~251 |
+| 13:08 | Created lib/failover-import.ts | — | ~1553 |
+| 13:09 | Created lib/failover-sync.ts | — | ~3196 |
+| 13:09 | Created app/api/admin/import-failover/route.ts | — | ~602 |
+| 13:09 | Created app/admin/import-failover/page.tsx | — | ~520 |
+| 13:10 | Created app/admin/import-failover/import-failover-client.tsx | — | ~3266 |
+| 13:10 | Edited components/app-nav.tsx | 2→3 lines | ~41 |
+| 13:11 | Created lib/failover-import.test.ts | — | ~1977 |
+| 13:17 | Edited lib/failover-import.test.ts | 97333959565 → 97337110807 | ~4 |
+| 13:17 | Edited lib/failover-import.test.ts | 97333112233 → 97337110807 | ~4 |
+| 13:17 | Edited lib/failover-import.test.ts | 33959565 → 37110807 | ~3 |
+| 13:17 | Edited lib/failover-import.test.ts | 33112233 → 37110807 | ~3 |
+| 13:10 | Built failover-sheet import feature (schema+migration 0006, google-sheets.readTab, failover-import.ts pure, failover-sync.ts db, api route, admin page+client, nav link, 19 tests) | lib/failover-import.ts, lib/failover-sync.ts, app/admin/import-failover/*, app/api/admin/import-failover/route.ts | 137 tests pass, typecheck+lint+build clean | ~14000 |
+| 13:19 | User stopped a test run: my test file had real-looking phone numbers; replaced all with user's number 37110807 | lib/failover-import.test.ts | fixed | ~500 |
+| 13:25 | Session end: 14 writes across 10 files (schema.prisma, migration.sql, google-sheets.ts, failover-import.ts, failover-sync.ts) | 13 reads | ~28258 tok |
+
+## Session: 2026-07-22 15:35
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-22 15:35
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 16:11 | Edited prisma/schema.prisma | expanded (+6 lines) | ~178 |
+| 16:11 | Created prisma/migrations/0007_failover_sync_status/migration.sql | — | ~50 |
+| 16:12 | Created lib/sheets-sync.ts | — | ~2830 |
+| 16:12 | Edited app/admin/sheets/actions.ts | expanded (+7 lines) | ~164 |
+| 16:13 | Edited app/admin/sheets/actions.ts | 1→5 lines | ~35 |
+| 16:13 | Edited app/api/cron/sheets-sync/route.ts | expanded (+6 lines) | ~142 |
+| 16:13 | Edited app/admin/sheets/page.tsx | 8→12 lines | ~85 |
+| 16:13 | Edited app/admin/sheets/page.tsx | 6→9 lines | ~168 |
+| 16:14 | Edited app/admin/sheets/page.tsx | CSS: mirror, failover | ~468 |
+| 16:14 | Edited app/admin/sheets/page.tsx | CSS: https, hover | ~406 |
+| 16:14 | Edited app/admin/sheets/page.tsx | CSS: store, googleSheetId, failoverSheetId | ~88 |
+| 16:15 | Edited app/admin/sheets/page.tsx | inline fix | ~8 |
+| 16:15 | Edited app/settings/actions.ts | 2→3 lines | ~33 |
+| 16:15 | Edited app/settings/page.tsx | added nullish coalescing | ~217 |
+| 16:18 | Extended nightly sync: push Contacts tab into each store's failover sheet after the mirror write (migration 0007 status columns, sheets-sync rewrite, cron red-on-failover-failure, /admin/sheets badges+alert, Settings field for failover Sheet ID) | lib/sheets-sync.ts, app/api/cron/sheets-sync/route.ts, app/admin/sheets/*, app/settings/* | 137 tests, typecheck+lint+build clean | ~8000 |
+| 16:22 | Session end: 14 writes across 6 files (schema.prisma, migration.sql, sheets-sync.ts, actions.ts, route.ts) | 3 reads | ~8403 tok |
+| 16:31 | Session end: 14 writes across 6 files (schema.prisma, migration.sql, sheets-sync.ts, actions.ts, route.ts) | 3 reads | ~8403 tok |
+| 16:37 | Session end: 14 writes across 6 files (schema.prisma, migration.sql, sheets-sync.ts, actions.ts, route.ts) | 3 reads | ~8403 tok |
+| 16:43 | Created lib/retry-policy.ts | — | ~700 |
+| 16:43 | Created lib/retry-runner.ts | — | ~1439 |
+| 16:44 | Created app/api/cron/retry-queue/route.ts | — | ~468 |
+| 16:44 | Edited vercel.json | 6→10 lines | ~52 |
+| 16:44 | Created lib/retry-policy.test.ts | — | ~594 |
+| 16:48 | Built the retry-queue drain: daily cron 07:00 UTC (10:00 Bahrain), pure policy module (MAX_ATTEMPTS 5, 20h reschedule, pacing 1s) + db runner + route; verified live queue empty (read-only) | lib/retry-policy.ts, lib/retry-runner.ts, app/api/cron/retry-queue/route.ts, vercel.json | 145 tests, typecheck+lint+build clean | ~5000 |
+| 16:49 | Session end: 19 writes across 10 files (schema.prisma, migration.sql, sheets-sync.ts, actions.ts, route.ts) | 5 reads | ~13080 tok |
+| 17:08 | Edited app/scanner/scanner-client.tsx | added 3 condition(s) | ~442 |
+| 17:08 | Edited app/scanner/scanner-client.tsx | CSS: scan, invoice | ~142 |
+| 17:08 | Edited app/scanner/scanner-client.tsx | inline fix | ~14 |
+| 17:09 | Edited app/scanner/scanner-client.tsx | modified handleConfirm() | ~109 |
+| 17:10 | Edited app/scanner/scanner-client.tsx | 3→4 lines | ~60 |
+| 17:25 | Scanner auto-log: Enter after a clean scan submits immediately; pauses (fields+warning) for bad/incomplete/below-min codes. Verified live on recreated zz-sandbox (no creds, cashier scoped to it, number 37110807 only): auto-log 2 entries, below-min paused, garbage errored, duplicate 409 shown. Sandbox+user deleted after. | app/scanner/scanner-client.tsx | 4/4 scenarios pass, tsc+lint+build clean | ~6000 |
+| 17:17 | Session end: 24 writes across 11 files (schema.prisma, migration.sql, sheets-sync.ts, actions.ts, route.ts) | 6 reads | ~17137 tok |
