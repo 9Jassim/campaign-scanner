@@ -39,11 +39,17 @@ export async function GET(request: Request) {
     return Response.json({ ok: false, error }, { status: 503 });
   }
 
+  // A failover-sheet problem never blocks the mirror write, but it must not
+  // pass silently either — a red cron run is how the admin finds out the
+  // outage scanner would send stale totals.
+  const bad = (s: string) => s === 'failed' || s === 'refused';
   const failed = results.some(
-    (r) => r.status === 'failed' || r.status === 'refused',
+    (r) => bad(r.status) || bad(r.failoverStatus),
   );
   console.log(
-    `[sheets-sync] done: ${results.map((r) => `${r.store}=${r.status}`).join(' ')}`,
+    `[sheets-sync] done: ${results
+      .map((r) => `${r.store}=${r.status}/failover=${r.failoverStatus}`)
+      .join(' ')}`,
   );
   // 500 makes a broken sync show up red in Vercel's cron history rather than
   // looking like a success that quietly wrote nothing.

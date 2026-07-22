@@ -26,15 +26,19 @@ export default async function SheetsPage({
       id: true,
       nameEn: true,
       googleSheetId: true,
+      failoverSheetId: true,
       lastSyncAt: true,
       lastSyncStatus: true,
       lastSyncDetail: true,
+      lastFailoverSyncAt: true,
+      lastFailoverSyncStatus: true,
+      lastFailoverSyncDetail: true,
     },
   });
   const credentialsReady = hasSheetsCredentials();
-  /** Nothing to sync without both a service account and somewhere to write. */
-  const canSync = (sheetId: string | null) =>
-    credentialsReady && Boolean(sheetId);
+  /** Nothing to sync without a service account and at least one sheet to write. */
+  const canSync = (store: { googleSheetId: string | null; failoverSheetId: string | null }) =>
+    credentialsReady && Boolean(store.googleSheetId || store.failoverSheetId);
 
   return (
     <>
@@ -47,8 +51,11 @@ export default async function SheetsPage({
           <p className="mt-1 text-sm text-zinc-500">
             Every night the portal replaces each store&apos;s Contacts, Log and
             Raffle tabs with a fresh copy, so the sheet is a readable view of the
-            portal. The sheet&apos;s own script archives it weekly. Nothing is
-            ever read back out — the portal stays the source of truth.
+            portal. The sheet&apos;s own script archives it weekly. Right after,
+            it also pushes current Contacts into the store&apos;s failover sheet
+            — only that tab — so outage messages state each customer&apos;s true
+            running total. Nothing is ever read back out here — the portal stays
+            the source of truth.
           </p>
         </div>
 
@@ -79,15 +86,34 @@ export default async function SheetsPage({
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <h2 className="font-medium">{store.nameEn}</h2>
-                <span
-                  className={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
-                    STATUS_STYLES[store.lastSyncStatus ?? ''] ??
-                    'bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300'
-                  }`}
-                >
-                  {store.lastSyncStatus ?? 'never synced'}
+                <span className="flex flex-wrap items-center gap-1.5">
+                  <span
+                    className={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
+                      STATUS_STYLES[store.lastSyncStatus ?? ''] ??
+                      'bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300'
+                    }`}
+                  >
+                    mirror: {store.lastSyncStatus ?? 'never synced'}
+                  </span>
+                  <span
+                    className={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
+                      STATUS_STYLES[store.lastFailoverSyncStatus ?? ''] ??
+                      'bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300'
+                    }`}
+                  >
+                    failover: {store.lastFailoverSyncStatus ?? 'never synced'}
+                  </span>
                 </span>
               </div>
+
+              {(store.lastFailoverSyncStatus === 'failed' ||
+                store.lastFailoverSyncStatus === 'refused') && (
+                <p className="mt-3 rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-800 dark:border-red-800 dark:bg-red-950/40 dark:text-red-200">
+                  The failover sheet did not get last night&apos;s contacts —
+                  outage messages would show stale totals until this is fixed.{' '}
+                  {store.lastFailoverSyncDetail}
+                </p>
+              )}
 
               <dl className="mt-3 grid grid-cols-1 gap-x-6 gap-y-1 text-sm sm:grid-cols-[8rem_1fr]">
                 <dt className="text-zinc-500">Last sync</dt>
@@ -121,6 +147,34 @@ export default async function SheetsPage({
                     </dd>
                   </>
                 )}
+
+                <dt className="text-zinc-500">Failover sheet</dt>
+                <dd>
+                  {store.failoverSheetId ? (
+                    <a
+                      href={`https://docs.google.com/spreadsheets/d/${store.failoverSheetId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline underline-offset-2 hover:no-underline"
+                    >
+                      Open failover sheet
+                    </a>
+                  ) : (
+                    <span className="text-zinc-500">
+                      No failover Sheet ID — contacts are not pushed for
+                      outages.
+                    </span>
+                  )}
+                </dd>
+
+                {store.lastFailoverSyncDetail && (
+                  <>
+                    <dt className="text-zinc-500">Failover detail</dt>
+                    <dd className="text-zinc-600 dark:text-zinc-400">
+                      {store.lastFailoverSyncDetail}
+                    </dd>
+                  </>
+                )}
               </dl>
 
               <div className="mt-4 flex flex-wrap items-center gap-2">
@@ -128,7 +182,7 @@ export default async function SheetsPage({
                   <input type="hidden" name="storeId" value={store.id} />
                   <button
                     type="submit"
-                    disabled={!canSync(store.googleSheetId)}
+                    disabled={!canSync(store)}
                     className="flex h-9 items-center justify-center rounded-full bg-foreground px-4 text-sm font-medium text-background transition-colors hover:opacity-90 disabled:opacity-40"
                   >
                     Sync this store
@@ -140,7 +194,7 @@ export default async function SheetsPage({
                   <input type="hidden" name="force" value="1" />
                   <button
                     type="submit"
-                    disabled={!canSync(store.googleSheetId)}
+                    disabled={!canSync(store)}
                     className="flex h-9 items-center justify-center rounded-full border border-amber-400 px-4 text-sm font-medium text-amber-700 transition-colors hover:bg-amber-50 disabled:opacity-40 dark:border-amber-700 dark:text-amber-400 dark:hover:bg-amber-950/40"
                   >
                     Force

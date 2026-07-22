@@ -113,6 +113,12 @@ export default async function SettingsPage({
               defaultValue={store.googleSheetId ?? ''}
               hint="From the sheet's URL. Every night the portal replaces this sheet's Contacts, Log and Raffle tabs with a fresh copy. Share the sheet with the service account as Editor first, or the write will fail. Leave blank and this store is skipped."
             />
+            <Field
+              name="failoverSheetId"
+              label="Failover Sheet ID"
+              defaultValue={store.failoverSheetId ?? ''}
+              hint="The standalone scanner sheet used only when the portal is down. The nightly sync pushes current Contacts into it (nothing else), so outage messages show each customer's true running total. Also pre-fills the Failover import page. Share it with the service account as Editor."
+            />
           </Section>
 
           <div>

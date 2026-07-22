@@ -30,16 +30,23 @@ export async function syncOneStore(formData: FormData) {
 
   const store = await db.store.findUnique({
     where: { id: storeId },
-    select: { id: true, slug: true, nameEn: true, googleSheetId: true },
+    select: {
+      id: true,
+      slug: true,
+      nameEn: true,
+      googleSheetId: true,
+      failoverSheetId: true,
+    },
   });
   if (!store) failed('Unknown store.');
 
   // Never throws — a failure comes back as the result, and is also recorded on
   // the store so the page shows it.
-  const result = await syncStore(store.id, store.slug, store.googleSheetId, {
-    force,
-  });
-  done(`${store.nameEn} — ${result.status}: ${result.detail}`);
+  const result = await syncStore(store, { force });
+  done(
+    `${store.nameEn} — mirror ${result.status}: ${result.detail} · ` +
+      `failover ${result.failoverStatus}: ${result.failoverDetail}`,
+  );
 }
 
 /**
@@ -58,5 +65,9 @@ export async function syncAll() {
   } catch (err) {
     failed(err instanceof Error ? err.message : String(err));
   }
-  done(results.map((r) => `${r.store}: ${r.status}`).join(' · '));
+  done(
+    results
+      .map((r) => `${r.store}: ${r.status} (failover ${r.failoverStatus})`)
+      .join(' · '),
+  );
 }

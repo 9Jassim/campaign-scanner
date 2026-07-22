@@ -43,6 +43,7 @@ export async function saveStoreSettings(formData: FormData) {
     metaTemplateName: field(formData, 'metaTemplateName'),
     metaTemplateLang: field(formData, 'metaTemplateLang'),
     googleSheetId: field(formData, 'googleSheetId'),
+    failoverSheetId: field(formData, 'failoverSheetId'),
   };
 
   // Secrets are write-only: only overwrite when a new value is entered, and
