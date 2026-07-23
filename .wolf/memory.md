@@ -700,3 +700,46 @@
 | 18:05 | Edited lib/auth.ts | inline fix | ~22 |
 | 18:20 | Settings made admin-only: requireAdmin on page, admin-only role check in saveStoreSettings, moved into the Admin dropdown | app/settings/*, components/app-nav.tsx, lib/auth.ts | tsc+lint+build clean | ~1500 |
 | 18:06 | Session end: 32 writes across 14 files (schema.prisma, migration.sql, sheets-sync.ts, actions.ts, route.ts) | 6 reads | ~18561 tok |
+| 18:08 | Session end: 32 writes across 14 files (schema.prisma, migration.sql, sheets-sync.ts, actions.ts, route.ts) | 6 reads | ~18561 tok |
+| 18:09 | Session end: 32 writes across 14 files (schema.prisma, migration.sql, sheets-sync.ts, actions.ts, route.ts) | 6 reads | ~18561 tok |
+| 18:15 | Session end: 32 writes across 14 files (schema.prisma, migration.sql, sheets-sync.ts, actions.ts, route.ts) | 6 reads | ~18561 tok |
+
+## Session: 2026-07-23 13:44
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-23 13:44
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-23 14:31
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-23 14:31
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-23 14:39
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 14:43 | Created scripts/daily-sheet-sync.ts | — | ~544 |
+| 14:43 | Created scripts/message-retry.ts | — | ~504 |
+| 14:43 | Created railway.json | — | ~65 |
+| 14:43 | Edited package.json | 1→3 lines | ~42 |
+| 14:43 | Edited package.json | 3→4 lines | ~22 |
+| 14:44 | Edited package.json | 4→3 lines | ~21 |
+| 14:44 | Edited auth.config.ts | 4→3 lines | ~58 |
+| 14:44 | Edited lib/retry-runner.ts | 1→2 lines | ~28 |
+| 14:45 | Edited README.md | 4→5 lines | ~102 |
+| 14:45 | Edited README.md | 3→2 lines | ~37 |
+| 14:46 | Edited README.md | modified terminal() | ~606 |
+| 14:46 | Edited README.md | inline fix | ~14 |
+| 14:52 | Railway migration (code side): scripts/daily-sheet-sync.ts + scripts/message-retry.ts (wrap existing lib modules), railway.json, cron:* npm scripts, tsx to dependencies; DELETED vercel.json + all app/api/cron/* routes; README/.env.example rewritten for Railway, CRON_SECRET removed. Kept daily 10:00 retry + 21:00 UTC sync (spec's 5-min retry and 3AM/4AM split contradicted user decisions). Both scripts run clean live: retry no-op exit 0; sheet-sync wrote mirror+failover for both stores (first failover push, 'failover ok'). | scripts/*, railway.json, package.json, README.md, .env.example | 145 tests, tsc+lint+build clean | ~10000 |
+| 14:52 | Session end: 12 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5159 tok |
+| 15:00 | Session end: 12 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5159 tok |

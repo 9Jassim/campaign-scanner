@@ -11,7 +11,8 @@ import {
  * Drains the WhatsApp retry queue — receipts whose confirmation message was
  * rate-limited at scan time and is still owed to the customer.
  *
- * Run by the daily cron (see vercel.json). One pass a day, sends paced a
+ * Run by the daily cron (scripts/message-retry.ts on Railway). One pass a
+ * day, sends paced a
  * second apart, and every outcome either resolves the row (sent / failed /
  * skipped → row deleted) or reschedules it for tomorrow — a row can never be
  * tried twice in one run, and a receipt that is no longer `pending` is dropped

@@ -33,9 +33,8 @@ export const authConfig = {
       const { pathname } = nextUrl;
 
       // Every API route authenticates itself — /api/scan and /api/export check
-      // the session, /api/webhook checks a signature, /api/cron checks
-      // CRON_SECRET. Let them answer for themselves so they can reply with
-      // JSON. Redirecting here instead sent a 307 to the sign-in page, which
+      // the session, /api/webhook checks a signature. Let them answer for
+      // themselves so they can reply with JSON. Redirecting here instead sent a 307 to the sign-in page, which
       // fetch follows, so `res.json()` choked on HTML and a cashier whose
       // session had lapsed mid-scan was told "Network error — please try
       // again" and lost the scan on retry.

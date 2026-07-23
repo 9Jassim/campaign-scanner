@@ -11,7 +11,7 @@ by `store_id`.
 - **Auth:** NextAuth / Auth.js v5 (username + password credentials, 2-hour idle sessions)
 - **Database:** Neon Postgres (serverless)
 - **ORM:** Prisma 7 (with the Neon driver adapter)
-- **Hosting:** Vercel
+- **Hosting:** Railway (web service + cron services)
 
 ## Prerequisites
 
@@ -147,9 +147,10 @@ attack.
 ## Google Sheets sync
 
 Each store's sheet is a readable **view** of the portal, refreshed nightly by a
-Vercel Cron job that replaces its `Contacts`, `Log` and `Raffle` tabs with a
-fresh copy from Postgres. The sheet's own Apps Script then archives it weekly.
-Nothing is ever read back out — the portal is the source of truth.
+Railway cron service that replaces its `Contacts`, `Log` and `Raffle` tabs with
+a fresh copy from Postgres, then pushes current contacts into the store's
+failover sheet. The sheet's own Apps Script then archives it weekly. Nothing is
+ever read back out on this path — the portal is the source of truth.
 
 There is no per-scan dual-write: keeping Google off the scanning path means a
 Sheets outage can never hold up a till, and a whole-tab replace sidesteps the
@@ -171,35 +172,57 @@ Setup (once):
 1. In Google Cloud, enable the **Google Sheets API**.
 2. Create a **service account** and download its JSON key.
 3. Set `GOOGLE_SERVICE_ACCOUNT_EMAIL` and `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`
-   (keep the literal `\n` escapes) and a generated `CRON_SECRET`, locally and in
-   Vercel.
+   (keep the literal `\n` escapes), locally and in Railway.
 4. **Share each store's sheet with the service account address as Editor** —
    without this the write fails with a permission error.
 5. Paste each sheet's ID (from its URL) into **Settings → Google Sheets** for
    that store. A store with no Sheet ID is skipped.
 
-The schedule lives in `vercel.json` (`0 21 * * *` — 21:00 UTC nightly, i.e.
-00:00 in Bahrain). It deliberately lands ahead of the Apps Script archive, which
-runs Sunday 02:00–03:00 (+3), so each weekly archive captures a copy that is
-hours old rather than a week old.
+The schedule is set on the Railway cron service (`0 21 * * *` — 21:00 UTC
+nightly, i.e. 00:00 in Bahrain). It deliberately lands ahead of the Apps Script
+archive, which runs Sunday 02:00–03:00 (+3), so each weekly archive captures a
+copy that is hours old rather than a week old.
 
 To run it from a terminal (admins can also use the **Sheets** page):
 
 ```bash
-curl -H "Authorization: Bearer $CRON_SECRET" http://localhost:3000/api/cron/sheets-sync
+npm run cron:sheet-sync
 ```
 
-## Deploying to Vercel
+## Deploying to Railway
 
-1. Push the repo to GitHub and import it into Vercel.
-2. Add all environment variables from `.env.example` in the Vercel project
-   settings.
-3. Vercel runs `npm run build` — ensure `db:deploy` has been run against your
-   production Neon database (either manually or as a release step).
-4. Keep the function region next to the database. Neon is in `eu-west-2`
-   (London) and the functions run in `lhr1`, so a scan's round trips cost ~2ms
-   rather than crossing an ocean. Moving one without the other would slow every
-   scan and lengthen the per-store lock it holds.
+The app runs as one long-running web service plus one Railway service per cron
+job, all built from this repo.
+
+1. Push the repo to GitHub and create a Railway project from it. `railway.json`
+   sets the builder (Nixpacks) and start command (`npm start`).
+2. Add all environment variables from `.env.example` in the service's
+   **Variables** tab. Don't set `PORT` — Railway provides it and `next start`
+   picks it up.
+3. Ensure `db:deploy` has been run against the production Neon database
+   (manually, or as a release step) before the first deploy of any new
+   migration.
+4. Keep the deploy region next to the database: Neon is in `eu-west-2`
+   (London), so pick Railway's **EU West** region. A scan's round trips then
+   cost ~2ms rather than crossing an ocean; moving one without the other would
+   slow every scan and lengthen the per-store lock it holds.
+5. Point the Meta webhook at `https://<your-domain>/api/webhook` (Meta
+   Developer Console → WhatsApp → Configuration; same verify token).
+
+Cron jobs are separate Railway services on the same repo and the same
+variables, each with a start command and a **cron schedule** in its settings
+(the service runs to completion and exits):
+
+| Service           | Start command             | Schedule     | Bahrain time |
+| ----------------- | ------------------------- | ------------ | ------------ |
+| `cron-sheet-sync` | `npm run cron:sheet-sync` | `0 21 * * *` | 00:00        |
+| `cron-retry`      | `npm run cron:retry`      | `0 7 * * *`  | 10:00        |
+
+The retry job is **deliberately daily** (mid-morning Bahrain): retried
+WhatsApp confirmations must never arrive at night, and a message is attempted
+at most once per day, five days, then marked failed. The sheet-sync job writes
+the mirror **and** failover sheets in one run — the ordering is load-bearing,
+so they are not separate services.
 
 ## Roadmap
 

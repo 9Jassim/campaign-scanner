@@ -1,254 +1,119 @@
 {
-  "session_id": "session-2026-07-22-1535",
-  "started": "2026-07-22T12:35:27.217Z",
+  "session_id": "session-2026-07-23-1439",
+  "started": "2026-07-23T11:39:23.522Z",
   "files_read": {
-    "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/cron/sheets-sync/route.ts": {
+    "C:/Users/jassi/Desktop/Projects/campaign-scanner/package.json": {
       "count": 1,
-      "tokens": 508,
-      "first_read": "2026-07-22T13:10:47.632Z"
+      "tokens": 333,
+      "first_read": "2026-07-23T11:42:01.294Z"
     },
-    "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/actions.ts": {
+    "C:/Users/jassi/Desktop/Projects/campaign-scanner/next.config.mjs": {
       "count": 1,
-      "tokens": 648,
-      "first_read": "2026-07-22T13:15:21.659Z"
+      "tokens": 33,
+      "first_read": "2026-07-23T11:42:04.781Z"
     },
-    "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/page.tsx": {
+    "C:/Users/jassi/Desktop/Projects/campaign-scanner/auth.config.ts": {
       "count": 1,
-      "tokens": 2358,
-      "first_read": "2026-07-22T13:15:52.843Z"
+      "tokens": 656,
+      "first_read": "2026-07-23T11:42:04.885Z"
     },
-    "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/whatsapp.ts": {
+    "C:/Users/jassi/Desktop/Projects/campaign-scanner/README.md": {
       "count": 1,
-      "tokens": 1379,
-      "first_read": "2026-07-22T13:42:17.985Z"
+      "tokens": 2039,
+      "first_read": "2026-07-23T11:45:08.210Z"
     },
-    "C:/Users/jassi/Desktop/Projects/campaign-scanner/vercel.json": {
+    "C:/Users/jassi/Desktop/Projects/campaign-scanner/.env.example": {
       "count": 1,
-      "tokens": 45,
-      "first_read": "2026-07-22T13:42:18.043Z"
-    },
-    "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx": {
-      "count": 1,
-      "tokens": 3290,
-      "first_read": "2026-07-22T14:07:17.193Z"
+      "tokens": 0,
+      "first_read": "2026-07-23T11:46:50.289Z"
     }
   },
   "files_written": [
     {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/prisma/schema.prisma",
-      "action": "edit",
-      "tokens": 191,
-      "at": "2026-07-22T13:11:33.628Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/prisma/migrations/0007_failover_sync_status/migration.sql",
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/scripts/daily-sheet-sync.ts",
       "action": "create",
-      "tokens": 54,
-      "at": "2026-07-22T13:11:47.516Z"
+      "tokens": 544,
+      "at": "2026-07-23T11:43:08.777Z"
     },
     {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/sheets-sync.ts",
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/scripts/message-retry.ts",
       "action": "create",
-      "tokens": 2830,
-      "at": "2026-07-22T13:12:40.383Z"
+      "tokens": 504,
+      "at": "2026-07-23T11:43:11.591Z"
     },
     {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/actions.ts",
-      "action": "edit",
-      "tokens": 164,
-      "at": "2026-07-22T13:12:54.090Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/actions.ts",
-      "action": "edit",
-      "tokens": 35,
-      "at": "2026-07-22T13:13:02.812Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/cron/sheets-sync/route.ts",
-      "action": "edit",
-      "tokens": 142,
-      "at": "2026-07-22T13:13:15.266Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
-      "action": "edit",
-      "tokens": 85,
-      "at": "2026-07-22T13:13:28.853Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
-      "action": "edit",
-      "tokens": 168,
-      "at": "2026-07-22T13:13:42.468Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
-      "action": "edit",
-      "tokens": 468,
-      "at": "2026-07-22T13:14:20.953Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
-      "action": "edit",
-      "tokens": 406,
-      "at": "2026-07-22T13:14:40.068Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
-      "action": "edit",
-      "tokens": 88,
-      "at": "2026-07-22T13:14:50.586Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/admin/sheets/page.tsx",
-      "action": "edit",
-      "tokens": 8,
-      "at": "2026-07-22T13:15:13.305Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/actions.ts",
-      "action": "edit",
-      "tokens": 33,
-      "at": "2026-07-22T13:15:30.403Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/page.tsx",
-      "action": "edit",
-      "tokens": 217,
-      "at": "2026-07-22T13:15:45.051Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/retry-policy.ts",
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/railway.json",
       "action": "create",
-      "tokens": 700,
-      "at": "2026-07-22T13:43:11.644Z"
+      "tokens": 65,
+      "at": "2026-07-23T11:43:24.329Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/package.json",
+      "action": "edit",
+      "tokens": 42,
+      "at": "2026-07-23T11:43:28.595Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/package.json",
+      "action": "edit",
+      "tokens": 22,
+      "at": "2026-07-23T11:43:55.845Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/package.json",
+      "action": "edit",
+      "tokens": 21,
+      "at": "2026-07-23T11:44:02.948Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/auth.config.ts",
+      "action": "edit",
+      "tokens": 58,
+      "at": "2026-07-23T11:44:55.631Z"
     },
     {
       "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/retry-runner.ts",
-      "action": "create",
-      "tokens": 1439,
-      "at": "2026-07-22T13:43:44.119Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/api/cron/retry-queue/route.ts",
-      "action": "create",
-      "tokens": 468,
-      "at": "2026-07-22T13:44:02.572Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/vercel.json",
       "action": "edit",
-      "tokens": 52,
-      "at": "2026-07-22T13:44:05.740Z"
+      "tokens": 28,
+      "at": "2026-07-23T11:44:58.262Z"
     },
     {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/retry-policy.test.ts",
-      "action": "create",
-      "tokens": 594,
-      "at": "2026-07-22T13:44:34.813Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/README.md",
       "action": "edit",
-      "tokens": 442,
-      "at": "2026-07-22T14:08:14.624Z"
+      "tokens": 110,
+      "at": "2026-07-23T11:45:21.872Z"
     },
     {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/README.md",
       "action": "edit",
-      "tokens": 142,
-      "at": "2026-07-22T14:08:41.996Z"
+      "tokens": 40,
+      "at": "2026-07-23T11:45:23.667Z"
     },
     {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/README.md",
       "action": "edit",
-      "tokens": 14,
-      "at": "2026-07-22T14:08:50.233Z"
+      "tokens": 649,
+      "at": "2026-07-23T11:46:31.090Z"
     },
     {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/README.md",
       "action": "edit",
-      "tokens": 109,
-      "at": "2026-07-22T14:09:04.243Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/scanner/scanner-client.tsx",
-      "action": "edit",
-      "tokens": 60,
-      "at": "2026-07-22T14:10:02.760Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/admin-menu.tsx",
-      "action": "create",
-      "tokens": 833,
-      "at": "2026-07-22T14:55:12.323Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
-      "action": "edit",
-      "tokens": 323,
-      "at": "2026-07-22T14:55:28.158Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
-      "action": "edit",
-      "tokens": 44,
-      "at": "2026-07-22T14:55:42.158Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/page.tsx",
-      "action": "edit",
-      "tokens": 17,
-      "at": "2026-07-22T15:04:21.927Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/page.tsx",
-      "action": "edit",
-      "tokens": 54,
-      "at": "2026-07-22T15:04:34.748Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/settings/actions.ts",
-      "action": "edit",
-      "tokens": 74,
-      "at": "2026-07-22T15:04:38.292Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
-      "action": "edit",
-      "tokens": 57,
-      "at": "2026-07-22T15:04:47.330Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/auth.ts",
-      "action": "edit",
-      "tokens": 22,
-      "at": "2026-07-22T15:05:43.090Z"
+      "tokens": 15,
+      "at": "2026-07-23T11:46:44.510Z"
     }
   ],
   "edit_counts": {
-    "prisma/schema.prisma": 1,
-    "prisma/migrations/0007_failover_sync_status/migration.sql": 1,
-    "lib/sheets-sync.ts": 1,
-    "app/admin/sheets/actions.ts": 2,
-    "app/api/cron/sheets-sync/route.ts": 1,
-    "app/admin/sheets/page.tsx": 6,
-    "app/settings/actions.ts": 2,
-    "app/settings/page.tsx": 3,
-    "lib/retry-policy.ts": 1,
+    "scripts/daily-sheet-sync.ts": 1,
+    "scripts/message-retry.ts": 1,
+    "railway.json": 1,
+    "package.json": 3,
+    "auth.config.ts": 1,
     "lib/retry-runner.ts": 1,
-    "app/api/cron/retry-queue/route.ts": 1,
-    "vercel.json": 1,
-    "lib/retry-policy.test.ts": 1,
-    "app/scanner/scanner-client.tsx": 5,
-    "components/admin-menu.tsx": 1,
-    "components/app-nav.tsx": 3,
-    "lib/auth.ts": 1
+    "README.md": 4
   },
-  "anatomy_hits": 6,
-  "anatomy_misses": 0,
+  "anatomy_hits": 4,
+  "anatomy_misses": 1,
   "repeated_reads_warned": 0,
   "cerebrum_warnings": 0,
-  "stop_count": 8
+  "stop_count": 2
 }

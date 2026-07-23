@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-22T15:05:43.079Z
-> Files: 101 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-23T11:46:44.487Z
+> Files: 104 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
 
@@ -13,15 +13,16 @@
 
 - `.eslintrc.json` (~12 tok)
 - `.gitignore` — Git ignore rules (~132 tok)
-- `auth.config.ts` — Edge-safe base config shared by the middleware and the full Node config. (~656 tok)
+- `auth.config.ts` — Edge-safe base config shared by the middleware and the full Node config. (~645 tok)
 - `auth.ts` — Thrown when the email or IP is locked out. NextAuth puts `code` on the (~648 tok)
 - `CLAUDE.md` — OpenWolf (~57 tok)
 - `drizzle.config.ts` (~134 tok)
 - `middleware.ts` — The middleware uses only the edge-safe config (no DB, no bcrypt). Route (~143 tok)
 - `next.config.mjs` — Declares nextConfig (~33 tok)
-- `package.json` — Node.js package manifest (~333 tok)
+- `package.json` — Node.js package manifest (~364 tok)
 - `prisma.config.ts` — Load .env.local (Next.js convention) for local development. In hosted (~274 tok)
-- `README.md` — Project documentation (~2039 tok)
+- `railway.json` (~65 tok)
+- `README.md` — Project documentation (~2368 tok)
 - `vercel.json` (~69 tok)
 
 ## .claude/
@@ -170,7 +171,7 @@
 - `password.ts` — Password hashing and verification. (~395 tok)
 - `retry-policy.test.ts` — Declares d (~594 tok)
 - `retry-policy.ts` — Retry policy for rate-limited WhatsApp sends. (~700 tok)
-- `retry-runner.ts` — Drains the WhatsApp retry queue — receipts whose confirmation message was (~1439 tok)
+- `retry-runner.ts` — Drains the WhatsApp retry queue — receipts whose confirmation message was (~1446 tok)
 - `scan.ts` — Outcome of the WhatsApp send attempt for this scan. (~3488 tok)
 - `session-expiry.ts` — Signalling for "your session has ended, sign in again". (~462 tok)
 - `sheets-sync.ts` — Pushes each store's data into its Google Sheets. (~2830 tok)
@@ -201,6 +202,11 @@
 ## prisma/migrations/0007_failover_sync_status/
 
 - `migration.sql` — AlterTable (~50 tok)
+
+## scripts/
+
+- `daily-sheet-sync.ts` — Nightly Google Sheets sync — Railway cron entrypoint. (~544 tok)
+- `message-retry.ts` — WhatsApp retry drain — Railway cron entrypoint. (~504 tok)
 
 ## types/
 

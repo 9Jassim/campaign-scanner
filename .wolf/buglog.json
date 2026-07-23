@@ -1651,6 +1651,38 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-22T15:05:43.093Z"
+    },
+    {
+      "id": "bug-097",
+      "timestamp": "2026-07-23T11:46:31.096Z",
+      "error_message": "Significant refactor of ",
+      "file": "README.md",
+      "root_cause": "15 lines replaced/restructured",
+      "fix": "Rewrote 22→45 lines (15 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-23T11:46:31.096Z"
+    },
+    {
+      "id": "bug-098",
+      "timestamp": "2026-07-23T11:46:44.521Z",
+      "error_message": "Wrong reference: Vercel should be Railway",
+      "file": "README.md",
+      "root_cause": "Used \"Vercel\" instead of \"Railway\"",
+      "fix": "Changed Vercel → Railway",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-23T11:46:44.521Z"
     }
   ]
 }
