@@ -1683,6 +1683,25 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-23T11:46:44.521Z"
+    },
+    {
+      "id": "bug-085",
+      "timestamp": "2026-07-23T12:17:01.421Z",
+      "error_message": "Railway build failed: npm ci lockfile out of sync (Missing @emnapi/core, @emnapi/runtime) + Nixpacks picked Node 18 (Prisma 7/Neon/Tailwind need 20+).",
+      "file": "package.json",
+      "root_cause": "Moved tsx between dependency sections by editing package.json without regenerating package-lock.json (Vercel install masked the drift), and no engines field so Nixpacks defaulted to nodejs_18.",
+      "fix": "Added engines.node >=22 (Nixpacks reads it), ran npm install --package-lock-only, verified with npm ci --dry-run. Rule: any manual package.json dependency edit must be followed by npm install to sync the lock.",
+      "tags": [
+        "railway",
+        "nixpacks",
+        "npm-ci",
+        "lockfile",
+        "node-version",
+        "deploy"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-23T12:17:01.421Z"
     }
   ]
 }

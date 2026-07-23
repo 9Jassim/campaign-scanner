@@ -743,3 +743,6 @@
 | 14:52 | Railway migration (code side): scripts/daily-sheet-sync.ts + scripts/message-retry.ts (wrap existing lib modules), railway.json, cron:* npm scripts, tsx to dependencies; DELETED vercel.json + all app/api/cron/* routes; README/.env.example rewritten for Railway, CRON_SECRET removed. Kept daily 10:00 retry + 21:00 UTC sync (spec's 5-min retry and 3AM/4AM split contradicted user decisions). Both scripts run clean live: retry no-op exit 0; sheet-sync wrote mirror+failover for both stores (first failover push, 'failover ok'). | scripts/*, railway.json, package.json, README.md, .env.example | 145 tests, tsc+lint+build clean | ~10000 |
 | 14:52 | Session end: 12 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5159 tok |
 | 15:00 | Session end: 12 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5159 tok |
+| 15:10 | Session end: 12 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5159 tok |
+| 15:15 | Edited package.json | 2→5 lines | ~23 |
+| 15:20 | Fixed Railway build failure: lockfile desync (manual tsx move) + Node 18 default; engines.node >=22 + lock regen | package.json, package-lock.json | npm ci --dry-run passes | ~1200 |
