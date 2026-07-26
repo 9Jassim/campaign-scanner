@@ -96,6 +96,7 @@ model Contact {
   raffleEntries RaffleEntry[]
 
   @@unique([storeId, phone])
+  @@index([storeId, totalEntries(sort: Desc)], map: "idx_contacts_store_entries")
   @@map("contacts")
 }
 

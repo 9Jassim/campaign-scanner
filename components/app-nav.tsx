@@ -18,6 +18,7 @@ const LINKS: NavLink[] = [
   { href: '/receipts', label: 'Receipts', roles: ['admin', 'manager'] },
   { href: '/raffle', label: 'Raffle', roles: ['admin', 'manager'] },
   { href: '/messages', label: 'Messages', roles: ['admin', 'manager'] },
+  { href: '/analytics', label: 'Analytics', roles: ['admin', 'manager'] },
 ];
 
 const ADMIN_LINKS: AdminLink[] = [
