@@ -5,12 +5,20 @@ import FilterBar from '@/components/filter-bar';
 import ExportButton from '@/components/export-button';
 import StatusBadge from '@/components/status-badge';
 import Pagination, { parsePageParam } from '@/components/pagination';
+import SortHeader, { parseSort } from '@/components/sort-header';
 import { formatDateTime } from '@/lib/datetime';
 import type { Prisma } from '@prisma/client';
 
 export const dynamic = 'force-dynamic';
 
 const PER_PAGE = 50;
+const SORTS = ['bd', 'entries', 'invoices', 'lastSeen'] as const;
+const SORT_COLUMN: Record<(typeof SORTS)[number], string> = {
+  bd: 'totalBd',
+  entries: 'totalEntries',
+  invoices: 'invoiceCount',
+  lastSeen: 'lastSeen',
+};
 /** Cap invoices shown per contact — a six-month campaign can rack them up. */
 const RECEIPTS_PER_CONTACT = 50;
 
@@ -21,7 +29,13 @@ const ROW_GRID =
 export default async function ContactsPage({
   searchParams,
 }: {
-  searchParams: { storeId?: string; q?: string; page?: string };
+  searchParams: {
+    storeId?: string;
+    q?: string;
+    page?: string;
+    sort?: string;
+    dir?: string;
+  };
 }) {
   const profile = await requireManager();
   const { stores, store } = await resolveActiveStore(
@@ -56,13 +70,22 @@ export default async function ContactsPage({
 
   // Count first so an out-of-range ?page can be clamped rather than showing
   // an empty list.
+  const { sort, dir } = parseSort(searchParams.sort, searchParams.dir, SORTS, {
+    sort: 'lastSeen',
+    dir: 'desc',
+  });
+  const orderBy: Prisma.ContactOrderByWithRelationInput[] = [
+    { [SORT_COLUMN[sort]]: dir } as Prisma.ContactOrderByWithRelationInput,
+    { id: 'asc' },
+  ];
+
   const total = await db.contact.count({ where });
   const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
   const page = Math.min(parsePageParam(searchParams.page), totalPages);
 
   const contacts = await db.contact.findMany({
     where,
-    orderBy: { lastSeen: 'desc' },
+    orderBy,
     skip: (page - 1) * PER_PAGE,
     take: PER_PAGE,
     include: {
@@ -83,6 +106,8 @@ export default async function ContactsPage({
       },
     },
   });
+
+  const sortParams = { storeId: store.id, q, sort, dir };
 
   return (
     <>
@@ -121,10 +146,46 @@ export default async function ContactsPage({
               <span />
               <span className="font-medium">Name</span>
               <span className="font-medium">Phone</span>
-              <span className="text-right font-medium">Total BD</span>
-              <span className="text-right font-medium">Entries</span>
-              <span className="text-right font-medium">Invoices</span>
-              <span className="font-medium">Last seen</span>
+              <span className="text-right">
+                <SortHeader
+                  label="Total BD"
+                  column="bd"
+                  currentSort={sort}
+                  currentDir={dir}
+                  basePath="/contacts"
+                  params={sortParams}
+                />
+              </span>
+              <span className="text-right">
+                <SortHeader
+                  label="Entries"
+                  column="entries"
+                  currentSort={sort}
+                  currentDir={dir}
+                  basePath="/contacts"
+                  params={sortParams}
+                />
+              </span>
+              <span className="text-right">
+                <SortHeader
+                  label="Invoices"
+                  column="invoices"
+                  currentSort={sort}
+                  currentDir={dir}
+                  basePath="/contacts"
+                  params={sortParams}
+                />
+              </span>
+              <span>
+                <SortHeader
+                  label="Last seen"
+                  column="lastSeen"
+                  currentSort={sort}
+                  currentDir={dir}
+                  basePath="/contacts"
+                  params={sortParams}
+                />
+              </span>
             </div>
 
             {contacts.length === 0 ? (
@@ -173,7 +234,7 @@ export default async function ContactsPage({
 
         <Pagination
           basePath="/contacts"
-          params={{ storeId: store.id, q }}
+          params={sortParams}
           page={page}
           totalPages={totalPages}
           totalItems={total}

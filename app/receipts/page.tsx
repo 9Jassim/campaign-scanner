@@ -6,12 +6,19 @@ import AutoSubmitSelect from '@/components/auto-submit-select';
 import ExportButton from '@/components/export-button';
 import StatusBadge from '@/components/status-badge';
 import Pagination, { parsePageParam } from '@/components/pagination';
+import SortHeader, { parseSort } from '@/components/sort-header';
 import { formatDateTime } from '@/lib/datetime';
 import type { Prisma } from '@prisma/client';
 
 export const dynamic = 'force-dynamic';
 
 const PER_PAGE = 50;
+const SORTS = ['date', 'amount', 'entries'] as const;
+const SORT_COLUMN: Record<(typeof SORTS)[number], string> = {
+  date: 'createdAt',
+  amount: 'amount',
+  entries: 'entries',
+};
 const STATUSES = [
   'pending',
   'sent',
@@ -29,6 +36,8 @@ export default async function ReceiptsPage({
     q?: string;
     status?: string;
     page?: string;
+    sort?: string;
+    dir?: string;
   };
 }) {
   const profile = await requireManager();
@@ -69,6 +78,16 @@ export default async function ReceiptsPage({
 
   // Count first so an out-of-range ?page can be clamped rather than showing
   // an empty list.
+  const { sort, dir } = parseSort(searchParams.sort, searchParams.dir, SORTS, {
+    sort: 'date',
+    dir: 'desc',
+  });
+  // `id` as a final tiebreaker keeps paging stable when the sort column ties.
+  const orderBy: Prisma.ReceiptOrderByWithRelationInput[] = [
+    { [SORT_COLUMN[sort]]: dir } as Prisma.ReceiptOrderByWithRelationInput,
+    { id: 'asc' },
+  ];
+
   const total = await db.receipt.count({ where });
   const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
   const page = Math.min(parsePageParam(searchParams.page), totalPages);
@@ -78,10 +97,12 @@ export default async function ReceiptsPage({
     include: {
       contact: { select: { name: true, phone: true } },
     },
-    orderBy: { createdAt: 'desc' },
+    orderBy,
     skip: (page - 1) * PER_PAGE,
     take: PER_PAGE,
   });
+
+  const sortParams = { storeId: store.id, q, status, sort, dir };
 
   return (
     <>
@@ -135,11 +156,38 @@ export default async function ReceiptsPage({
           <table className="w-full min-w-[720px] text-sm">
             <thead className="bg-zinc-100 text-left text-xs uppercase tracking-wide text-zinc-500 dark:bg-zinc-900">
               <tr>
-                <th className="px-3 py-2 font-medium">Date</th>
+                <th className="px-3 py-2 font-medium">
+                  <SortHeader
+                    label="Date"
+                    column="date"
+                    currentSort={sort}
+                    currentDir={dir}
+                    basePath="/receipts"
+                    params={sortParams}
+                  />
+                </th>
                 <th className="px-3 py-2 font-medium">Invoice</th>
                 <th className="px-3 py-2 font-medium">Customer</th>
-                <th className="px-3 py-2 text-right font-medium">Amount</th>
-                <th className="px-3 py-2 text-right font-medium">Entries</th>
+                <th className="px-3 py-2 text-right font-medium">
+                  <SortHeader
+                    label="Amount"
+                    column="amount"
+                    currentSort={sort}
+                    currentDir={dir}
+                    basePath="/receipts"
+                    params={sortParams}
+                  />
+                </th>
+                <th className="px-3 py-2 text-right font-medium">
+                  <SortHeader
+                    label="Entries"
+                    column="entries"
+                    currentSort={sort}
+                    currentDir={dir}
+                    basePath="/receipts"
+                    params={sortParams}
+                  />
+                </th>
                 <th className="px-3 py-2 font-medium">Status</th>
                 <th className="px-3 py-2 font-medium">Cashier</th>
               </tr>
@@ -194,7 +242,7 @@ export default async function ReceiptsPage({
 
         <Pagination
           basePath="/receipts"
-          params={{ storeId: store.id, q, status }}
+          params={sortParams}
           page={page}
           totalPages={totalPages}
           totalItems={total}

@@ -1482,7 +1482,7 @@
       "error_message": "Significant refactor of ",
       "file": "app/admin/sheets/page.tsx",
       "root_cause": "2 lines replaced/restructured",
-      "fix": "Rewrote 6→9 lines (2 removed) | Also: /** Nothing to sync without both a service account; const canSync = (sheetId: string | null) =>",
+      "fix": "Rewrote 6→9 lines (2 removed) | Also: /** Nothing to sync without both a service account; const canSync = (sheetId: string | null) => RESOLVED 26/07: removed startCommand from railway.json (it overrode the dashboard and locked the field), then set Custom Start Command per service. cron-sheet-sync verified live: log shows tsx scripts/daily-sheet-sync.ts + mirror ok/failover ok for both stores. cron-retry still needs the same start command set.",
       "tags": [
         "auto-detected",
         "refactor",
@@ -1490,7 +1490,7 @@
       ],
       "related_bugs": [],
       "occurrences": 2,
-      "last_seen": "2026-07-22T13:14:50.590Z"
+      "last_seen": "2026-07-26T10:22:50.294Z"
     },
     {
       "id": "bug-087",
@@ -1723,6 +1723,102 @@
       ],
       "occurrences": 1,
       "last_seen": "2026-07-26T10:11:38.728Z"
+    },
+    {
+      "id": "bug-101",
+      "timestamp": "2026-07-26T14:42:17.087Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/app-nav.tsx",
+      "root_cause": "Had '/contacts'",
+      "fix": "Changed to '/analytics'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-26T14:42:17.087Z"
+    },
+    {
+      "id": "bug-102",
+      "timestamp": "2026-07-26T14:42:48.505Z",
+      "error_message": "Incorrect value in code",
+      "file": "prisma/schema.prisma",
+      "root_cause": "Had \"contacts\"",
+      "fix": "Changed to \"idx_contacts_store_entries\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "prisma"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-26T14:42:48.505Z"
+    },
+    {
+      "id": "bug-103",
+      "timestamp": "2026-07-26T15:00:53.386Z",
+      "error_message": "CSS fix: href",
+      "file": "components/app-nav.tsx",
+      "root_cause": "href: '/messages', label: 'Messages', roles: ['admin', 'manager'] → '/analytics', label: 'Analytics', roles: ['admin', 'manager']",
+      "fix": "Changed href: '/messages', label: 'Messages', roles: ['admin', 'manager'] → '/analytics', label: 'Analytics', roles: ['admin', 'manager']",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-26T15:00:53.386Z"
+    },
+    {
+      "id": "bug-104",
+      "timestamp": "2026-07-26T15:21:22.382Z",
+      "error_message": "Type error",
+      "file": "app/receipts/page.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation | Also: const { sort, dir } = parseSort(searchParams.sort, searchPar; sort: 'date', | Also: import SortHeader, { parseSort } from '@/components/sort-hea; const SORTS = ['number', 'date'] as const; | Also: import SortHeader, { parseSort } from '@/components/sort-hea; const SORTS = ['bd', 'entries', 'invoices', 'lastSeen'] as c | Also: const { sort, dir } = parseSort(searchParams.sort, searchPar; sort: 'lastSeen', | Also: const sortParams = { storeId: store.id, q, sort, dir };",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 6,
+      "last_seen": "2026-07-26T15:24:41.681Z"
+    },
+    {
+      "id": "bug-105",
+      "timestamp": "2026-07-26T15:22:06.401Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/receipts/page.tsx",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 9→36 lines (3 removed) | Also: <th className=\"px-3 py-2 text-right font-medium\">E; <th className=\"px-3 py-2 font-medium\">Date</th> | Also: <span className=\"text-right font-medium\">Total BD<; <span className=\"text-right font-medium\">Entries</",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-07-26T15:24:54.351Z"
+    },
+    {
+      "id": "bug-106",
+      "timestamp": "2026-07-26T15:22:50.588Z",
+      "error_message": "CSS fix: orderBy",
+      "file": "app/raffle/page.tsx",
+      "root_cause": "orderBy: { entryNumber: 'asc' → Prisma.RaffleEntryOrderByWithRelationInput[] =",
+      "fix": "Changed orderBy: { entryNumber: 'asc' → Prisma.RaffleEntryOrderByWithRelationInput[] =",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-26T15:24:10.584Z"
     }
   ]
 }

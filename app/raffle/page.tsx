@@ -4,17 +4,25 @@ import AppNav from '@/components/app-nav';
 import FilterBar from '@/components/filter-bar';
 import ExportButton from '@/components/export-button';
 import Pagination, { parsePageParam } from '@/components/pagination';
+import SortHeader, { parseSort } from '@/components/sort-header';
 import { formatDateTime } from '@/lib/datetime';
 import type { Prisma } from '@prisma/client';
 
 export const dynamic = 'force-dynamic';
 
 const PER_PAGE = 100;
+const SORTS = ['number', 'date'] as const;
 
 export default async function RafflePage({
   searchParams,
 }: {
-  searchParams: { storeId?: string; q?: string; page?: string };
+  searchParams: {
+    storeId?: string;
+    q?: string;
+    page?: string;
+    sort?: string;
+    dir?: string;
+  };
 }) {
   const profile = await requireManager();
   const { stores, store } = await resolveActiveStore(
@@ -53,16 +61,28 @@ export default async function RafflePage({
 
   // Count first so an out-of-range ?page can be clamped rather than showing
   // an empty list.
+  const { sort, dir } = parseSort(searchParams.sort, searchParams.dir, SORTS, {
+    sort: 'number',
+    dir: 'asc',
+  });
+  // Entries created in one scan share a timestamp, so tiebreak date by number.
+  const orderBy: Prisma.RaffleEntryOrderByWithRelationInput[] =
+    sort === 'date'
+      ? [{ createdAt: dir }, { entryNumber: 'asc' }]
+      : [{ entryNumber: dir }];
+
   const total = await db.raffleEntry.count({ where });
   const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
   const page = Math.min(parsePageParam(searchParams.page), totalPages);
 
   const entries = await db.raffleEntry.findMany({
     where,
-    orderBy: { entryNumber: 'asc' },
+    orderBy,
     skip: (page - 1) * PER_PAGE,
     take: PER_PAGE,
   });
+
+  const sortParams = { storeId: store.id, q, sort, dir };
 
   return (
     <>
@@ -97,11 +117,30 @@ export default async function RafflePage({
           <table className="w-full min-w-[560px] text-sm">
             <thead className="bg-zinc-100 text-left text-xs uppercase tracking-wide text-zinc-500 dark:bg-zinc-900">
               <tr>
-                <th className="px-3 py-2 text-right font-medium">Entry #</th>
+                <th className="px-3 py-2 text-right font-medium">
+                  <SortHeader
+                    label="Entry #"
+                    column="number"
+                    currentSort={sort}
+                    currentDir={dir}
+                    basePath="/raffle"
+                    params={sortParams}
+                    defaultDir="asc"
+                  />
+                </th>
                 <th className="px-3 py-2 font-medium">Name</th>
                 <th className="px-3 py-2 font-medium">Phone</th>
                 <th className="px-3 py-2 font-medium">Invoice</th>
-                <th className="px-3 py-2 font-medium">Date</th>
+                <th className="px-3 py-2 font-medium">
+                  <SortHeader
+                    label="Date"
+                    column="date"
+                    currentSort={sort}
+                    currentDir={dir}
+                    basePath="/raffle"
+                    params={sortParams}
+                  />
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -138,7 +177,7 @@ export default async function RafflePage({
 
         <Pagination
           basePath="/raffle"
-          params={{ storeId: store.id, q }}
+          params={sortParams}
           page={page}
           totalPages={totalPages}
           totalItems={total}

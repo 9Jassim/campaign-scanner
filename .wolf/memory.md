@@ -800,3 +800,77 @@
 |------|--------|---------|---------|--------|
 | (26/07) | Diagnosed 3-day sync gap: Railway cron services were running `next start` (web server on :8080) not `npm run cron:*` — schedule was set but per-service Custom Start Command was not, so they inherited railway.json's npm start. Fix: set Custom Start Command on each cron service. | railway.json (context), .wolf/buglog.json | root cause found, user applying fix in dashboard | ~1500 |
 | 13:15 | Edited railway.json | 5→4 lines | ~26 |
+| 13:16 | Session end: 1 writes across 1 files (railway.json) | 0 reads | ~26 tok |
+| (26/07) | RESOLVED cron gap: railway.json startCommand locked the dashboard field; removed it (kept builder+restartPolicy, commit e57cc5b) and set per-service Custom Start Command. cron-sheet-sync verified live — runs tsx script, mirror ok/failover ok both stores, /admin/sheets timestamp current. cron-retry: user to set npm run cron:retry. | railway.json | migration functionally complete | ~800 |
+| 13:23 | Session end: 1 writes across 1 files (railway.json) | 0 reads | ~26 tok |
+
+## Session: 2026-07-26 16:22
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-26 16:22
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 16:28 | Created lib/analytics/types.ts | — | ~361 |
+| 16:29 | Created lib/analytics/helpers.ts | — | ~1638 |
+| 16:29 | Created lib/analytics/access.ts | — | ~300 |
+| 16:30 | Created lib/analytics/queries.ts | — | ~1826 |
+| 16:30 | Created app/analytics/components/stat-cards.tsx | — | ~751 |
+| 16:31 | Created app/analytics/components/delivery-pie-chart.tsx | — | ~1029 |
+| 16:31 | Created app/analytics/components/peak-hours-heatmap.tsx | — | ~949 |
+| 16:32 | Created app/analytics/components/daily-scans-chart.tsx | — | ~1827 |
+| 16:33 | Created app/analytics/components/top-customers-table.tsx | — | ~1615 |
+| 16:33 | Created app/analytics/components/analytics-filters.tsx | — | ~1237 |
+| 16:34 | Created app/analytics/page.tsx | — | ~1536 |
+| 16:34 | Created app/analytics/loading.tsx | — | ~324 |
+
+## Session: 2026-07-26 17:05
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-26 17:20
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 17:42 | Edited components/app-nav.tsx | 2→3 lines | ~66 |
+| 17:42 | Created prisma/migrations/0008_analytics_indexes/migration.sql | — | ~84 |
+| 17:42 | Edited prisma/schema.prisma | 2→3 lines | ~35 |
+| (26/07) | Built /analytics dashboard (5 views: stat cards+delta, daily line, delivery donut, top-customers table, peak-hours heatmap). Hand-rolled SVG/CSS charts (user chose over Recharts — zero deps, /analytics = 2.71kB). lib/analytics/{types,helpers,access,queries}. unstable_cache 5min. Migration 0008 (idx_contacts_store_entries) applied to Neon. Nav link admin+manager. Fixed spec's TZ bug (AT TIME ZONE UTC then Asia/Bahrain). Verified live w/ throwaway admin/manager/cashier: cashier→redirect, manager→1 store no picker no reveal, admin→all stores+picker+combined line+reveal; store filter + empty states work. Users deleted after. | app/analytics/*, lib/analytics/*, components/app-nav.tsx, prisma | 145 tests, tsc+lint+build clean | ~18000 |
+| 17:53 | Session end: 3 writes across 3 files (app-nav.tsx, migration.sql, schema.prisma) | 0 reads | ~194 tok |
+| 18:00 | Edited components/app-nav.tsx | 7→7 lines | ~128 |
+| 18:01 | Edited app/analytics/components/daily-scans-chart.tsx | 6→6 lines | ~32 |
+| 18:01 | Edited app/analytics/components/daily-scans-chart.tsx | 8→8 lines | ~76 |
+| 18:01 | Edited app/analytics/components/daily-scans-chart.tsx | 9→9 lines | ~83 |
+| 18:02 | Session end: 7 writes across 4 files (app-nav.tsx, migration.sql, schema.prisma, daily-scans-chart.tsx) | 0 reads | ~513 tok |
+| 18:06 | Edited app/analytics/components/daily-scans-chart.tsx | added 1 condition(s) | ~169 |
+| 18:06 | Edited app/analytics/components/daily-scans-chart.tsx | 14→14 lines | ~134 |
+| 18:07 | Session end: 9 writes across 4 files (app-nav.tsx, migration.sql, schema.prisma, daily-scans-chart.tsx) | 0 reads | ~816 tok |
+| 18:12 | Edited lib/analytics/types.ts | 3→5 lines | ~49 |
+| 18:12 | Edited lib/analytics/queries.ts | 12→14 lines | ~106 |
+| 18:12 | Edited app/analytics/page.tsx | 1→5 lines | ~41 |
+| 18:12 | Edited app/analytics/components/top-customers-table.tsx | CSS: showStore | ~106 |
+| 18:12 | Edited app/analytics/components/top-customers-table.tsx | added 1 condition(s) | ~70 |
+| 18:13 | Edited app/analytics/components/top-customers-table.tsx | 3→6 lines | ~114 |
+| 18:13 | Edited app/analytics/components/top-customers-table.tsx | CSS: dark, dark | ~162 |
+| (26/07) | Analytics tweaks: moved Analytics nav link after Messages; enlarged daily-chart axis label fonts (10→15 y, 9→14 x) + fixed end-label overlap (drop neighbor near forced last, anchor first/last inward); added sortable Store badge column to top-customers table shown only when >1 store in view. | components/app-nav.tsx, app/analytics/components/{daily-scans-chart,top-customers-table}.tsx, page.tsx, lib/analytics/{types,queries}.ts | tsc+lint+build clean | ~2500 |
+| 18:14 | Session end: 16 writes across 8 files (app-nav.tsx, migration.sql, schema.prisma, daily-scans-chart.tsx, types.ts) | 0 reads | ~1464 tok |
+| 18:20 | Created components/sort-header.tsx | — | ~616 |
+| 18:21 | Edited app/receipts/page.tsx | expanded (+7 lines) | ~136 |
+| 18:21 | Edited app/receipts/page.tsx | 7→9 lines | ~41 |
+| 18:21 | Edited app/receipts/page.tsx | expanded (+12 lines) | ~236 |
+| 18:22 | Edited app/receipts/page.tsx | expanded (+27 lines) | ~399 |
+| 18:22 | Edited app/receipts/page.tsx | 4→4 lines | ~30 |
+| 18:22 | Edited app/raffle/page.tsx | modified RafflePage() | ~150 |
+| 18:22 | Edited app/raffle/page.tsx | expanded (+12 lines) | ~216 |
+| 18:23 | Edited app/raffle/page.tsx | expanded (+19 lines) | ~282 |
+| 18:23 | Edited app/raffle/page.tsx | 4→4 lines | ~29 |
+| 18:23 | Edited app/contacts/page.tsx | expanded (+8 lines) | ~149 |
+| 18:24 | Edited app/contacts/page.tsx | expanded (+6 lines) | ~35 |
+| 18:24 | Edited app/contacts/page.tsx | CSS: sort, dir, id | ~171 |
+| 18:24 | Edited app/contacts/page.tsx | CSS: storeId | ~38 |
+| 18:24 | Edited app/contacts/page.tsx | expanded (+36 lines) | ~411 |
+| 18:25 | Edited app/contacts/page.tsx | 4→4 lines | ~30 |
+| (26/07) | Added URL-based column sorting to contacts/receipts/raffle via shared components/sort-header.tsx (SortHeader link + parseSort). Receipts: date/amount/entries. Contacts: totalBd/entries/invoices/lastSeen. Raffle: entryNumber/date (date tiebreaks on entryNumber). Sort+dir carried through Pagination; sorting resets to page 1; id tiebreaker for stable paging. Verified live (throwaway admin, deleted): all sorts asc/desc correct. | components/sort-header.tsx, app/{contacts,receipts,raffle}/page.tsx | tsc+lint+build clean | ~4000 |

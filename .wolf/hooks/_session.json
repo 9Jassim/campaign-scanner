@@ -1,19 +1,232 @@
 {
-  "session_id": "session-2026-07-26-1244",
-  "started": "2026-07-26T09:44:45.358Z",
-  "files_read": {},
+  "session_id": "session-2026-07-26-1720",
+  "started": "2026-07-26T14:20:53.677Z",
+  "files_read": {
+    "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/receipts/page.tsx": {
+      "count": 1,
+      "tokens": 2010,
+      "first_read": "2026-07-26T15:18:20.175Z"
+    },
+    "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/contacts/page.tsx": {
+      "count": 1,
+      "tokens": 2568,
+      "first_read": "2026-07-26T15:18:32.294Z"
+    },
+    "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/raffle/page.tsx": {
+      "count": 1,
+      "tokens": 1500,
+      "first_read": "2026-07-26T15:18:37.182Z"
+    }
+  },
   "files_written": [
     {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/railway.json",
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
       "action": "edit",
-      "tokens": 26,
-      "at": "2026-07-26T10:15:54.566Z"
+      "tokens": 66,
+      "at": "2026-07-26T14:42:17.084Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/prisma/migrations/0008_analytics_indexes/migration.sql",
+      "action": "create",
+      "tokens": 90,
+      "at": "2026-07-26T14:42:28.899Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/prisma/schema.prisma",
+      "action": "edit",
+      "tokens": 38,
+      "at": "2026-07-26T14:42:48.502Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/app-nav.tsx",
+      "action": "edit",
+      "tokens": 128,
+      "at": "2026-07-26T15:00:53.376Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/analytics/components/daily-scans-chart.tsx",
+      "action": "edit",
+      "tokens": 32,
+      "at": "2026-07-26T15:01:18.347Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/analytics/components/daily-scans-chart.tsx",
+      "action": "edit",
+      "tokens": 76,
+      "at": "2026-07-26T15:01:27.486Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/analytics/components/daily-scans-chart.tsx",
+      "action": "edit",
+      "tokens": 83,
+      "at": "2026-07-26T15:01:35.953Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/analytics/components/daily-scans-chart.tsx",
+      "action": "edit",
+      "tokens": 169,
+      "at": "2026-07-26T15:06:16.104Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/analytics/components/daily-scans-chart.tsx",
+      "action": "edit",
+      "tokens": 134,
+      "at": "2026-07-26T15:06:32.960Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/analytics/types.ts",
+      "action": "edit",
+      "tokens": 49,
+      "at": "2026-07-26T15:12:05.272Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/analytics/queries.ts",
+      "action": "edit",
+      "tokens": 106,
+      "at": "2026-07-26T15:12:16.755Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/analytics/page.tsx",
+      "action": "edit",
+      "tokens": 41,
+      "at": "2026-07-26T15:12:31.889Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/analytics/components/top-customers-table.tsx",
+      "action": "edit",
+      "tokens": 106,
+      "at": "2026-07-26T15:12:42.721Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/analytics/components/top-customers-table.tsx",
+      "action": "edit",
+      "tokens": 70,
+      "at": "2026-07-26T15:12:53.437Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/analytics/components/top-customers-table.tsx",
+      "action": "edit",
+      "tokens": 114,
+      "at": "2026-07-26T15:13:07.453Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/analytics/components/top-customers-table.tsx",
+      "action": "edit",
+      "tokens": 162,
+      "at": "2026-07-26T15:13:21.570Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/components/sort-header.tsx",
+      "action": "create",
+      "tokens": 616,
+      "at": "2026-07-26T15:20:58.340Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/receipts/page.tsx",
+      "action": "edit",
+      "tokens": 136,
+      "at": "2026-07-26T15:21:22.379Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/receipts/page.tsx",
+      "action": "edit",
+      "tokens": 41,
+      "at": "2026-07-26T15:21:37.856Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/receipts/page.tsx",
+      "action": "edit",
+      "tokens": 236,
+      "at": "2026-07-26T15:21:49.286Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/receipts/page.tsx",
+      "action": "edit",
+      "tokens": 399,
+      "at": "2026-07-26T15:22:06.395Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/receipts/page.tsx",
+      "action": "edit",
+      "tokens": 30,
+      "at": "2026-07-26T15:22:14.199Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/raffle/page.tsx",
+      "action": "edit",
+      "tokens": 150,
+      "at": "2026-07-26T15:22:37.188Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/raffle/page.tsx",
+      "action": "edit",
+      "tokens": 216,
+      "at": "2026-07-26T15:22:50.584Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/raffle/page.tsx",
+      "action": "edit",
+      "tokens": 282,
+      "at": "2026-07-26T15:23:04.822Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/raffle/page.tsx",
+      "action": "edit",
+      "tokens": 29,
+      "at": "2026-07-26T15:23:25.507Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/contacts/page.tsx",
+      "action": "edit",
+      "tokens": 149,
+      "at": "2026-07-26T15:23:52.031Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/contacts/page.tsx",
+      "action": "edit",
+      "tokens": 35,
+      "at": "2026-07-26T15:24:10.579Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/contacts/page.tsx",
+      "action": "edit",
+      "tokens": 171,
+      "at": "2026-07-26T15:24:31.453Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/contacts/page.tsx",
+      "action": "edit",
+      "tokens": 38,
+      "at": "2026-07-26T15:24:41.678Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/contacts/page.tsx",
+      "action": "edit",
+      "tokens": 411,
+      "at": "2026-07-26T15:24:54.345Z"
+    },
+    {
+      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/app/contacts/page.tsx",
+      "action": "edit",
+      "tokens": 30,
+      "at": "2026-07-26T15:25:08.328Z"
     }
   ],
   "edit_counts": {
-    "railway.json": 1
+    "components/app-nav.tsx": 2,
+    "prisma/migrations/0008_analytics_indexes/migration.sql": 1,
+    "prisma/schema.prisma": 1,
+    "app/analytics/components/daily-scans-chart.tsx": 5,
+    "lib/analytics/types.ts": 1,
+    "lib/analytics/queries.ts": 1,
+    "app/analytics/page.tsx": 1,
+    "app/analytics/components/top-customers-table.tsx": 4,
+    "components/sort-header.tsx": 1,
+    "app/receipts/page.tsx": 5,
+    "app/raffle/page.tsx": 4,
+    "app/contacts/page.tsx": 6
   },
-  "anatomy_hits": 0,
+  "anatomy_hits": 3,
   "anatomy_misses": 0,
   "repeated_reads_warned": 0,
   "cerebrum_warnings": 0,

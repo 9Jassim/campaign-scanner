@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-26T10:15:54.543Z
-> Files: 104 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-26T15:25:08.318Z
+> Files: 118 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
 
@@ -57,6 +57,20 @@
 - `actions.ts` — Usernames are typed at a till, often on a phone keyboard, so they are stored (~1280 tok)
 - `page.tsx` — dynamic — renders form (~3604 tok)
 
+## app/analytics/
+
+- `loading.tsx` — Skeleton shown while the dashboard's queries run. Mirrors the page layout: (~324 tok)
+- `page.tsx` — Distinct, theme-safe hues for per-store lines; combined uses currentColor. (~1558 tok)
+
+## app/analytics/components/
+
+- `analytics-filters.tsx` — Date-range presets (as links, so state stays in the URL and the page stays (~1237 tok)
+- `daily-scans-chart.tsx` — Scans per day, hand-drawn as an SVG line chart (no charting dependency). (~1962 tok)
+- `delivery-pie-chart.tsx` — Donut of message-delivery outcomes, drawn with a CSS conic-gradient (no (~1029 tok)
+- `peak-hours-heatmap.tsx` — Scan volume by hour × day of week (Bahrain time), as a coloured grid — darker (~949 tok)
+- `stat-cards.tsx` — The four headline totals, each with its change against the previous period (~751 tok)
+- `top-customers-table.tsx` — Top customers by entries. Sortable by any column, masked phones with an (~1836 tok)
+
 ## app/api/admin/import-failover/
 
 - `route.ts` — Preview or run a failover-sheet import. One POST endpoint; `mode` in the body (~602 tok)
@@ -91,7 +105,7 @@
 
 ## app/contacts/
 
-- `page.tsx` — Cap invoices shown per contact — a six-month campaign can rack them up. (~2568 tok)
+- `page.tsx` — Cap invoices shown per contact — a six-month campaign can rack them up. (~3049 tok)
 
 ## app/messages/
 
@@ -99,11 +113,11 @@
 
 ## app/raffle/
 
-- `page.tsx` — dynamic — renders table (~1500 tok)
+- `page.tsx` — dynamic — renders table (~1833 tok)
 
 ## app/receipts/
 
-- `page.tsx` — dynamic — renders table (~2010 tok)
+- `page.tsx` — dynamic — renders table (~2450 tok)
 
 ## app/scanner/
 
@@ -131,13 +145,14 @@
 ## components/
 
 - `admin-menu.tsx` — The admin-only pages folded into one dropdown, so the nav stays short. (~833 tok)
-- `app-nav.tsx` — Daily-use pages keep top-level links; admin-only pages live in the menu. (~793 tok)
+- `app-nav.tsx` — Daily-use pages keep top-level links; admin-only pages live in the menu. (~814 tok)
 - `auto-submit-select.tsx` — A <select> that submits its enclosing form as soon as the value changes, (~163 tok)
 - `export-button.tsx` — Download link to the CSV export endpoint, carrying the current filters. (~245 tok)
 - `filter-bar.tsx` — A GET-form filter bar: store selector + free-text search, plus any extra (~658 tok)
 - `pagination.tsx` — URL-based pager. Keeps the current filters in the links so paging never (~1072 tok)
 - `session-guard.tsx` — How often to check the session while the page sits open. (~1660 tok)
 - `sign-out-button.tsx` — SignOutButton — renders form (~145 tok)
+- `sort-header.tsx` — A clickable column header that sorts a list page via URL params (`sort`, (~616 tok)
 - `status-badge.tsx` — WhatsApp message status pill. Hover shows the underlying Meta error, which (~321 tok)
 - `theme-script.tsx` — Applies the saved theme before the page paints. (~354 tok)
 - `theme-toggle.tsx` — Resolve a preference to the concrete theme the page should show. (~1297 tok)
@@ -182,9 +197,16 @@
 - `whatsapp.test.ts` — Declares makeStore (~1209 tok)
 - `whatsapp.ts` — WhatsApp sending via the Meta Cloud API. (~1379 tok)
 
+## lib/analytics/
+
+- `access.ts` — Who may see analytics, and for which stores. (~300 tok)
+- `helpers.ts` — Date-range and formatting helpers for analytics. (~1638 tok)
+- `queries.ts` — All analytics database access. (~1849 tok)
+- `types.ts` — Shared types for the analytics dashboard. (~389 tok)
+
 ## prisma/
 
-- `schema.prisma` (~2258 tok)
+- `schema.prisma` (~2280 tok)
 - `seed.ts` — Seed script: creates the two campaign stores, and optionally seeds an admin (~860 tok)
 
 ## prisma/migrations/
@@ -202,6 +224,10 @@
 ## prisma/migrations/0007_failover_sync_status/
 
 - `migration.sql` — AlterTable (~50 tok)
+
+## prisma/migrations/0008_analytics_indexes/
+
+- `migration.sql` — Speeds up the top-customers query (ORDER BY total_entries within a store). (~84 tok)
 
 ## scripts/
 
