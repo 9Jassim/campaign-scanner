@@ -1702,6 +1702,27 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-23T12:17:01.421Z"
+    },
+    {
+      "id": "bug-086",
+      "timestamp": "2026-07-26T10:11:38.728Z",
+      "error_message": "Railway cron services ran the Next.js web server (next start, localhost:8080) instead of the sync/retry scripts; /admin/sheets lastSyncAt stuck 3 days at the last manual run.",
+      "file": "railway.json",
+      "root_cause": "railway.json deploy.startCommand \"npm start\" is inherited by every service built from the repo. The cron services had their SCHEDULE set but no per-service Custom Start Command, so they fell back to npm start (next start) and never executed npm run cron:*.",
+      "fix": "Set Custom Start Command per cron service in Railway Settings->Deploy: cron-sheet-sync = npm run cron:sheet-sync, cron-retry = npm run cron:retry (service-level command overrides railway.json). Verify via Logs showing [sheets-sync] ... mirror ok and lastSyncAt updating.",
+      "tags": [
+        "railway",
+        "cron",
+        "start-command",
+        "deploy",
+        "sheets-sync",
+        "config"
+      ],
+      "related_bugs": [
+        "bug-085"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-26T10:11:38.728Z"
     }
   ]
 }

@@ -746,3 +746,57 @@
 | 15:10 | Session end: 12 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5159 tok |
 | 15:15 | Edited package.json | 2→5 lines | ~23 |
 | 15:20 | Fixed Railway build failure: lockfile desync (manual tsx move) + Node 18 default; engines.node >=22 + lock regen | package.json, package-lock.json | npm ci --dry-run passes | ~1200 |
+| 15:17 | Session end: 13 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5182 tok |
+| 15:21 | Session end: 13 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5182 tok |
+| 15:22 | Session end: 13 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5182 tok |
+| 15:24 | Session end: 13 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5182 tok |
+| 16:05 | User confirmed Railway deployment live: scanner works, Meta webhook verified against the Railway URL. Port 3000 + PORT=3000 on web service; crons need no networking. | — | migration cutover successful | ~300 |
+| 15:35 | Session end: 13 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5182 tok |
+| 15:38 | Session end: 13 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5182 tok |
+| 15:42 | Session end: 13 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5182 tok |
+| 15:45 | Session end: 13 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5182 tok |
+| 15:47 | Session end: 13 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5182 tok |
+| 15:56 | Session end: 13 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5182 tok |
+| 15:59 | Session end: 13 writes across 7 files (daily-sheet-sync.ts, message-retry.ts, railway.json, package.json, auth.config.ts) | 5 reads | ~5182 tok |
+
+## Session: 2026-07-23 18:23
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-23 18:52
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-23 19:24
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-26 12:40
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-26 12:43
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-26 12:44
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-26 12:44
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-26 12:44
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| (26/07) | Diagnosed 3-day sync gap: Railway cron services were running `next start` (web server on :8080) not `npm run cron:*` — schedule was set but per-service Custom Start Command was not, so they inherited railway.json's npm start. Fix: set Custom Start Command on each cron service. | railway.json (context), .wolf/buglog.json | root cause found, user applying fix in dashboard | ~1500 |
+| 13:15 | Edited railway.json | 5→4 lines | ~26 |

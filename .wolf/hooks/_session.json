@@ -1,125 +1,21 @@
 {
-  "session_id": "session-2026-07-23-1439",
-  "started": "2026-07-23T11:39:23.522Z",
-  "files_read": {
-    "C:/Users/jassi/Desktop/Projects/campaign-scanner/package.json": {
-      "count": 1,
-      "tokens": 333,
-      "first_read": "2026-07-23T11:42:01.294Z"
-    },
-    "C:/Users/jassi/Desktop/Projects/campaign-scanner/next.config.mjs": {
-      "count": 1,
-      "tokens": 33,
-      "first_read": "2026-07-23T11:42:04.781Z"
-    },
-    "C:/Users/jassi/Desktop/Projects/campaign-scanner/auth.config.ts": {
-      "count": 1,
-      "tokens": 656,
-      "first_read": "2026-07-23T11:42:04.885Z"
-    },
-    "C:/Users/jassi/Desktop/Projects/campaign-scanner/README.md": {
-      "count": 1,
-      "tokens": 2039,
-      "first_read": "2026-07-23T11:45:08.210Z"
-    },
-    "C:/Users/jassi/Desktop/Projects/campaign-scanner/.env.example": {
-      "count": 1,
-      "tokens": 0,
-      "first_read": "2026-07-23T11:46:50.289Z"
-    }
-  },
+  "session_id": "session-2026-07-26-1244",
+  "started": "2026-07-26T09:44:45.358Z",
+  "files_read": {},
   "files_written": [
     {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/scripts/daily-sheet-sync.ts",
-      "action": "create",
-      "tokens": 544,
-      "at": "2026-07-23T11:43:08.777Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/scripts/message-retry.ts",
-      "action": "create",
-      "tokens": 504,
-      "at": "2026-07-23T11:43:11.591Z"
-    },
-    {
       "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/railway.json",
-      "action": "create",
-      "tokens": 65,
-      "at": "2026-07-23T11:43:24.329Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/package.json",
       "action": "edit",
-      "tokens": 42,
-      "at": "2026-07-23T11:43:28.595Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/package.json",
-      "action": "edit",
-      "tokens": 22,
-      "at": "2026-07-23T11:43:55.845Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/package.json",
-      "action": "edit",
-      "tokens": 21,
-      "at": "2026-07-23T11:44:02.948Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/auth.config.ts",
-      "action": "edit",
-      "tokens": 58,
-      "at": "2026-07-23T11:44:55.631Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/lib/retry-runner.ts",
-      "action": "edit",
-      "tokens": 28,
-      "at": "2026-07-23T11:44:58.262Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/README.md",
-      "action": "edit",
-      "tokens": 110,
-      "at": "2026-07-23T11:45:21.872Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/README.md",
-      "action": "edit",
-      "tokens": 40,
-      "at": "2026-07-23T11:45:23.667Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/README.md",
-      "action": "edit",
-      "tokens": 649,
-      "at": "2026-07-23T11:46:31.090Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/README.md",
-      "action": "edit",
-      "tokens": 15,
-      "at": "2026-07-23T11:46:44.510Z"
-    },
-    {
-      "file": "C:/Users/jassi/Desktop/Projects/campaign-scanner/package.json",
-      "action": "edit",
-      "tokens": 23,
-      "at": "2026-07-23T12:15:30.211Z"
+      "tokens": 26,
+      "at": "2026-07-26T10:15:54.566Z"
     }
   ],
   "edit_counts": {
-    "scripts/daily-sheet-sync.ts": 1,
-    "scripts/message-retry.ts": 1,
-    "railway.json": 1,
-    "package.json": 4,
-    "auth.config.ts": 1,
-    "lib/retry-runner.ts": 1,
-    "README.md": 4
+    "railway.json": 1
   },
-  "anatomy_hits": 4,
-  "anatomy_misses": 1,
+  "anatomy_hits": 0,
+  "anatomy_misses": 0,
   "repeated_reads_warned": 0,
   "cerebrum_warnings": 0,
-  "stop_count": 3
+  "stop_count": 4
 }

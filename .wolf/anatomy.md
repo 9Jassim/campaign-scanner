@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-23T12:15:30.199Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-26T10:15:54.543Z
 > Files: 104 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
@@ -21,7 +21,7 @@
 - `next.config.mjs` — Declares nextConfig (~33 tok)
 - `package.json` — Node.js package manifest (~375 tok)
 - `prisma.config.ts` — Load .env.local (Next.js convention) for local development. In hosted (~274 tok)
-- `railway.json` (~65 tok)
+- `railway.json` (~56 tok)
 - `README.md` — Project documentation (~2368 tok)
 - `vercel.json` (~69 tok)
 
