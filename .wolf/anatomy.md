@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-26T15:25:08.318Z
-> Files: 118 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-28T09:43:26.488Z
+> Files: 120 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../AppData/Local/Temp/claude/C--Users-jassi-Desktop-Projects-campaign-scanner/b16e8983-9f22-48a3-81fa-a4622be5aa24/scratchpad/
 
@@ -117,7 +117,8 @@
 
 ## app/receipts/
 
-- `page.tsx` — dynamic — renders table (~2450 tok)
+- `actions.ts` — Admin action: re-send the WhatsApp confirmation for one failed receipt. (~499 tok)
+- `page.tsx` — dynamic — renders form, table (~3043 tok)
 
 ## app/scanner/
 
@@ -184,6 +185,7 @@
 - `login-throttle.ts` — Sign-in throttling policy. (~1502 tok)
 - `password.test.ts` — Declares hash (~520 tok)
 - `password.ts` — Password hashing and verification. (~395 tok)
+- `resend.ts` — Re-send the WhatsApp confirmation for a single receipt. (~869 tok)
 - `retry-policy.test.ts` — Declares d (~594 tok)
 - `retry-policy.ts` — Retry policy for rate-limited WhatsApp sends. (~700 tok)
 - `retry-runner.ts` — Drains the WhatsApp retry queue — receipts whose confirmation message was (~1446 tok)

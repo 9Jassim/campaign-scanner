@@ -9,6 +9,7 @@ import Pagination, { parsePageParam } from '@/components/pagination';
 import SortHeader, { parseSort } from '@/components/sort-header';
 import { formatDateTime } from '@/lib/datetime';
 import type { Prisma } from '@prisma/client';
+import { resendReceiptAction } from './actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -38,6 +39,7 @@ export default async function ReceiptsPage({
     page?: string;
     sort?: string;
     dir?: string;
+    resent?: string;
   };
 }) {
   const profile = await requireManager();
@@ -104,6 +106,18 @@ export default async function ReceiptsPage({
 
   const sortParams = { storeId: store.id, q, status, sort, dir };
 
+  // Only admins may resend. Each resend returns to this exact view.
+  const isAdmin = profile.role === 'admin';
+  const returnQuery = new URLSearchParams();
+  returnQuery.set('storeId', store.id);
+  if (q) returnQuery.set('q', q);
+  if (status) returnQuery.set('status', status);
+  returnQuery.set('sort', sort);
+  returnQuery.set('dir', dir);
+  if (page > 1) returnQuery.set('page', String(page));
+  const returnTo = `/receipts?${returnQuery.toString()}`;
+  const resentOk = searchParams.resent === 'sent';
+
   return (
     <>
       <AppNav profile={profile} current="/receipts" />
@@ -147,6 +161,18 @@ export default async function ReceiptsPage({
             </AutoSubmitSelect>
           </label>
         </FilterBar>
+
+        {searchParams.resent && (
+          <p
+            className={
+              resentOk
+                ? 'rounded-md border border-green-300 bg-green-50 p-3 text-sm text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200'
+                : 'rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-800 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200'
+            }
+          >
+            Resend — {searchParams.resent}
+          </p>
+        )}
 
         <p className="text-xs text-zinc-500">
           {total} receipt{total === 1 ? '' : 's'}
@@ -225,10 +251,28 @@ export default async function ReceiptsPage({
                       {r.entries}
                     </td>
                     <td className="px-3 py-2">
-                      <StatusBadge
-                        status={r.messageStatus}
-                        error={r.messageError}
-                      />
+                      <div className="flex items-center gap-2">
+                        <StatusBadge
+                          status={r.messageStatus}
+                          error={r.messageError}
+                        />
+                        {isAdmin && r.messageStatus === 'failed' && (
+                          <form action={resendReceiptAction}>
+                            <input type="hidden" name="receiptId" value={r.id} />
+                            <input
+                              type="hidden"
+                              name="returnTo"
+                              value={returnTo}
+                            />
+                            <button
+                              type="submit"
+                              className="rounded-full border border-black/10 px-2 py-0.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-black/[.04] dark:border-white/15 dark:text-zinc-300 dark:hover:bg-white/[.06]"
+                            >
+                              Resend
+                            </button>
+                          </form>
+                        )}
+                      </div>
                     </td>
                     <td className="px-3 py-2 text-xs text-zinc-500">
                       {r.cashierUsername ?? '—'}

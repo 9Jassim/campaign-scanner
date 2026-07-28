@@ -1819,6 +1819,22 @@
       "related_bugs": [],
       "occurrences": 2,
       "last_seen": "2026-07-26T15:24:10.584Z"
+    },
+    {
+      "id": "bug-107",
+      "timestamp": "2026-07-28T09:42:26.489Z",
+      "error_message": "Missing guard clause",
+      "file": "app/receipts/page.tsx",
+      "root_cause": "No early return/throw for edge case: q",
+      "fix": "Added guard clause: if (q)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-28T09:42:26.489Z"
     }
   ]
 }

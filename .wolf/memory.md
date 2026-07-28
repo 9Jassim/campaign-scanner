@@ -874,3 +874,69 @@
 | 18:24 | Edited app/contacts/page.tsx | expanded (+36 lines) | ~411 |
 | 18:25 | Edited app/contacts/page.tsx | 4→4 lines | ~30 |
 | (26/07) | Added URL-based column sorting to contacts/receipts/raffle via shared components/sort-header.tsx (SortHeader link + parseSort). Receipts: date/amount/entries. Contacts: totalBd/entries/invoices/lastSeen. Raffle: entryNumber/date (date tiebreaks on entryNumber). Sort+dir carried through Pagination; sorting resets to page 1; id tiebreaker for stable paging. Verified live (throwaway admin, deleted): all sorts asc/desc correct. | components/sort-header.tsx, app/{contacts,receipts,raffle}/page.tsx | tsc+lint+build clean | ~4000 |
+| 18:33 | Session end: 32 writes across 9 files (app-nav.tsx, migration.sql, schema.prisma, daily-scans-chart.tsx, types.ts) | 3 reads | ~10511 tok |
+
+## Session: 2026-07-26 19:29
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-27 13:09
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-27 13:10
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-27 13:10
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| (27/07) | Railway cron-sheet-sync confirmed firing autonomously overnight: /admin/sheets shows last sync 27/07/2026 00:03 (00:00 Bahrain schedule). Migration fully verified end-to-end. Only remaining cleanup: delete old Vercel project. | — | migration complete | ~200 |
+
+## Session: 2026-07-27 13:55
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-27 15:28
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-27 16:55
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-27 18:15
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-27 19:09
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-28 12:31
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-28 12:31
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 12:39 | Created lib/resend.ts | — | ~869 |
+| 12:39 | Created app/receipts/actions.ts | — | ~499 |
+| 12:39 | Edited app/receipts/page.tsx | added 1 import(s) | ~60 |
+| 12:42 | Edited app/receipts/page.tsx | 6→7 lines | ~31 |
+| 12:42 | Edited app/receipts/page.tsx | added 3 condition(s) | ~165 |
+| 12:42 | Edited app/receipts/page.tsx | expanded (+12 lines) | ~175 |
+| 12:43 | Edited app/receipts/page.tsx | expanded (+18 lines) | ~349 |
+| (28/07) | Built per-receipt admin Resend for failed WhatsApp messages: lib/resend.ts (resendReceipt — refuses already-sent/delivered/read to avoid double-send, uses current totalEntries, rate-limit → pending+retryQueue), app/receipts/actions.ts (admin-only server action, sanitized returnTo, resent flash), Resend button on failed rows in receipts page (admin only). Verified via credential-less zz-sandbox failed receipt: full flow ran, no send, receipt failed→skipped, flash shown, button vanished. Sandbox+user deleted. | lib/resend.ts, app/receipts/actions.ts, app/receipts/page.tsx | 145 tests, tsc+lint+build clean | ~5000 |
+| 12:54 | Session end: 7 writes across 3 files (resend.ts, actions.ts, page.tsx) | 2 reads | ~4919 tok |
